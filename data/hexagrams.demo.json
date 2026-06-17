@@ -1,0 +1,51 @@
+{
+  "_placeholder": true,
+  "_instructions": "HUMAN ACTION REQUIRED — do not let an agent fill this in. Populate judgment/image/lines text with a rights-clean public-domain translation (e.g. Legge) or original house text for each locale (vi/zh/en), per docs/TASKS/milestone-2-interpretation-endpoint.md prerequisites. Structural fields (number, name_pinyin, name_zh) are already verified against ICHING_REFERENCE.md / lib/iching/kingwen.authoritative.ts and may be left as-is. Until judgment/image/line text is populated, the interpretation service will throw a MissingHexagramTextError for these hexagrams by design — this is the correct, safe behavior (AGENTS.md: never invent missing content).",
+  "hexagrams": [
+    {
+      "number": 1,
+      "name_pinyin": "Qián",
+      "name_zh": "乾",
+      "judgment": { "vi": null, "zh": null, "en": null },
+      "image": { "vi": null, "zh": null, "en": null },
+      "lines": [
+        { "position": 1, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 2, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 3, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 4, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 5, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 6, "text": { "vi": null, "zh": null, "en": null } }
+      ]
+    },
+    {
+      "number": 2,
+      "name_pinyin": "Kūn",
+      "name_zh": "坤",
+      "judgment": { "vi": null, "zh": null, "en": null },
+      "image": { "vi": null, "zh": null, "en": null },
+      "lines": [
+        { "position": 1, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 2, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 3, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 4, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 5, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 6, "text": { "vi": null, "zh": null, "en": null } }
+      ]
+    },
+    {
+      "number": 11,
+      "name_pinyin": "Tài",
+      "name_zh": "泰",
+      "judgment": { "vi": null, "zh": null, "en": null },
+      "image": { "vi": null, "zh": null, "en": null },
+      "lines": [
+        { "position": 1, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 2, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 3, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 4, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 5, "text": { "vi": null, "zh": null, "en": null } },
+        { "position": 6, "text": { "vi": null, "zh": null, "en": null } }
+      ]
+    }
+  ]
+}
