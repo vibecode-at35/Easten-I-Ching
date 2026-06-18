@@ -18,6 +18,7 @@ import { getHexagramRecord } from "../db/hexagrams";
 import { interpret as routerInterpret, extract as routerExtract } from "./router";
 import { gatherGroundedTexts, runInterpretation } from "./interpret";
 import { MissingHexagramTextError } from "../db/hexagrams";
+import { HexagramFabricationError } from "./hexagram-guard";
 
 const mockedGetHexagramRecord = getHexagramRecord as jest.Mock;
 const mockedRouterInterpret = routerInterpret as jest.Mock;
@@ -281,5 +282,87 @@ describe("runInterpretation — two-phase grounding (Phase 1 -> Phase 2)", () =>
     expect(consoleError).toHaveBeenCalled();
 
     consoleError.mockRestore();
+  });
+});
+
+// ─── Hexagram-fabrication guard (buffer, validate, retry once, then fail safe) ──
+
+describe("runInterpretation — hexagram-fabrication guard", () => {
+  async function drain(iterable: AsyncIterable<string>): Promise<string[]> {
+    const out: string[] = [];
+    for await (const chunk of iterable) out.push(chunk);
+    return out;
+  }
+
+  const FABRICATED_TEXT = "Resulting hexagram: #43 Guài (夬) — a transformation that was never cast.";
+  const CLEAN_TEXT = "Hexagram 11, Tài, speaks of peace and the meeting of heaven and earth.";
+
+  it("passes clean output straight through on the first attempt, calling the router once", async () => {
+    mockedRouterInterpret.mockImplementation(async function* () {
+      yield CLEAN_TEXT;
+    });
+
+    const chunks = await drain(runInterpretation({ cast: castWith({}), question: "Q", locale: "en" }));
+
+    expect(chunks).toEqual([CLEAN_TEXT]);
+    expect(mockedRouterInterpret).toHaveBeenCalledTimes(1);
+  });
+
+  it("regenerates once when the first attempt fabricates a hexagram, and yields the clean retry", async () => {
+    let call = 0;
+    mockedRouterInterpret.mockImplementation(async function* () {
+      call += 1;
+      yield call === 1 ? FABRICATED_TEXT : CLEAN_TEXT;
+    });
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+
+    const chunks = await drain(runInterpretation({ cast: castWith({}), question: "Q", locale: "en" }));
+
+    expect(chunks).toEqual([CLEAN_TEXT]);
+    expect(mockedRouterInterpret).toHaveBeenCalledTimes(2);
+    expect(consoleError).toHaveBeenCalledWith(
+      expect.stringContaining("Hexagram fabrication detected"),
+      expect.arrayContaining([expect.stringContaining("43")]),
+    );
+
+    consoleError.mockRestore();
+  });
+
+  it("throws HexagramFabricationError when fabrication persists through the retry, yielding nothing", async () => {
+    mockedRouterInterpret.mockImplementation(async function* () {
+      yield FABRICATED_TEXT;
+    });
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+
+    const chunks: string[] = [];
+    let caught: unknown;
+    try {
+      for await (const chunk of runInterpretation({ cast: castWith({}), question: "Q", locale: "en" })) {
+        chunks.push(chunk);
+      }
+    } catch (err) {
+      caught = err;
+    }
+
+    expect(chunks).toEqual([]); // nothing was ever yielded to the caller
+    expect(mockedRouterInterpret).toHaveBeenCalledTimes(2); // first attempt + one retry, no more
+    expect(caught).toBeInstanceOf(HexagramFabricationError);
+    expect((caught as HexagramFabricationError).foundReferences).toEqual(
+      expect.arrayContaining([expect.stringContaining("43")]),
+    );
+
+    consoleError.mockRestore();
+  });
+
+  it("never flags a legitimate resulting hexagram as fabricated", async () => {
+    mockedRouterInterpret.mockImplementation(async function* () {
+      yield "Primary #11 泰 moves toward the resulting hexagram #36 明夷, as the changing line shifts.";
+    });
+
+    const cast = castWith({ changingLinePositions: [2], resultingHexagram: 36 });
+    const chunks = await drain(runInterpretation({ cast, question: "Q", locale: "en" }));
+
+    expect(chunks).toHaveLength(1);
+    expect(mockedRouterInterpret).toHaveBeenCalledTimes(1);
   });
 });

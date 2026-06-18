@@ -2,10 +2,26 @@ import {
   getHexagramRecord,
   getLineRecord,
   resolveLocaleText,
+  getAllHexagramIdentities,
   HexagramTextNotFoundError,
   MissingHexagramTextError,
   type HexagramRecord,
 } from "./hexagrams";
+
+describe("getAllHexagramIdentities", () => {
+  it("returns all 64 hexagrams with number + Chinese name (used by the hexagram-fabrication guard)", () => {
+    const identities = getAllHexagramIdentities();
+    expect(identities).toHaveLength(64);
+    expect(identities).toContainEqual({ number: 1, nameZh: "乾" });
+    expect(identities).toContainEqual({ number: 43, nameZh: "夬" });
+    expect(identities).toContainEqual({ number: 64, nameZh: "未濟" });
+  });
+
+  it("every number 1-64 appears exactly once", () => {
+    const numbers = getAllHexagramIdentities().map((h) => h.number).sort((a, b) => a - b);
+    expect(numbers).toEqual(Array.from({ length: 64 }, (_, i) => i + 1));
+  });
+});
 
 describe("getHexagramRecord", () => {
   it("returns the structural record for a seeded demo hexagram (number 1)", () => {

@@ -9,6 +9,7 @@ import { NextRequest } from "next/server";
 import { runInterpretation } from "../../../lib/interpretation/interpret";
 import { HexagramTextNotFoundError, MissingHexagramTextError } from "../../../lib/db/hexagrams";
 import { ModelRequestError } from "../../../lib/interpretation/router";
+import { HexagramFabricationError } from "../../../lib/interpretation/hexagram-guard";
 import type { InterpretParams, Locale, ModelTier } from "../../../lib/interpretation/types";
 import type { CastResult } from "../../../lib/iching/types";
 
@@ -139,6 +140,11 @@ function mapPipelineError(err: unknown): Response {
   }
   if (err instanceof ModelRequestError) {
     console.error("Model request failed:", err.cause);
+    return jsonError("The interpretation model request failed.", 502);
+  }
+  if (err instanceof HexagramFabricationError) {
+    // Never surfaces what was fabricated to the client — just that generation failed safely.
+    console.error("Hexagram fabrication persisted after retry:", err.foundReferences);
     return jsonError("The interpretation model request failed.", 502);
   }
   console.error("Unexpected interpretation error:", err);

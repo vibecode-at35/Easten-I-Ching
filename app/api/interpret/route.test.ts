@@ -7,6 +7,7 @@ jest.mock("../../../lib/interpretation/interpret", () => ({
 import { runInterpretation } from "../../../lib/interpretation/interpret";
 import { MissingHexagramTextError } from "../../../lib/db/hexagrams";
 import { ModelRequestError } from "../../../lib/interpretation/router";
+import { HexagramFabricationError } from "../../../lib/interpretation/hexagram-guard";
 import { POST } from "./route";
 
 const mockedRunInterpretation = runInterpretation as jest.Mock;
@@ -129,6 +130,22 @@ describe("POST /api/interpret — error handling", () => {
     expect(res.status).toBe(502);
     const json = await res.json();
     expect(json.error).not.toContain("sk-ant-XYZ");
+  });
+
+  it("maps persisted hexagram fabrication to 502 without leaking which hexagram was fabricated", async () => {
+    mockedRunInterpretation.mockImplementation(async function* () {
+      throw new HexagramFabricationError(["#43 (夬)"]);
+    });
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+
+    const res = await POST(makeRequest(VALID_BODY));
+
+    expect(res.status).toBe(502);
+    const json = await res.json();
+    expect(json.error).not.toContain("43");
+    expect(json.error).not.toContain("夬");
+
+    consoleError.mockRestore();
   });
 
   it("maps an unexpected error to 500 without leaking internals", async () => {

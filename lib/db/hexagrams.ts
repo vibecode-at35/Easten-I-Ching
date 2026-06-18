@@ -8,6 +8,7 @@
  */
 
 import demoCorpus from "../../data/hexagrams.demo.json";
+import seedCorpus from "../../data/hexagrams.seed.json";
 import type { Locale } from "../interpretation/types";
 
 export interface LocalizedText {
@@ -85,4 +86,27 @@ export function getLineRecord(record: HexagramRecord, position: number): Hexagra
     );
   }
   return line;
+}
+
+/** Minimal identity (number + Chinese name) for one of the 64 hexagrams — no judgment/image/line text. */
+export interface HexagramIdentity {
+  number: number;
+  nameZh: string;
+}
+
+interface SeedEntry {
+  number: number;
+  name_zh: string;
+}
+
+const seedIdentities = seedCorpus as unknown as SeedEntry[];
+
+/**
+ * Returns the number + Chinese name for all 64 hexagrams, from the M1 structural
+ * seed (data/hexagrams.seed.json) — used by the hexagram-fabrication guard
+ * (lib/interpretation/hexagram-guard.ts) to know every hexagram identity that
+ * could appear, not just the 3 with real judgment/image/line text.
+ */
+export function getAllHexagramIdentities(): HexagramIdentity[] {
+  return seedIdentities.map((h) => ({ number: h.number, nameZh: h.name_zh }));
 }

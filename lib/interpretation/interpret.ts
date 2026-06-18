@@ -16,6 +16,11 @@ import { assemblePrompt } from "./prompt";
 import { interpret as callModel } from "./router";
 import type { ModelClient } from "./router";
 import { extractGrounding } from "./grounding";
+import {
+  findFabricatedHexagramReferences,
+  HexagramFabricationError,
+  type AllowedHexagrams,
+} from "./hexagram-guard";
 import type {
   GroundedChangingLine,
   GroundedHexagram,
@@ -23,6 +28,8 @@ import type {
   GroundingExtraction,
   InterpretParams,
 } from "./types";
+
+const MAX_GENERATION_ATTEMPTS = 2;
 
 /** Fetches and resolves the exact texts needed for this cast, per the §5 emphasis rules. */
 export function gatherGroundedTexts(
@@ -86,9 +93,26 @@ async function tryExtractGrounding(
   }
 }
 
+/** Drains an async text stream into a single string. */
+async function collectText(iterable: AsyncIterable<string>): Promise<string> {
+  let text = "";
+  for await (const chunk of iterable) {
+    text += chunk;
+  }
+  return text;
+}
+
 /**
  * Runs the full pipeline for one reading: fetch grounded texts -> Phase 1
- * grounding extraction -> assemble -> Phase 2 call -> stream.
+ * grounding extraction -> assemble -> Phase 2 call -> validate -> stream.
+ *
+ * Phase 2's full output is buffered (not streamed chunk-by-chunk to the
+ * caller) and checked against the hexagram-fabrication guard before being
+ * yielded at all (AGENTS.md golden rule #1 — the model never computes the
+ * hexagram; a single fabricated reference must never reach a user). On a
+ * violation, the exact same prompt is sent once more; if the retry still
+ * fails, this throws HexagramFabricationError rather than yielding anything.
+ *
  * `client` is for test injection only; production callers omit it.
  */
 export async function* runInterpretation(
@@ -98,5 +122,28 @@ export async function* runInterpretation(
   const grounded = gatherGroundedTexts(params.cast, params.locale);
   const grounding = await tryExtractGrounding(params.question, client);
   const assembled = assemblePrompt(params.question, params.locale, grounded, grounding);
-  yield* callModel(assembled, params.tier ?? "default", client);
+  const tier = params.tier ?? "default";
+
+  const allowed: AllowedHexagrams = {
+    primaryNumber: grounded.primary.number,
+    resultingNumber: grounded.resulting ? grounded.resulting.number : null,
+  };
+
+  let text = "";
+  let violations: string[] = [];
+
+  for (let attempt = 1; attempt <= MAX_GENERATION_ATTEMPTS; attempt++) {
+    text = await collectText(callModel(assembled, tier, client));
+    violations = findFabricatedHexagramReferences(text, allowed);
+    if (violations.length === 0) {
+      yield text;
+      return;
+    }
+    console.error(
+      `Hexagram fabrication detected on attempt ${attempt}/${MAX_GENERATION_ATTEMPTS}:`,
+      violations,
+    );
+  }
+
+  throw new HexagramFabricationError(violations);
 }
