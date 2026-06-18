@@ -39,11 +39,19 @@ This is a cost and correctness advantage. Don't reintroduce complexity the domai
 │   POST /api/interpret ► ┌─────────────▼──────────────┐               │
 │                         │  INTERPRETATION SERVICE      │               │
 │                         │  1. fetch exact texts (DB)   │               │
-│                         │  2. build prompt:            │               │
-│                         │     [cached static] + [hex   │──────► Anthropic API
-│                         │     texts + question + ctx]  │        (Sonnet 4.6,
-│                         │  3. call model (router)      │◄──────  prompt caching;
-│                         │  4. stream reading           │         Opus 4.8 premium)
+│                         │  2. Phase 1: grounding        │──────► Anthropic API
+│                         │     extraction (question →    │◄──────  (Haiku 4.5,
+│                         │     stated/unstated/type)      │         cheap, not streamed;
+│                         │     fails → fall back, no      │         failure never blocks
+│                         │     grounding, never blocks    │         the reading)
+│                         │  3. build prompt: [cached      │               │
+│                         │     static] + [hex texts +    │──────► Anthropic API
+│                         │     question + grounding obj]  │        (Sonnet 4.6,
+│                         │  4. Phase 2: call model        │◄──────  prompt caching;
+│                         │     (router) — instructed to   │         Opus 4.8 premium)
+│                         │     treat unstated as a hard   │               │
+│                         │     boundary                   │               │
+│                         │  5. stream reading              │               │
 │                         └─────────────┬───────────────┘               │
 │   POST /api/chat ──────────────────────┘ (same grounded texts + history)│
 │                                                                       │
@@ -73,9 +81,10 @@ This is a cost and correctness advantage. Don't reintroduce complexity the domai
     types.ts          # HexagramCast, Line, etc.
     casting.test.ts   # validates against docs/ICHING_REFERENCE.md
   /interpretation
-    router.ts         # single entry point for all model calls
-    prompt.ts         # builds cached static + dynamic prompt
-    interpret.ts      # fetch texts → call model → stream
+    router.ts         # single entry point for all model calls (interpret() + extract())
+    grounding.ts       # Phase 1: cheap extraction of stated/unstated/questionType
+    prompt.ts         # builds cached static + dynamic prompt (incl. grounding object)
+    interpret.ts      # fetch texts → Phase 1 → assemble → Phase 2 call → stream
   /db
     schema.ts         # Postgres schema / queries
     hexagrams.ts      # corpus access (exact lookup)
@@ -107,20 +116,22 @@ Rule: `/lib/iching/casting.ts` is framework-free and pure. The model is only rea
 ## 5. Interpretation pipeline detail
 
 1. **Retrieve, don't generate.** Pull the exact Judgment, Image, the *specific* changing-line texts, and the resulting hexagram's judgment from Postgres.
-2. **Prompt caching.** Split the prompt: the **static** half (system instructions, house voice, format rules) is cached (~90% input savings); only the **dynamic** half (this hexagram's texts, the question, context) varies per call.
-3. **Synthesis instruction.** The system prompt makes the model read *this question* through the hexagram — primary + changing lines + movement to the resulting hexagram → guidance, in the user's language and voice.
-4. **Stream** to the client.
-5. **Follow-ups** reuse the same grounded texts + history → anchored dialogue, not generic chat.
+2. **Phase 1: grounding extraction.** A cheap, non-streamed call (Haiku 4.5, via the same router) reads the raw question and returns `{ stated, unstated, questionType }` — what the person's words establish, and categories of specifics (job, relationship, decision, etc.) they did *not* mention. If this call fails or returns unparseable output, the pipeline logs it and proceeds without a grounding object — Phase 1 never blocks or fails the reading. Added because prompt wording alone (forbidding invented situational detail in the system prompt) left a small residual hallucination rate under live testing; the structural check catches what wording alone didn't.
+3. **Prompt caching.** Split the prompt: the **static** half (system instructions, house voice, format rules, the "hard boundaries" instruction) is cached (~90% input savings); only the **dynamic** half (this hexagram's texts, the question, context, and the Phase 1 grounding object when present) varies per call.
+4. **Synthesis instruction.** The system prompt makes the model read *this question* through the hexagram — primary + changing lines + movement to the resulting hexagram → guidance, in the user's language and voice — while treating every Phase 1 `unstated` item as a hard boundary it must not introduce.
+5. **Phase 2: call model (router) and stream** the reading to the client.
+6. **Follow-ups** reuse the same grounded texts + history → anchored dialogue, not generic chat.
 
-Full prompt design: `docs/INTERPRETATION_PROMPT.md`.
+Full prompt design: `INTERPRETATION_PROMPT.md`.
 
 ---
 
 ## 6. Model & cost
 
-- Default interpretation model: **Claude Sonnet 4.6** (best tone/nuance per cost; 1M context; caching). Premium "deep reading" tier may use **Opus 4.8**.
-- All calls routed through `/lib/interpretation/router.ts` so models/tiers are swappable; keep Qwen available as a Chinese-language / cost hedge.
-- Per-reading cost ≈ $0.02–0.05 (lower with caching). Model cost is not the constraint — retention is.
+- **Phase 1 (grounding extraction):** **Claude Haiku 4.5** — cheap, non-streamed, runs before every reading. Not a user-selectable tier; failure falls back to running Phase 2 without it rather than blocking the reading.
+- **Phase 2 (the reading):** Default **Claude Sonnet 4.6** (best tone/nuance per cost; 1M context; caching). Premium "deep reading" tier may use **Opus 4.8**.
+- Both phases routed through `/lib/interpretation/router.ts` (the only module that imports the Anthropic SDK) so models/tiers are swappable; keep Qwen available as a Chinese-language / cost hedge.
+- Per-reading cost ≈ $0.02–0.05 for Phase 2 (lower with caching), plus a small additional Phase 1 call. Two sequential model calls instead of one increases time-to-first-byte — Phase 1 is not streamed and must complete before Phase 2 starts. Model cost is not the constraint — retention is.
 
 ---
 
