@@ -1,5 +1,5 @@
 import { assemblePrompt, buildSystemBlocks, buildUserMessageText, SYSTEM_PROMPT } from "./prompt";
-import type { GroundedTexts } from "./types";
+import type { GroundedTexts, GroundingExtraction } from "./types";
 
 const noChangingLines: GroundedTexts = {
   primary: {
@@ -28,6 +28,12 @@ const withChangingLines: GroundedTexts = {
     nameZh: "明夷",
     judgment: "FIXTURE_RESULTING_JUDGMENT",
   },
+};
+
+const fixtureGrounding: GroundingExtraction = {
+  stated: ["FIXTURE_STATED_ONE", "FIXTURE_STATED_TWO"],
+  unstated: ["FIXTURE_UNSTATED_JOB", "FIXTURE_UNSTATED_RELATIONSHIP"],
+  questionType: "emotional_state",
 };
 
 // ─── Prompt assembly: exact fetched texts appear, correctly placed ───────────
@@ -70,6 +76,42 @@ describe("buildUserMessageText — assembly", () => {
   });
 });
 
+// ─── Phase 1 grounding extraction wiring (optional 4th param) ───────────────
+
+describe("buildUserMessageText — Phase 1 grounding section", () => {
+  it("omits the grounding section entirely when none is provided (backward compatible)", () => {
+    const text = buildUserMessageText("Q", "en", noChangingLines);
+    expect(text).not.toContain("Stated:");
+    expect(text).not.toContain("Unstated");
+    expect(text).not.toContain("Question type:");
+  });
+
+  it("includes Stated, Unstated, and Question type when a grounding object is provided", () => {
+    const text = buildUserMessageText("Q", "en", noChangingLines, fixtureGrounding);
+    expect(text).toContain("Stated: FIXTURE_STATED_ONE; FIXTURE_STATED_TWO");
+    expect(text).toContain(
+      "Unstated (hard boundaries — do not introduce): FIXTURE_UNSTATED_JOB; FIXTURE_UNSTATED_RELATIONSHIP",
+    );
+    expect(text).toContain("Question type: emotional_state");
+  });
+
+  it("omits the Stated line when stated is empty, but still includes Question type", () => {
+    const grounding: GroundingExtraction = { stated: [], unstated: [], questionType: "decision" };
+    const text = buildUserMessageText("Q", "en", noChangingLines, grounding);
+    expect(text).not.toContain("Stated:");
+    expect(text).not.toContain("Unstated");
+    expect(text).toContain("Question type: decision");
+  });
+
+  it("the grounding section appears before the hexagram texts in the user message", () => {
+    const text = buildUserMessageText("Q", "en", noChangingLines, fixtureGrounding);
+    const groundingIdx = text.indexOf("Question type:");
+    const hexagramIdx = text.indexOf("Primary hexagram:");
+    expect(groundingIdx).toBeGreaterThanOrEqual(0);
+    expect(hexagramIdx).toBeGreaterThan(groundingIdx);
+  });
+});
+
 // ─── Grounding contract ───────────────────────────────────────────────────────
 
 describe("grounding contract", () => {
@@ -84,6 +126,12 @@ describe("grounding contract", () => {
     expect(fullSystemText).not.toContain("FIXTURE_PRIMARY_JUDGMENT");
     expect(fullSystemText).not.toContain("FIXTURE_LINE_2_TEXT");
     expect(fullSystemText).not.toContain("Should I take the job?");
+  });
+
+  it("the static system prompt instructs treating Unstated items as hard boundaries", () => {
+    expect(SYSTEM_PROMPT).toContain("Unstated");
+    expect(SYSTEM_PROMPT).toContain("hard boundary");
+    expect(SYSTEM_PROMPT).not.toContain("FIXTURE_UNSTATED_JOB");
   });
 
   it("the assembled prompt's user message contains only the provided grounded texts and question — no extra hexagram content", () => {
@@ -132,6 +180,25 @@ describe("cache breakpoint placement", () => {
     expect(cachedBlock.cache_control).toBeDefined();
     expect(cachedBlock.text).not.toContain("UNIQUE_QUESTION_TOKEN");
     expect(cachedBlock.text).not.toContain("FIXTURE_LINE_2_TEXT");
+  });
+
+  it("the Phase 1 grounding object never contaminates the cached system block", () => {
+    const assembled = assemblePrompt("Q", "en", noChangingLines, fixtureGrounding);
+    const cachedBlock = assembled.system[assembled.system.length - 1]!;
+    expect(cachedBlock.text).not.toContain("FIXTURE_STATED_ONE");
+    expect(cachedBlock.text).not.toContain("FIXTURE_UNSTATED_JOB");
+    expect(cachedBlock.text).not.toContain("emotional_state");
+  });
+
+  it("system block stays byte-identical whether or not a grounding object is passed", () => {
+    const withoutGrounding = assemblePrompt("Q", "en", noChangingLines);
+    const withGrounding = assemblePrompt("Q", "en", noChangingLines, fixtureGrounding);
+    expect(withGrounding.system).toEqual(withoutGrounding.system);
+  });
+
+  it("the grounding object lives in the user message, after the breakpoint", () => {
+    const assembled = assemblePrompt("Q", "en", noChangingLines, fixtureGrounding);
+    expect(assembled.messages[0]!.content).toContain("FIXTURE_STATED_ONE");
   });
 
   it("all per-request content lives strictly after system, in the user message", () => {

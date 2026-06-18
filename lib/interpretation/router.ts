@@ -20,6 +20,9 @@ export function resolveModel(tier: ModelTier = "default"): string {
   return MODEL_BY_TIER[tier];
 }
 
+/** Cheap model for Phase 1 grounding extraction (lib/interpretation/grounding.ts). Not a user-selectable tier. */
+export const EXTRACTION_MODEL = "claude-haiku-4-5";
+
 /**
  * A streamed event from the model. Typed `unknown` deliberately: the real SDK's
  * `RawMessageStreamEvent` union has per-variant `delta` shapes that don't share
@@ -71,16 +74,16 @@ function getDefaultClient(): ModelClient {
 }
 
 /**
- * Calls the model with an already-assembled prompt and streams back text chunks.
- * Tests always inject `client` so no real network call is ever made in CI.
+ * Streams text chunks from a given model id for an already-assembled prompt.
+ * Shared by interpret() (Phase 2 reading) and extract() (Phase 1 grounding) —
+ * the only difference between them is which model id gets passed in.
  */
-export async function* interpret(
+async function* streamFromModel(
+  model: string,
   prompt: AssembledPrompt,
-  tier: ModelTier = "default",
   client?: ModelClient,
 ): AsyncGenerator<string, void, unknown> {
   const activeClient = client ?? getDefaultClient();
-  const model = resolveModel(tier);
 
   let stream: ModelStream;
   try {
@@ -104,4 +107,30 @@ export async function* interpret(
   } catch (err) {
     throw new ModelRequestError(err);
   }
+}
+
+/**
+ * Calls the reading model (Phase 2) with an already-assembled prompt and
+ * streams back text chunks. Tests always inject `client` so no real network
+ * call is ever made in CI.
+ */
+export async function* interpret(
+  prompt: AssembledPrompt,
+  tier: ModelTier = "default",
+  client?: ModelClient,
+): AsyncGenerator<string, void, unknown> {
+  yield* streamFromModel(resolveModel(tier), prompt, client);
+}
+
+/**
+ * Calls the cheap extraction model (Phase 1, claude-haiku-4-5) with an
+ * already-assembled prompt and streams back text chunks — typically a small
+ * JSON object; see grounding.ts for parsing. Same client/error/event handling
+ * as interpret(); only the model id differs.
+ */
+export async function* extract(
+  prompt: AssembledPrompt,
+  client?: ModelClient,
+): AsyncGenerator<string, void, unknown> {
+  yield* streamFromModel(EXTRACTION_MODEL, prompt, client);
 }

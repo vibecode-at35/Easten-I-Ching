@@ -15,7 +15,14 @@ import { getHexagramRecord, getLineRecord, resolveLocaleText } from "../db/hexag
 import { assemblePrompt } from "./prompt";
 import { interpret as callModel } from "./router";
 import type { ModelClient } from "./router";
-import type { GroundedChangingLine, GroundedHexagram, GroundedTexts, InterpretParams } from "./types";
+import { extractGrounding } from "./grounding";
+import type {
+  GroundedChangingLine,
+  GroundedHexagram,
+  GroundedTexts,
+  GroundingExtraction,
+  InterpretParams,
+} from "./types";
 
 /** Fetches and resolves the exact texts needed for this cast, per the §5 emphasis rules. */
 export function gatherGroundedTexts(
@@ -62,7 +69,26 @@ export function gatherGroundedTexts(
 }
 
 /**
- * Runs the full pipeline for one reading: fetch -> assemble -> call -> stream.
+ * Runs Phase 1 (lib/interpretation/grounding.ts): extracts what the question
+ * stated vs. left unstated. Failure here must not fail the reading — it falls
+ * back to `undefined`, which makes Phase 2's prompt identical to before this
+ * phase existed (preserving prior behavior). Logged server-side only.
+ */
+async function tryExtractGrounding(
+  question: string,
+  client?: ModelClient,
+): Promise<GroundingExtraction | undefined> {
+  try {
+    return await extractGrounding(question, client);
+  } catch (err) {
+    console.error("Phase 1 grounding extraction failed; continuing without it:", err);
+    return undefined;
+  }
+}
+
+/**
+ * Runs the full pipeline for one reading: fetch grounded texts -> Phase 1
+ * grounding extraction -> assemble -> Phase 2 call -> stream.
  * `client` is for test injection only; production callers omit it.
  */
 export async function* runInterpretation(
@@ -70,6 +96,7 @@ export async function* runInterpretation(
   client?: ModelClient,
 ): AsyncGenerator<string, void, unknown> {
   const grounded = gatherGroundedTexts(params.cast, params.locale);
-  const assembled = assemblePrompt(params.question, params.locale, grounded);
+  const grounding = await tryExtractGrounding(params.question, client);
+  const assembled = assemblePrompt(params.question, params.locale, grounded, grounding);
   yield* callModel(assembled, params.tier ?? "default", client);
 }

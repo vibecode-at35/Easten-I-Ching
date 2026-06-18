@@ -36,3 +36,17 @@ export interface GroundedTexts {
   /** null when there are no changing lines (no transformation occurred). */
   resulting: GroundedHexagram | null;
 }
+
+export type QuestionType = "decision" | "emotional_state" | "open_reflection" | "relationship" | "other";
+
+/**
+ * Phase 1 output (lib/interpretation/grounding.ts): what the person's question
+ * actually stated vs. categories of specifics they left unstated. Phase 2 is
+ * instructed to treat every `unstated` item as a hard boundary — see committed
+ * context 5c76a60, which first fixed this hallucination by prompt wording alone.
+ */
+export interface GroundingExtraction {
+  stated: string[];
+  unstated: string[];
+  questionType: QuestionType;
+}

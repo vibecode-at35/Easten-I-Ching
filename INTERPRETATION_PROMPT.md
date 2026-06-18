@@ -23,6 +23,8 @@ Keep the static block stable so the cache stays warm. Inject the dynamic block a
 >
 > Ground the reading in the person's situation exactly as they describe it — and only as they describe it. Do not invent, assume, or supply concrete specifics they did not state. If they mention no job, name no job; if they describe no relationship, introduce none; if they pose no decision, do not manufacture one. Treat the words of their question as the whole of what you know about their life. Where the question is spare, stay with what is actually there rather than filling the silence with a plausible story.
 >
+> **Hard boundaries.** The message below may include a "Stated" list and an "Unstated" list. "Stated" restates only what the person's own words establish. Every item in "Unstated" names a category of specific (a job, a relationship, a decision, etc.) that is absent from their question — treat each one as a hard boundary: never introduce it, name it, or imply it exists, not as a hint and not as a question you ask back. If these lists are absent, the rule above still applies on its own.
+>
 > A vague, open, or emotional question is not a gap to be filled by guessing what the person "really" means — it is itself the material to read. When someone says only that they feel stuck, or uncertain, or that they are waiting for something, read that — the stuckness, the uncertainty, the waiting — through the hexagram. Often the most honest and illuminating reading holds the contrast between what they bring and what they drew: a person who feels stuck has cast the hexagram of pure, ceaseless motion; a person seeking certainty has drawn an image of change. Name that tension plainly and let the hexagram speak to it. Do not resolve the openness of their question into a specific scenario in order to have something concrete to interpret.
 >
 > This restraint does not mean the reading should be short, hedged, or noncommittal. Offer a full, substantive reflection — rich in the hexagram's imagery and generous in insight — provided every concrete claim about the person's life traces to their own words.
@@ -50,6 +52,9 @@ Provide to the model, clearly structured:
 ```
 Question: <the user's framed situation>
 Locale: <vi | zh | en>
+Stated: <Phase 1 extraction — what the question's own words establish>          (omit if empty)
+Unstated (hard boundaries — do not introduce): <Phase 1 extraction>             (omit if empty)
+Question type: <decision | emotional_state | open_reflection | relationship | other>
 Primary hexagram: #<n> <names> — Judgment: <text> | Image: <text>
 Changing lines: [<positions>] with texts:
   - line <p>: <text>
@@ -57,6 +62,8 @@ Resulting hexagram: #<m> <names> — Judgment: <text>   (omit if no changing lin
 ```
 
 Use the emphasis rules in `docs/ICHING_REFERENCE.md` §5 to decide which texts to include (e.g. 0 changing lines → judgment/image only; 1 → that line central; etc.).
+
+The `Stated`/`Unstated`/`Question type` fields come from a **Phase 1 grounding extraction** (§5) that runs before this prompt is assembled. If Phase 1 fails for any reason, these three lines are simply omitted — the situational-grounding rule and Hard boundaries instruction in §2 still apply on their own; the reading is never blocked by an extraction failure.
 
 ---
 
@@ -68,9 +75,10 @@ Reuse the **same** grounded texts plus the conversation history. The model answe
 
 ## 5. Model & routing
 
-- Default: **Claude Sonnet 4.6** (tone/nuance per cost). Premium "deep reading" tier may route to **Opus 4.8**.
-- All calls go through `/lib/interpretation/router.ts` (`AGENTS.md` §3). Keep **Qwen** available as a Chinese-language depth option / cost hedge.
-- Cache the static system prompt; expect ~$0.02–0.05 per reading.
+- **Phase 1 (grounding extraction):** **Claude Haiku 4.5** — a cheap, non-streamed call that reads the raw question and returns the `stated`/`unstated`/`questionType` object used in §3. Failure falls back to running Phase 2 without it (see §3), never blocking the reading.
+- **Phase 2 (the reading):** Default **Claude Sonnet 4.6** (tone/nuance per cost). Premium "deep reading" tier may route to **Opus 4.8**.
+- Both phases go through `/lib/interpretation/router.ts` (`AGENTS.md` §3) — it is the only module that imports the Anthropic SDK. Keep **Qwen** available as a Chinese-language depth option / cost hedge.
+- Cache the static system prompt (Phase 2 only); expect ~$0.02–0.05 per reading plus a small, uncached Phase 1 call.
 
 ---
 

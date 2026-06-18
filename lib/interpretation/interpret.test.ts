@@ -11,15 +11,24 @@ jest.mock("../db/hexagrams", () => {
 
 jest.mock("./router", () => ({
   interpret: jest.fn(),
+  extract: jest.fn(),
 }));
 
 import { getHexagramRecord } from "../db/hexagrams";
-import { interpret as routerInterpret } from "./router";
+import { interpret as routerInterpret, extract as routerExtract } from "./router";
 import { gatherGroundedTexts, runInterpretation } from "./interpret";
 import { MissingHexagramTextError } from "../db/hexagrams";
 
 const mockedGetHexagramRecord = getHexagramRecord as jest.Mock;
 const mockedRouterInterpret = routerInterpret as jest.Mock;
+const mockedRouterExtract = routerExtract as jest.Mock;
+
+/** Default Phase 1 mock: a neutral, valid extraction so existing tests need no changes. */
+function mockExtractWith(json: Record<string, unknown>) {
+  mockedRouterExtract.mockImplementation(async function* () {
+    yield JSON.stringify(json);
+  });
+}
 
 const PRIMARY_RECORD: HexagramRecord = {
   number: 11,
@@ -64,6 +73,8 @@ beforeEach(() => {
     if (number === 36) return RESULTING_RECORD;
     throw new Error(`unexpected hexagram number in test: ${number}`);
   });
+  // Neutral default so tests that don't care about Phase 1 don't need to set it up.
+  mockExtractWith({ stated: [], unstated: [], questionType: "other" });
 });
 
 // ─── gatherGroundedTexts — emphasis rules (ICHING_REFERENCE.md §5) ───────────
@@ -175,5 +186,100 @@ describe("runInterpretation", () => {
       MissingHexagramTextError,
     );
     expect(mockedRouterInterpret).not.toHaveBeenCalled();
+    expect(mockedRouterExtract).not.toHaveBeenCalled();
+  });
+});
+
+// ─── Two-phase grounding: Phase 2 receives and is instructed by Phase 1 ─────
+
+describe("runInterpretation — two-phase grounding (Phase 1 -> Phase 2)", () => {
+  async function drain(iterable: AsyncIterable<string>): Promise<string[]> {
+    const out: string[] = [];
+    for await (const chunk of iterable) out.push(chunk);
+    return out;
+  }
+
+  it("Phase 2's prompt contains the stated/unstated/questionType fields Phase 1 extracted", async () => {
+    mockExtractWith({
+      stated: ["feels stuck", "is waiting for something"],
+      unstated: ["no job or career decision mentioned", "no relationship mentioned"],
+      questionType: "emotional_state",
+    });
+    mockedRouterInterpret.mockImplementation(async function* () {
+      yield "reading";
+    });
+
+    const cast = castWith({});
+    await drain(runInterpretation({ cast, question: "I feel stuck", locale: "en" }));
+
+    expect(mockedRouterExtract).toHaveBeenCalledTimes(1);
+    const [extractionPrompt] = mockedRouterExtract.mock.calls[0];
+    expect(extractionPrompt.messages[0].content).toBe("I feel stuck");
+
+    const [readingPrompt] = mockedRouterInterpret.mock.calls[0];
+    const userContent = readingPrompt.messages[0].content as string;
+    expect(userContent).toContain("Stated: feels stuck; is waiting for something");
+    expect(userContent).toContain(
+      "Unstated (hard boundaries — do not introduce): no job or career decision mentioned; no relationship mentioned",
+    );
+    expect(userContent).toContain("Question type: emotional_state");
+  });
+
+  it("Phase 1 runs before Phase 2 (extract called, then interpret)", async () => {
+    const callOrder: string[] = [];
+    mockedRouterExtract.mockImplementation(async function* () {
+      callOrder.push("extract");
+      yield JSON.stringify({ stated: [], unstated: [], questionType: "other" });
+    });
+    mockedRouterInterpret.mockImplementation(async function* () {
+      callOrder.push("interpret");
+    });
+
+    await drain(runInterpretation({ cast: castWith({}), question: "Q", locale: "en" }));
+
+    expect(callOrder).toEqual(["extract", "interpret"]);
+  });
+
+  it("falls back gracefully when Phase 1 fails: Phase 2 still runs, without a grounding section", async () => {
+    mockedRouterExtract.mockImplementation(async function* () {
+      throw new Error("extraction model unavailable");
+    });
+    mockedRouterInterpret.mockImplementation(async function* () {
+      yield "reading anyway";
+    });
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+
+    const cast = castWith({});
+    const chunks = await drain(runInterpretation({ cast, question: "Q", locale: "en" }));
+
+    expect(chunks).toEqual(["reading anyway"]);
+    expect(mockedRouterInterpret).toHaveBeenCalledTimes(1);
+    const [readingPrompt] = mockedRouterInterpret.mock.calls[0];
+    const userContent = readingPrompt.messages[0].content as string;
+    expect(userContent).not.toContain("Stated:");
+    expect(userContent).not.toContain("Unstated");
+    expect(userContent).not.toContain("Question type:");
+    expect(consoleError).toHaveBeenCalled();
+
+    consoleError.mockRestore();
+  });
+
+  it("falls back gracefully when Phase 1 returns unparseable output", async () => {
+    mockedRouterExtract.mockImplementation(async function* () {
+      yield "not json at all";
+    });
+    mockedRouterInterpret.mockImplementation(async function* () {
+      yield "reading anyway";
+    });
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+
+    const chunks = await drain(
+      runInterpretation({ cast: castWith({}), question: "Q", locale: "en" }),
+    );
+
+    expect(chunks).toEqual(["reading anyway"]);
+    expect(consoleError).toHaveBeenCalled();
+
+    consoleError.mockRestore();
   });
 });

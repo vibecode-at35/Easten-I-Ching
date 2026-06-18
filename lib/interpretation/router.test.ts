@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { interpret, resolveModel, ModelRequestError, type ModelClient } from "./router";
+import { interpret, extract, resolveModel, EXTRACTION_MODEL, ModelRequestError, type ModelClient } from "./router";
 import type { AssembledPrompt } from "./prompt";
 
 function makeAssembledPrompt(): AssembledPrompt {
@@ -147,6 +147,71 @@ describe("interpret — streaming via injected client", () => {
     expect(chunks).toEqual(["partial"]);
     expect(caught).toBeInstanceOf(ModelRequestError);
     expect((caught as Error).message).not.toContain("sk-ant-SECRET67890");
+  });
+});
+
+// ─── Phase 1: extract() — cheap grounding-extraction model ──────────────────
+
+describe("extract — Phase 1 grounding model, same router", () => {
+  it("EXTRACTION_MODEL is claude-haiku-4-5", () => {
+    expect(EXTRACTION_MODEL).toBe("claude-haiku-4-5");
+  });
+
+  it("calls client.messages.stream with the extraction model id (not a reading tier)", async () => {
+    const prompt = makeAssembledPrompt();
+    let capturedParams: unknown;
+    const client: ModelClient = {
+      messages: {
+        stream: (params) => {
+          capturedParams = params;
+          return { async *[Symbol.asyncIterator]() {} };
+        },
+      },
+    };
+
+    await drain(extract(prompt, client));
+
+    expect(capturedParams).toMatchObject({
+      model: "claude-haiku-4-5",
+      system: prompt.system,
+      messages: prompt.messages,
+    });
+  });
+
+  it("yields text_delta content the same way interpret() does", async () => {
+    const client: ModelClient = {
+      messages: {
+        stream: () => ({
+          async *[Symbol.asyncIterator]() {
+            yield { type: "content_block_delta", delta: { type: "text_delta", text: '{"a":1}' } };
+          },
+        }),
+      },
+    };
+
+    const chunks = await drain(extract(makeAssembledPrompt(), client));
+    expect(chunks.join("")).toBe('{"a":1}');
+  });
+
+  it("wraps stream failures in ModelRequestError, same as interpret()", async () => {
+    const secretError = new Error("key sk-ant-SECRET-EXTRACT failed");
+    const client: ModelClient = {
+      messages: {
+        stream: () => {
+          throw secretError;
+        },
+      },
+    };
+
+    let caught: unknown;
+    try {
+      await drain(extract(makeAssembledPrompt(), client));
+    } catch (err) {
+      caught = err;
+    }
+
+    expect(caught).toBeInstanceOf(ModelRequestError);
+    expect((caught as Error).message).not.toContain("sk-ant-SECRET-EXTRACT");
   });
 });
 
