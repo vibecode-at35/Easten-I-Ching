@@ -1,51 +1,95 @@
 {
-  "_placeholder": true,
-  "_instructions": "HUMAN ACTION REQUIRED — do not let an agent fill this in. Populate judgment/image/lines text with a rights-clean public-domain translation (e.g. Legge) or original house text for each locale (vi/zh/en), per docs/TASKS/milestone-2-interpretation-endpoint.md prerequisites. Structural fields (number, name_pinyin, name_zh) are already verified against ICHING_REFERENCE.md / lib/iching/kingwen.authoritative.ts and may be left as-is. Until judgment/image/line text is populated, the interpretation service will throw a MissingHexagramTextError for these hexagrams by design — this is the correct, safe behavior (AGENTS.md: never invent missing content).",
+  "_meta": {
+    "purpose": "Small RIGHTS-CLEAN demo corpus for Milestone 2. Lets the interpretation pipeline produce a real, grounded reading. NOT the full corpus.",
+    "shape_note": "Fields follow docs/DATA_MODEL.md §1-2. If the M1 seed loader uses different field names, map these to it rather than reinventing. `lines` is an array of 6, bottom-to-top (position 1 = bottom). `all_lines_changing` is the special 用九/用六 text that applies only when every line is a changing line (relevant for hexagrams 1 and 2).",
+    "sources": {
+      "chinese_original": "Classical Zhouyi (周易) — ancient, public domain.",
+      "english": "James Legge, 'The Yi King' (Sacred Books of the East, vol. 16, 2nd ed. 1899). Public domain (Legge d. 1897). Retrieved via Chinese Text Project (ctext.org), parallel Chinese/Legge edition.",
+      "vietnamese": "NOT included — must be supplied by a rights-clean source or original translation. Do NOT machine-invent vi text for production; placeholders are null here."
+    },
+    "license": "All text in this file is public domain.",
+    "status": "Demo seed — Hexagram 1 only. Extend with more hexagrams (e.g. 2, 11, 36) from the same source to demo the changing-line -> resulting-hexagram path end to end."
+  },
   "hexagrams": [
     {
       "number": 1,
-      "name_pinyin": "Qián",
+      "value": 63,
       "name_zh": "乾",
-      "judgment": { "vi": null, "zh": null, "en": null },
-      "image": { "vi": null, "zh": null, "en": null },
+      "name_pinyin": "Qián",
+      "name_vi": null,
+      "name_en": "The Creative",
+      "upper_trigram": "qian",
+      "lower_trigram": "qian",
+      "judgment": {
+        "zh": "元亨,利貞。",
+        "vi": null,
+        "en": "Qian (represents) what is great and originating, penetrating, advantageous, correct and firm."
+      },
+      "image": {
+        "zh": "天行健,君子以自強不息。",
+        "vi": null,
+        "en": "Heaven, in its motion, (gives the idea of) strength. The superior man, in accordance with this, nerves himself to ceaseless activity."
+      },
       "lines": [
-        { "position": 1, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 2, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 3, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 4, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 5, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 6, "text": { "vi": null, "zh": null, "en": null } }
-      ]
-    },
-    {
-      "number": 2,
-      "name_pinyin": "Kūn",
-      "name_zh": "坤",
-      "judgment": { "vi": null, "zh": null, "en": null },
-      "image": { "vi": null, "zh": null, "en": null },
-      "lines": [
-        { "position": 1, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 2, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 3, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 4, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 5, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 6, "text": { "vi": null, "zh": null, "en": null } }
-      ]
-    },
-    {
-      "number": 11,
-      "name_pinyin": "Tài",
-      "name_zh": "泰",
-      "judgment": { "vi": null, "zh": null, "en": null },
-      "image": { "vi": null, "zh": null, "en": null },
-      "lines": [
-        { "position": 1, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 2, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 3, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 4, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 5, "text": { "vi": null, "zh": null, "en": null } },
-        { "position": 6, "text": { "vi": null, "zh": null, "en": null } }
-      ]
+        {
+          "position": 1,
+          "text": {
+            "zh": "初九:潛龍,勿用。",
+            "vi": null,
+            "en": "In the first (or lowest) NINE, undivided, (we see its subject as) the dragon lying hid (in the deep). It is not the time for active doing."
+          }
+        },
+        {
+          "position": 2,
+          "text": {
+            "zh": "九二:見龍在田,利見大人。",
+            "vi": null,
+            "en": "In the second NINE, undivided, (we see its subject as) the dragon appearing in the field. It will be advantageous to meet with the great man."
+          }
+        },
+        {
+          "position": 3,
+          "text": {
+            "zh": "九三:君子終日乾乾,夕惕若,厲,无咎。",
+            "vi": null,
+            "en": "In the third NINE, undivided, (we see its subject as) the superior man active and vigilant all the day, and in the evening still careful and apprehensive. (The position is) dangerous, but there will be no mistake."
+          }
+        },
+        {
+          "position": 4,
+          "text": {
+            "zh": "九四:或躍在淵,无咎。",
+            "vi": null,
+            "en": "In the fourth NINE, undivided, (we see its subject as the dragon looking) as if he were leaping up, but still in the deep. There will be no mistake."
+          }
+        },
+        {
+          "position": 5,
+          "text": {
+            "zh": "九五:飛龍在天,利見大人。",
+            "vi": null,
+            "en": "In the fifth NINE, undivided, (we see its subject as) the dragon on the wing in the sky. It will be advantageous to meet with the great man."
+          }
+        },
+        {
+          "position": 6,
+          "text": {
+            "zh": "上九:亢龍有悔。",
+            "vi": null,
+            "en": "In the sixth (or topmost) NINE, undivided, (we see its subject as) the dragon exceeding the proper limits. There will be occasion for repentance."
+          }
+        }
+      ],
+      "all_lines_changing": {
+        "zh": "用九:見群龍无首,吉。",
+        "vi": null,
+        "en": "(The lines of this hexagram are all strong and undivided, as appears from) the use of the number NINE. If the host of dragons (thus) appearing were to divest themselves of their heads, there would be good fortune."
+      },
+      "commentary": {
+        "zh": null,
+        "vi": null,
+        "en": null
+      }
     }
   ]
 }

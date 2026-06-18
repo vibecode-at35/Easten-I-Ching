@@ -22,6 +22,40 @@ describe("getHexagramRecord", () => {
   });
 });
 
+describe("hexagram 1 — real populated text (data/hexagrams.demo.json)", () => {
+  it("judgment and image resolve to non-null text for en and zh", () => {
+    const record = getHexagramRecord(1);
+
+    const judgmentEn = resolveLocaleText(record.judgment, "en", "hexagram 1 judgment");
+    const judgmentZh = resolveLocaleText(record.judgment, "zh", "hexagram 1 judgment");
+    const imageEn = resolveLocaleText(record.image, "en", "hexagram 1 image");
+    const imageZh = resolveLocaleText(record.image, "zh", "hexagram 1 image");
+
+    expect(judgmentEn.length).toBeGreaterThan(0);
+    expect(judgmentZh).toContain("元亨");
+    expect(imageEn.length).toBeGreaterThan(0);
+    expect(imageZh).toContain("天行健");
+  });
+
+  it("all six lines resolve to non-null text for en and zh", () => {
+    const record = getHexagramRecord(1);
+
+    for (const line of record.lines) {
+      const en = resolveLocaleText(line.text, "en", `hexagram 1 line ${line.position}`);
+      const zh = resolveLocaleText(line.text, "zh", `hexagram 1 line ${line.position}`);
+      expect(en.length).toBeGreaterThan(0);
+      expect(zh.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("vi is still genuinely absent (not yet supplied) and throws as designed", () => {
+    const record = getHexagramRecord(1);
+    expect(() => resolveLocaleText(record.judgment, "vi", "hexagram 1 judgment")).toThrow(
+      MissingHexagramTextError,
+    );
+  });
+});
+
 describe("resolveLocaleText", () => {
   // Use a local fixture (not the real demo file) so this test is robust to
   // humans populating data/hexagrams.demo.json later.
