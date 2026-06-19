@@ -8,7 +8,15 @@
  * Source of truth for probabilities and line encoding: ICHING_REFERENCE.md §3, §4.
  */
 
-import type { CastLine, CastMethod, CastResult, LineType, LineValue, Position } from "./types";
+import type {
+  CastLine,
+  CastMethod,
+  CastResult,
+  LineType,
+  LineValue,
+  Position,
+  ResultingLine,
+} from "./types";
 import { lookupKingWen } from "./kingwen";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -125,6 +133,48 @@ export function castHexagram(seed?: string): CastResult {
     LineValue,
   ];
   return castFromLineValues(values, "three_coin", resolvedSeed);
+}
+
+/**
+ * Derives the resulting hexagram's per-line yin/yang pattern for display —
+ * UI components (e.g. the hexagram glyph) must never compute this themselves
+ * (AGENTS.md golden rule #1). Flips yin/yang on every changing line in the
+ * primary; unchanged lines keep the primary's yin/yang.
+ *
+ * Returns null when there are no changing lines (no resulting hexagram).
+ *
+ * Self-check: the derived pattern's 6-bit value is looked up via the SAME
+ * lookupKingWen() the engine itself uses, and asserted to match
+ * `cast.resultingHexagram` exactly. If it doesn't, the engine's own two
+ * computations of this transformation have diverged — that must never be
+ * silently rendered, so this throws rather than returning a mismatched glyph.
+ */
+export function deriveResultingLines(cast: CastResult): ResultingLine[] | null {
+  if (cast.resultingHexagram === null) {
+    return null;
+  }
+
+  const changingSet = new Set(cast.changingLinePositions);
+  let derivedValue = 0;
+  const resultLines: ResultingLine[] = cast.lines.map((line) => {
+    const primaryIsYang = (line.value & 1) === 1; // odd values (7, 9) are yang
+    const isYang = changingSet.has(line.position) ? !primaryIsYang : primaryIsYang;
+    if (isYang) {
+      derivedValue |= 1 << (line.position - 1);
+    }
+    return { position: line.position, isYang };
+  });
+
+  const derivedKingWen = lookupKingWen(derivedValue);
+  if (derivedKingWen !== cast.resultingHexagram) {
+    throw new Error(
+      `Resulting hexagram pattern derivation mismatch: derived King Wen #${derivedKingWen} ` +
+        `but cast.resultingHexagram is #${cast.resultingHexagram}. This indicates an engine-internal ` +
+        `inconsistency and must not be silently rendered.`,
+    );
+  }
+
+  return resultLines;
 }
 
 function generateSeed(): string {

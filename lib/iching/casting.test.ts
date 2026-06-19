@@ -5,7 +5,8 @@
 
 import { VALUE_TO_KW, lookupKingWen } from "./kingwen";
 import { TRIGRAMS, hexagramValue } from "./trigrams";
-import { castFromLineValues, castHexagram } from "./casting";
+import { castFromLineValues, castHexagram, deriveResultingLines } from "./casting";
+import type { CastResult } from "./types";
 import {
   AUTHORITATIVE_KING_WEN,
   valueToKingWen,
@@ -251,5 +252,69 @@ describe("authoritative source verification", () => {
       expect(computedValue).toBe(entry.value);
       expect(lookupKingWen(computedValue)).toBe(entry.number);
     }
+  });
+});
+
+// ─── deriveResultingLines (M3 Task 2 prerequisite — UI never computes a hexagram) ──
+
+describe("deriveResultingLines", () => {
+  it("returns null when there are no changing lines", () => {
+    const cast = castFromLineValues([7, 7, 7, 8, 8, 8]); // Hexagram 11, no changing lines
+    expect(cast.resultingHexagram).toBeNull();
+    expect(deriveResultingLines(cast)).toBeNull();
+  });
+
+  it("all-changing Hexagram 1 -> all-broken Hexagram 2: every line flips yang to yin", () => {
+    const cast = castFromLineValues([9, 9, 9, 9, 9, 9]);
+    expect(cast.primaryHexagram).toBe(1);
+    expect(cast.resultingHexagram).toBe(2);
+
+    const resulting = deriveResultingLines(cast);
+    expect(resulting).not.toBeNull();
+    expect(resulting).toHaveLength(6);
+    for (const line of resulting!) {
+      expect(line.isYang).toBe(false);
+    }
+    // Positions are present 1-6, in order, matching the primary cast's lines.
+    expect(resulting!.map((l) => l.position)).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+
+  it("all-changing Hexagram 2 -> all-solid Hexagram 1: every line flips yin to yang", () => {
+    const cast = castFromLineValues([6, 6, 6, 6, 6, 6]);
+    expect(cast.primaryHexagram).toBe(2);
+    expect(cast.resultingHexagram).toBe(1);
+
+    const resulting = deriveResultingLines(cast);
+    expect(resulting).not.toBeNull();
+    for (const line of resulting!) {
+      expect(line.isYang).toBe(true);
+    }
+  });
+
+  it("mixed changing-line case: only the changing position flips, others keep the primary's yin/yang", () => {
+    // Hex 11 (lower Qian/yang, upper Kun/yin) with old-yang (9) at position 2.
+    // Reference case from ICHING_REFERENCE.md, verified in the existing
+    // "reference case — changing lines and resulting hexagram" suite above:
+    // primary 11, changing [2], resulting Hex 36 (Ming Yi).
+    const cast = castFromLineValues([7, 9, 7, 8, 8, 8]);
+    expect(cast.primaryHexagram).toBe(11);
+    expect(cast.changingLinePositions).toEqual([2]);
+    expect(cast.resultingHexagram).toBe(36);
+
+    const resulting = deriveResultingLines(cast);
+    expect(resulting).toEqual([
+      { position: 1, isYang: true }, // unchanged (was yang/7)
+      { position: 2, isYang: false }, // changing: flipped from yang/9 to yin
+      { position: 3, isYang: true }, // unchanged (was yang/7)
+      { position: 4, isYang: false }, // unchanged (was yin/8)
+      { position: 5, isYang: false }, // unchanged (was yin/8)
+      { position: 6, isYang: false }, // unchanged (was yin/8)
+    ]);
+  });
+
+  it("throws rather than silently rendering a mismatched glyph if resultingHexagram disagrees with the derived pattern", () => {
+    const validCast = castFromLineValues([9, 9, 9, 9, 9, 9]); // resultingHexagram really is 2
+    const corrupted: CastResult = { ...validCast, resultingHexagram: 45 }; // deliberately wrong
+    expect(() => deriveResultingLines(corrupted)).toThrow(/mismatch/i);
   });
 });

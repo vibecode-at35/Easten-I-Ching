@@ -23,3 +23,13 @@ export interface CastResult {
   /** Hex string; same seed always reproduces the same cast */
   seed: string;
 }
+
+/**
+ * One line of the resulting hexagram's yin/yang pattern — display data only.
+ * The resulting hexagram has no "value" or "changing" of its own; it is a
+ * static end-state. See deriveResultingLines() in casting.ts.
+ */
+export interface ResultingLine {
+  position: Position;
+  isYang: boolean;
+}
