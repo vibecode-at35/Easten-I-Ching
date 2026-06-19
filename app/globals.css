@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+/*
+ * Warm-traditional design tokens — "paper" (light), the M3 default.
+ * docs/TASKS/milestone-3-reading-experience.md §5.1, §5.3.
+ *
+ * Registered in Tailwind's @theme so components can use ordinary utility
+ * classes (bg-paper-base, text-ink, font-serif, etc.) instead of arbitrary
+ * values — these are the only tokens any component may use until the dark
+ * variant below is actually built.
+ */
+@theme {
+  --color-paper-base: #efe7d6;
+  --color-paper-raised: #f4eee0;
+  --color-ink: #3a2e1c;
+  --color-ink-muted: #8b7a5c;
+  --color-cinnabar: #9a3324;
+  --color-cinnabar-deep: #7c2a1e;
+  --color-hairline: rgba(58, 46, 28, 0.15);
+
+  /* Serif for content (the reading, hexagram names); sans for chrome (buttons, labels). */
+  --font-serif: var(--font-noto-serif), var(--font-noto-serif-tc), serif;
+  --font-sans: var(--font-inter), sans-serif;
+
+  /* Reading body: ~17-18px, line-height ~1.75 — generous, meant to be sat with (§5.3). */
+  --text-reading-body: 1.125rem;
+  --text-reading-body--line-height: 1.75;
+
+  /* Hexagram name (CJK): large, 40-56px (§5.3). Midpoint default; tune per screen. */
+  --text-hexagram-name: 3rem;
+}
+
+/*
+ * "Ink by night" dark variant — STUBBED ONLY (§5.2: "Define tokens ... so
+ * this variant can be added in a later pass without rework. Do not build
+ * the toggle now.").
+ *
+ * Deliberately plain CSS variables, NOT registered in @theme above, so no
+ * Tailwind utility classes (e.g. bg-ink-night-bg) are generated for them.
+ * Nothing in this milestone reads these. A later pass would register a
+ * proper theme object (likely under a [data-theme="ink-night"] selector)
+ * and would also need raised/muted/hairline equivalents not specified yet
+ * in the spec — only the three values §5.2 actually gives are stubbed here.
+ */
+:root {
+  --ink-night-bg: #14161e;
+  --ink-night-text: #e8e3d5;
+  --ink-night-gold: #c9a24a;
+}
