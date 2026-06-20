@@ -14,19 +14,26 @@ export interface HexagramGlyphProps {
   cast: CastResult;
 }
 
-interface LineRowProps {
+export interface LineRowProps {
   isYang: boolean;
   isChanging: boolean;
-  size: "default" | "small";
+  size: "large" | "default" | "small";
 }
 
 const BAR_SIZES = {
+  /** Used by the casting ceremony — the forming hexagram should feel significant. */
+  large: { width: "w-44", height: "h-4" },
   default: { width: "w-28", height: "h-3" },
   small: { width: "w-16", height: "h-2" },
 } as const;
 
-/** One brush-weighted line: yang is a single bar, yin is two segments with a center gap. */
-function LineRow({ isYang, isChanging, size }: LineRowProps) {
+/**
+ * One brush-weighted line: yang is a single bar, yin is two segments with a
+ * center gap. Exported so the casting ceremony (which reveals already-known
+ * lines from a pre-computed CastResult one at a time) can render each line
+ * identically to the final glyph, without duplicating this styling.
+ */
+export function LineRow({ isYang, isChanging, size }: LineRowProps) {
   const { width, height } = BAR_SIZES[size];
   return (
     <div className="flex items-center gap-2">
