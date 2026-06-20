@@ -64,9 +64,18 @@ describe("hexagram 1 — real populated text (data/hexagrams.demo.json)", () => 
     }
   });
 
-  it("vi is still genuinely absent (not yet supplied) and throws as designed", () => {
+  it("vi now resolves to real text (Ngô Tất Tố translation, sourced for the full 64-hexagram corpus)", () => {
     const record = getHexagramRecord(1);
-    expect(() => resolveLocaleText(record.judgment, "vi", "hexagram 1 judgment")).toThrow(
+    const judgmentVi = resolveLocaleText(record.judgment, "vi", "hexagram 1 judgment");
+    expect(judgmentVi.length).toBeGreaterThan(0);
+  });
+});
+
+describe("known residual corpus gaps (Vietnamese)", () => {
+  it("hexagram 8 line 1 still has no vi text — its own translation block was not separately extractable from the source, and the policy is to leave it null rather than guess", () => {
+    const record = getHexagramRecord(8);
+    const line1 = getLineRecord(record, 1);
+    expect(() => resolveLocaleText(line1.text, "vi", "hexagram 8 line 1")).toThrow(
       MissingHexagramTextError,
     );
   });
