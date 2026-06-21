@@ -64,3 +64,16 @@ A task is done only when:
 - [ ] You've reported what was built/tested and stopped for review.
 
 When in doubt, choose correctness and honesty over cleverness. Flag uncertainty rather than papering over it.
+
+---
+
+## 7. Corpus sourcing — two single-lineage candidate versions (read before touching the corpus)
+
+`data/hexagrams.demo.json` is the production file the app actually loads, and currently has real text for hexagrams 1-56 only (ctext.org: classical Zhouyi Chinese + James Legge's 1899 translation for English; Vietnamese from Ngô Tất Tố's "Kinh Dịch trọn bộ"). Hexagrams 57-64 are **not yet merged in** — ctext.org became rate-limited and then CAPTCHA-blocked mid-sourcing.
+
+Rather than force one blended "ground truth" for all 64, two **complete, single-lineage** candidate files exist in `data/sources/` — neither is loaded by the app:
+
+- `data/sources/hexagrams.1-64.ngotatto.json` — Ngô Tất Tố's Vietnamese translation **only** (plus that source's own embedded classical Chinese, kept as-is rather than swapped for another source's Chinese, so the file stays single-attributable). No English, anywhere.
+- `data/sources/hexagrams.1-64.legge.json` — Chinese + English **only**, no Vietnamese. Hexagrams 1-56 are ctext.org's 1899 Legge edition (identical to what's already in production); 57-64 are zh.wikisource.org + an 1882 1st-edition Legge scan via archive.org, since ctext.org was unreachable for those 8.
+
+**Before merging either into `data/hexagrams.demo.json`, or sourcing 57-64 fresh:** read both files' `_meta.pros`/`_meta.cons` in full, every session, before relying on either. Each has real, genuine tradeoffs (a handful of font-artifact glyphs vs. a different Legge edition for 8 of the 64 hexagrams plus one OCR-reconstructed line vs. no English at all vs. no Vietnamese at all) — neither is simply "correct," and they should not be silently merged without re-reading these notes. If ctext.org is reachable again, re-sourcing 57-64 from there directly (matching the precedent already set by 1-56) is likely the cleanest path and may make the `legge.json` 57-64 entries moot.

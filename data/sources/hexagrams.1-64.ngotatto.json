@@ -1,0 +1,2898 @@
+{
+  "_meta": {
+    "purpose": "Candidate full 64-hexagram corpus, Ngo Tat To source ONLY - NOT loaded by the app. See AGENTS.md SS7 before merging any of this into data/hexagrams.demo.json.",
+    "source": "Ngo Tat To, 'Kinh Dich tron bo' (public domain in Vietnam; Ngo Tat To d. 1954, term is life + 50 years p.m.a.). Hexagrams 1-56 matched against the already-verified Chinese in data/hexagrams.demo.json to locate the right passage in the source epub, then BOTH that source's own Chinese and its Vietnamese meaning were kept (not the ctext.org Chinese) so this file stays single-source. Hexagrams 57-64 extracted the same way, cross-checked against a second independent digitization of the same translation.",
+    "pros": [
+      "Single, coherent, named, dateable source for the WHOLE corpus - no live web fetch, no rate limits, no fabrication risk from a summarizing fetch tool.",
+      "Real scholarly Vietnamese translation with its own commentary tradition (Trinh Di, Chu Hy) alongside the bare line text.",
+      "Hexagrams 57-64 cross-checked against two independent digitizations of the same translation."
+    ],
+    "cons": [
+      "No English text at all - Vietnamese (plus the embedded classical Chinese) only.",
+      "The embedded Chinese for hexagrams 57-64 (second digitization) uses some Unicode 'Kangxi Radical' lookalike codepoints instead of proper CJK Unified Ideographs for a handful of characters - a PDF-extraction artifact. Not normalized; re-check before treating as authoritative.",
+      "9 fields in hexagrams 1-56 and 3 fields in hexagrams 57-64 have no separately extractable translation block in the source itself (the line's core text was folded into adjacent commentary, not an extraction bug) - left null rather than guessed. See the per-hexagram null fields below."
+    ]
+  },
+  "hexagrams": [
+    {
+      "number": 1,
+      "name_zh": "乾",
+      "name_pinyin": "Qián",
+      "judgment": {
+        "zh": "乾元亨利貞.",
+        "vi": "Kiền: Đầu cả, hanh thông, lợi tốt, chính bền."
+      },
+      "image": {
+        "zh": "象曰: 天行健, 君子以自強不息.",
+        "vi": "Lời Tượng nói rằng: Trời đi rnạnh, quân tử coi đó tự cường không nghỉ."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 潜龍勿用.",
+          "vi": "Hào Chín Đầu: Rồng lặn chớ dùng."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 見龍在田, 利見大人",
+          "vi": "Hào Chín Hai; Rồng hiện ở ruộng, lợi về sự thấy người lớn."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 君子終日乾乾, 夕惕若, 厲！无咎",
+          "vi": "Hào Chín Ba: Đấng quân tử trọn ngày săng sắc, tối dương rùng rợn. Nguy! Không lỗi."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 或躍在淵, 无咎",
+          "vi": "Hào Chín Tư: Hoặc nhảy ở vực, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "九五:飛龍在天, 利見大人.",
+          "vi": "Hào Chín Năm: Rồng bay ở trời, lợi về sự thấy người lớn."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 亢龍有悔.",
+          "vi": "Hào Chín Trên: Rồng quá cực có ăn năn."
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "name_zh": "坤",
+      "name_pinyin": "Kūn",
+      "judgment": {
+        "zh": "坤元亨, 利牝馬之貞, 君子有攸往. 先迷, 後得, 主利, 西南得朋, 東北喪朋. 安貞, 吉.",
+        "vi": "Quẻ Khôn: Đầu cả, hanh thông, Lợi về nết trinh của ngựa cái. Quân tử có sự đi. Trước mê, sau được. Chủ về lợi. Phía Tây Nam được bạn, phía Đông Bắc mất bạn. Yên phận giữ nết trinh thì tốt."
+      },
+      "image": {
+        "zh": "象曰: 地勢坤, 君子以厚得裁物.",
+        "vi": "Lời Tượng nói rằng: Thế đất là quẻ Khôn, đấng quân tử coi đó mà dùng đức dày chở các vật."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 履霜, 堅冰至.",
+          "vi": "Hào Sáu Đầu: Xéo sương, váng rắn tới."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 直, 方, 大, 不習, 無不利.",
+          "vi": "Hào Sáu Hai: Thẳng, vuông, lớn, không phải tập, không gì không lợi."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 含章可貞, 或從王事, 無成有終.",
+          "vi": "Hào Sáu Ba: Ngậm văn vẻ, có thể chính; hoặc theo đuổi việc nhà vua, không cậy công? Thì được tốt lành về sau."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 括囊, 無咎, 無譽.",
+          "vi": "Hào Sáu Tư: Thắt túi, không lỗi, không khen."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 黄裳, 元吉.",
+          "vi": "Hào Sáu Năm: Quần vàng, cả tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 龍戰于野, 其血玄黄.",
+          "vi": "Thượng Lục: Long chiến vu dã, kỳ huyết huyền hoàng."
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "name_zh": "屯",
+      "name_pinyin": "Zhūn",
+      "judgment": {
+        "zh": "屯元亨利貞, 勿用有攸往, 利建侯.",
+        "vi": "Truân đầu cả, hanh thông, lợi tốt, chính bền, chớ dùng có thửa đi, lợi về dựng tước hầu."
+      },
+      "image": {
+        "zh": "象曰: 雲雷屯, 君子以經綸.",
+        "vi": "Lời Tượng nói rằng: Mây sấm là quẻ Truân, đấng quân tử coi đó mà sửa sang thiên hạ."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 盤桓, 利居貞, 利建侯.",
+          "vi": "Hào Chín Đầu: Quanh co, lợi về ở chính bền, lợi về dựng tước hầu."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 屯如, 邅如, 乘馬班如. 匪鬼, 婚媾, 女子貞不字, 十年乃字.",
+          "vi": "Hào Sáu Hai: Dường quanh co vậy, đường cưỡi ngựa rẽ ra vậy. Chẳng phải giặc, là dâu gia đó. Con gái trinh tiết không đặt tên chữ, mười năm mới đặt tên chữ."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 即鹿無虞, 惟入于林中, 君子幾不如舍, 往吝.",
+          "vi": "Hào Sáu Ba: Theo hươu không có ngu nhân, chỉ vào trong rừng. Đấng quân tử biết cơ, không bằng bỏ đi thì hối tiếc."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 乘馬班如, 求婚媾, 往吉, 無不利.",
+          "vi": "Hào Sáu Tư: Cưỡi ngựa dường rẽ ra vậy, tìm dâu gia, đi thì tốt, không gì không lợi."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 屯其膏, 小貞吉, 大貞凶.",
+          "vi": "Hào Chín Năm: Gian truân thừa ơn huệ, nhỏ mà trinh thì lành, lớn mà trinh thì dữ."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 乘馬班如, 泣血漣如.",
+          "vi": "Hào Sáu Trên: Cưỡi ngựa dường rẽ ra vậy; khóc ra máu đầm đìa vậy."
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "name_zh": "蒙",
+      "name_pinyin": "Méng",
+      "judgment": {
+        "zh": "蒙亨, 匪我求童蒙, 童蒙求我. 初筮告, 再三漬, 漬則不告. 利貞.",
+        "vi": "Quẻ Mông hanh, chẳng phải ta tìm trẻ thơ, trẻ thơ tìm ta. Mới bói bảo, hai, ba lần nhàm, không bảo. Lợi về sự chính."
+      },
+      "image": {
+        "zh": "象曰: 出下出泉, 蒙. 君子以果行, 育德.",
+        "vi": "Lời tượng nói rằng: Dưới núi ra suối, là quẻ Mông, đấng quân tử coi đó mà quyết việc làm, nuôi lấy đức."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 發蒙, 利用刑人, 用說桎梏, 以往吝.",
+          "vi": "Hào Sáu Đầu: Mở mang trẻ thơ, lợi dùng về sự hình phạt người ta để thoát gông cùm, đi thì hối tiếc."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 包蒙, 吉. 納婦吉, 子克家.",
+          "vi": "Hào Chín Hai: Bao dung trẻ thơ, tốt. Nạp vợ, tốt. Con trị được nhà."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 勿用取女, 見金夫, 不有躬, 無攸利.",
+          "vi": "Hào Sáu Ba: Chớ dùng lấy gái, thấy chồng vàng, không có mình, không thửa lợi."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 困蒙, 吝.",
+          "vi": "Hào Sáu Tư: Khốn về tăm tối, hối tiếc."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 童蒙, 吉.",
+          "vi": "Hào Sáu năm: Trẻ thơ, tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 擊蒙, 不利為寇, 利御寇.",
+          "vi": "Hào Chín Trên: Đánh kẻ tối tăm, không lợi cho sự làm giặc, lợi cho sự chống giặc."
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "name_zh": "需",
+      "name_pinyin": "Xū",
+      "judgment": {
+        "zh": "需, 有孚, 光, 亨, 貞, 吉, 利涉大川.",
+        "vi": "Quẻ Nhu, có đức tin, sáng láng, hanh thông, chính bền, tốt. Lợi sang sông lớn."
+      },
+      "image": {
+        "zh": "象曰: 雲上於天, 需. 君子以飲食宴樂.",
+        "vi": "Lời tượng nói rằng: mây lên trời, là quẻ Nhu, đấng quân tử coi đó mà ăn uống yên vụi."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 需于郊, 利用恒, 無咎.",
+          "vi": "Hào Chín Đầu: Đợi ở đồng, lợi về dùng lẽ hằng. Không có lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 需于沙, 小有言, 終吉.",
+          "vi": "Hào Chín Hai: Đợi ở bãi cát, hơi có điều tiếng, sau chót tốt."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 需于泥, 至寇至.",
+          "vi": "Hào Chín Ba: Đợi ở bùn, dắt gỉặc đến."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 需于血, 出自穴.",
+          "vi": "Hào Sáu Tư: Đợi chưng máu, ra tự hang."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 需于酒食, 貞吉.",
+          "vi": "Hào Chín Năm: Đợi chưng rượu cơm, chính tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 入于穴, 有不速之客, 三人來, 敬之, 終吉.",
+          "vi": "Hào Chín Trên: Vào chung hang, có ba người khách không mời mà đến, kính trọng họ, sau chót tốt."
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "name_zh": "訟",
+      "name_pinyin": "Sòng",
+      "judgment": {
+        "zh": "訟有孚室惕, 中吉, 終凶, 利見大人, 不利涉大川.",
+        "vi": "Kiện, có thật, bị lấp, phải sợ, vừa phải, tốt, theo đuổi đến chót, xấu; lợi về sự thấy người lớn, không lợi về sự sang sông lớn."
+      },
+      "image": {
+        "zh": "象曰: 天與水違行, 訟, 君子以作事謀始.",
+        "vi": "Lời Tượng nói rằng: Trời với nước đi trái nhau, là quẻ Tụng. Đấng quân tử coi đó mà dấy việc mưu tính lúc đầu."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 不永所事, 小有言, 終吉.",
+          "vi": "Hào Sáu Đầu: Chẳng lâu dài về việc của mình, hơi có điều tiếng, sau tốt."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 不克訟, 歸而逋, 其邑人三百戶, 無眚.",
+          "vi": "Hào Chín Hai: Không được kiện, về mà trốn người làng mình ba trăm hộ, không có tội lỗi."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 食舊德, 貞属, 終吉, 或從王事, 無成.",
+          "vi": "Hào Sáu Ba: Ăn về đức cũ, chính bền, lo sợ sau tốt, hoặc theo việc vua, không thành."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 不克訟, 復即命, 渝安貞吉.",
+          "vi": "Hào Chín Tư: Không thể kiện, lại theo mệnh, đổi ra yên bề chính bền, tốt."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 訟元吉.",
+          "vi": "Hào Chín Năm: Kiện cả tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 或錫之搫帶, 終朝三褫之.",
+          "vi": "Hào Chín Trên: hoặc cho chiếc dải lưng da, trọn buổi sáng, ba lần lột lại."
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "name_zh": "師",
+      "name_pinyin": "Shī",
+      "judgment": {
+        "zh": "師貞, 丈人吉, 無咎.",
+        "vi": "Quân chính, bậc trượng nhân tốt, không lỗi."
+      },
+      "image": {
+        "zh": "象曰: 地中有水, 師. 君子以容民畜衆.",
+        "vi": "Lời Tượng nói rằng: Trong đất có nước, là quẻ sư, đấng quân tử coi đó là dung dân, nuôi quân."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 師出以律, 否臧, 凶.",
+          "vi": "Hào Sáu Đầu: Quân ra bằng luật, không khéo thì hung."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 在師中吉, 离咎, 王三錫命.",
+          "vi": "Hào Chín Hai: Ở trong quân, vừa phải thì tốt, không lỗi, nhà vua ba lần cho mệnh."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 師或輿尸, 凶.",
+          "vi": "Hào Sáu Ba: Quân hoặc khiêng thây, hung."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 師左次, 參咎.",
+          "vi": "Hào Sáu Tư: Quân lùi đóng, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 田有禽, 利執言, 無咎. 長子帥師, 弟子輿尸, 貞凶.",
+          "vi": "Hào Sáu Năm: Ruộng có chim, lợi cho sự có lời để nói, không lỗi. Con cả đem quân, con em khiêng thây, chinh cũng hung."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 大君有命, 開國承家, 小人勿用.",
+          "vi": "Hào Sáu Trên: Đấng đại quân có mệnh, mở nước vâng nhà, kẻ tiểu nhân chớ dùng."
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "name_zh": "比",
+      "name_pinyin": "Bǐ",
+      "judgment": {
+        "zh": "比吉, 原筮元, 永, 貞, 无咎. 不寧方來, 後夫凶.",
+        "vi": "Liền nhau tốt, truy nguyên việc bói, đầu cả, lâu dài, chính bền, không lỗi. [Có việc] chẳng yên mới lại, sau trễ trượng phu, hung."
+      },
+      "image": {
+        "zh": "象曰: 地上有水, 比. 先王以建萬國, 親諸侯.",
+        "vi": "Lời Tượng nói rằng: Trên đất có nước, là quẻ Tỷ, đấng tiên vương coi đó mà dựng muôn nước, thân chư hầu."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": null,
+          "vi": null
+        },
+        {
+          "position": 2,
+          "zh": "六二: 比之自內, 貞吉.",
+          "vi": "Hào Sáu Hai: Liền lại tự bên trong, chính và tốt."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 比之匪人",
+          "vi": "Hào Sáu Ba: Liền với người không đáng liền."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 外比之, 貞吉.",
+          "vi": "Hào Sáu Tư: Liền lại với kẻ ngoài, chính tốt."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 賢比, 王用三軀, 失前禽, 邑人不誡, 吉.",
+          "vi": "Hào Chín Năm: Rõ rệt liền lại, nhà vua dùng đuổi ba mặt, mất con chim ở phía trước người làng không bảo, tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 比之无首, 凶.",
+          "vi": "Hào Sáu Trên: Gần liền không đầu, hung."
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "name_zh": "小畜",
+      "name_pinyin": "Xiǎo Chù",
+      "judgment": {
+        "zh": "小畜亨, 密雲不雨, 自我西郊.",
+        "vi": "Chứa nhỏ hanh thông, mây dầy không mưa, tự cõi Tây ta."
+      },
+      "image": {
+        "zh": "象曰: 風行天上, 小畜, 君子以懿文德.",
+        "vi": "Lời Tượng nói rằng: Gió đi trên trời là quẻ Tiểu Súc, đấng quân tử coi đó mà làm cho tốt đức văn."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 復自道, 何其咎, 吉.",
+          "vi": "Hào Chín Đầu: Trở lại với đạo lý, còn lỗi gì? Tốt."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 牽復, 吉.",
+          "vi": "Hào Chín Hai: Giật trở lại, tốt."
+        },
+        {
+          "position": 3,
+          "zh": null,
+          "vi": null
+        },
+        {
+          "position": 4,
+          "zh": "六四: 有孚, 血去, 惕出, 无咎.",
+          "vi": "Hào Sáu Tư: Có tin, máu đi, sợ ra, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 有孚攣如, 富以其鄰.",
+          "vi": "Hào Chín Năm: Có tin, dường co quẹo vậy, giàu vì láng giềng."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 旣雨, 旣處, 尚德載, 婦貞厲. 月幾望, 君子征凶.",
+          "vi": "Hào Chín Trên: Đã mưa, đã ở, chuộng đức chở, đàn bà chính bền, nguy. Mặt trăng hầu đến tuần vọng, đấng quân tử đi thì hung."
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "name_zh": "履",
+      "name_pinyin": "Lǚ",
+      "judgment": {
+        "zh": "履虎尾, 不咥人, 亨.",
+        "vi": "Xéo đuôi cọp, không cắn người, hanh."
+      },
+      "image": {
+        "zh": "象曰: 上天下澤, 履. 君子以辯上下, 定民志.",
+        "vi": "Lời Tượng nói rằng: Trên trời dưới chằm, là quẻ Lý. Đấng quân vương coi đó mà phân biệt trên, dưới, định chí dân."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 素履, 往無咎.",
+          "vi": "Hào Chín Đầu: Xéo theo sự vốn có, đi, không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 履道坦坦, 幽人貞吉.",
+          "vi": "Hào Chín Hai: Xéo đường bằng phẳng, người uẩn chính bền thì tốt."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 眇能視, 陂能履, 履虎尾, 咥人, 凶. 武人為乎大君.",
+          "vi": "Hào Sáu Ba: Chột biết trông, què biết xéo, xéo đuôi cọp, cắn người, hung. Kẻ vũ nhân làm đấng đại quân."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 履虎尾, 愬愬, 終吉.",
+          "vi": "Hào Chín Tư: Xéo đuôi cọp, nơm nớp, sau chót tốt."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 夬履, 貞厲.",
+          "vi": "Hào Chín Năm: Quyết xéo, chính bền nguy."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 視履考祥, 其旋元吉.",
+          "vi": "Hào Chín Trên: Coi sự xéo, xét điềm lành, thửa quanh cả tốt."
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "name_zh": "泰",
+      "name_pinyin": "Tài",
+      "judgment": {
+        "zh": "泰, 小往大來, 吉, 亨.",
+        "vi": "Quẻ Thái, nhỏ đi, lớn lại, lành tốt, hanh thông."
+      },
+      "image": {
+        "zh": "象曰: 天地交, 泰, 後以裁成天地之道, 辅相天地之宜, 以左右尾.",
+        "vi": "Lời Tượng nói rằng: Trời đất giao nhau là quẻ Thái, ông vua coi mà sửa nên đạo của trời đất, giúp tập sự nên phải của trời đất, để đỡ đần dân."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 拔茅茹, 以其彙, 征吉.",
+          "vi": "Hào Chín Đầu: Nhổ cụm cỏ tranh, lấy vầng nó, đi tốt."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 苞荒, 用馮河, 不遐遗, 朋亡, 得尚于中行.",
+          "vi": "Hào Chín Hai: Bao dung sự hoang rậm, dùng để tay không lội sông, không sót việc xa; bè cánh mất, được sánh ở hàng giữa."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 無平不陂, 無往不得, 艱貞無咎, 勿恤其孚, 于食有福.",
+          "vi": "Hào Chín Ba: Không chỗ bằng phẳng nào không lồi lõm, không sự đi nào không trở lại. Khó nhọc, chính bền, chớ lo thừa sự tín, chưng việc ăn hưởng có phúc."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 翻翻, 不富以其鄰, 不戒以孚.",
+          "vi": "Hào Sáu Tư: Phơi phới, chẳng giàu lấy thửa láng giềng, chẳng răn lấy tin."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 帝乙歸妹, 以祉, 元吉.",
+          "vi": "Hào Sáu Năm: Vua Đế Ất gả em gái, để có phúc cả tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 城復于隍, 勿用師, 自邑告命, 貞吝.",
+          "vi": "Hào Sáu Trên: Thành trở về rãnh, chớ dùng quân tự ấp bảo mệnh, chính bền thẹn tiếc."
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "name_zh": "否",
+      "name_pinyin": "Pǐ",
+      "judgment": {
+        "zh": "否之匪人. 不利君子貞, 大往小來.",
+        "vi": "Bỉ đấy, chẳng phải đạo người. Chẳng lợi cho sự chính bền của đấng quân tử, lớn đi nhỏ lại."
+      },
+      "image": {
+        "zh": "象曰: 天地不交, 否, 君子以儉德辟難, 不可榮與祿.",
+        "vi": "Lời Tượng nói rằng: Trời đất không giao nhau là quẻ Bĩ, đấng quân tử coi đó để dè đức, lánh nạn, không thể vẻ vang bằng lộc."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 拔茅茹, 以其彙, 貞吉, 亨.",
+          "vi": "Hào Sáu Đầu: Nhổ cụm cỏ tranh, lấy vầng nó, chính bền tốt lành hanh thông."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 包承, 小人吉, 大人否, 亨.",
+          "vi": "Hào Sáu Hai: Bọc chứa sự vâng thuận, kẻ tiểu nhân tốt, đấng đại nhân bĩ thì hanh thông."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 包羞.",
+          "vi": "Hào Sáu Ba: Bọc chứa sự hổ thẹn."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 有命無咎, 疇難祉.",
+          "vi": "Hào Chín Tư: Có mệnh không lỗi, bè loại dính phúc."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 休否, 大人吉, 其亡, 其亡, 繫于苞喪.",
+          "vi": "Hào Chín Năm: Nghỉ bĩ, đấng đại nhân tốt. Này mất! Này mất! Buộc cây dâu rậm."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 傾否, 先否後喜.",
+          "vi": "Hào Chín Trên: Nghiêng bĩ, trước bĩ sau mừng."
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "name_zh": "同人",
+      "name_pinyin": "Tóng Rén",
+      "judgment": {
+        "zh": "同人于野, 亨, 利涉大川, 利君子貞.",
+        "vi": "Cùng người ở đồng, hanh thông, lợi về sự sang sông lớn, lợi cho sự chính bền của đấng quân tử."
+      },
+      "image": {
+        "zh": "象曰: 天與火, 同人. 君子以類族辨物.",
+        "vi": "Lời tượng nói rằng: Trời với lửa là quẻ Đồng Nhân, đấng quân tử coi đó mà chia loại các giống, phân biệt các vật."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 同人于門, 無咎.",
+          "vi": "Hào Chín Đầu: Cùng người ở cửa, không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 同人于宗, 吝.",
+          "vi": "Hào Sáu Hai: Cùng người ở họ, đáng tiếc."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 伏戎于莽, 升其高陵, 三歲不興.",
+          "vi": "Hào Chín Ba: Phục quân ở rừng, lên thửa gò cao, ba năm không dấy lên."
+        },
+        {
+          "position": 4,
+          "zh": "九曰: 乘其墉, 弗克攻, 吉.",
+          "vi": "Hào Chín Tư: Cưỡi thừa tường, không đánh được, tốt."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 同人, 先嚎啕而後笑, 大師克, 相遇.",
+          "vi": "Hào Chín Năm: Cùng với người, trước kêu gào mà sau cười, quân lớn được, gặp nhau."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 同人于交, 無悔.",
+          "vi": "Hào Chín Trên: Cùng người ở đồng, không ăn năn."
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "name_zh": "大有",
+      "name_pinyin": "Dà Yǒu",
+      "judgment": {
+        "zh": "大有元亨.",
+        "vi": "Quẻ Đại Hữu cả lớn hanh thông."
+      },
+      "image": {
+        "zh": "象曰: 火在天上, 大月. 君子以遏惡揚善, 順天休命.",
+        "vi": "Lời Tượng nói rằng: Lửa cao ở trên trời, là quẻ Đại Hữu, đấng quân tử coi đó mà ngăn kẻ ác, biểu dương người thiện, thuận theo mệnh tốt của trời."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 無交害, 匪咎, 難則無咎.",
+          "vi": "Hào Chín Đầu: Không dính tới sự hại, chẳng phải lỗi. Khó nhọc thì không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 大車以裁, 有攸往, 無咎.",
+          "vi": "Hào Chín Hai: Xe lớn để chở, có thừa đi, không lỗi."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 公用亨于天子, 小人不克.",
+          "vi": "Hào Chín Ba. Tước công dùng hưởng của đấng thiên tử, kẻ tiểu nhân không thể được."
+        },
+        {
+          "position": 4,
+          "zh": "九曰: 匪其彭, 無咎.",
+          "vi": "Hào Chín Tư: Chẳng phải sự thịnh của mình, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "六曰: 厥孚交如, 威如, 吉.",
+          "vi": "Hào Sáu Năm: Thửa tin dường giao nhau vậy, dường oai nghiêm vậy, tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 自天祐之, 吉, 無不利.",
+          "vi": "Hào Chín Trên: Tự trời giúp nó, tốt, không gì không lợi."
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "name_zh": "謙",
+      "name_pinyin": "Qiān",
+      "judgment": {
+        "zh": null,
+        "vi": null
+      },
+      "image": {
+        "zh": "象曰: 地中有山, 謙. 君子以裒多益寡, 稱物平施.",
+        "vi": "Lời Tượng nói rằng: Trong đất có núi, là quẻ Khiêm, đấng quân tử coi đó mà rút chỗ nhiều, thêm chỗ ít, cân lường các vật, làm cho sự thi thố được thăng bằng."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 謙謙君子, 用涉大川, 吉.",
+          "vi": "Hào Sáu Đầu: Đấng quân tử nhún nhún, dùng sang sông lớn, tốt."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 鳴謙, 貞吉.",
+          "vi": "Hào Sáu Hai: Kêu sự nhún, chính bền, tốt."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 勞謙, 君子有終, 吉.",
+          "vi": "Hào Chín Ba; Đấng quân tử nhọc mà nhún, sau chót, tốt."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 無不利, 偽謙.",
+          "vi": "Hào Sáu Tư: Không gì không lợi, vung vẩy sự nhún."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 不富以其鄰, 利用侵伐, 無不利.",
+          "vi": "Hào Sáu Năm: Không giàu, sai khiến được láng giềng, lợi dụng lấn đánh, không gì không lợi."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 鳴謙, 利用行師征邑國.",
+          "vi": "Hào Sáu Trên: Kêu sự nhún, lợi dụng trẩy quân đánh làng nước."
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "name_zh": "豫",
+      "name_pinyin": "Yù",
+      "judgment": {
+        "zh": "豫, 利建侯, 行師.",
+        "vi": "Quẻ Dự, lợi cho sự dựng nước hầu, trẩy quân."
+      },
+      "image": {
+        "zh": "象曰: 雷出地奮, 豫. 先王以作樂崇德, 殷薦之上帝, 以配祖考.",
+        "vi": "Lời Tượng nói rằng; Sấm ra, đất chuyển, là quẻ Dự, đấng tiên vương coi đó mà làm nhạc, chuộng đức, thịnh dâng đức Thượng đế để phối ông cha."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 鳴豫, 凶.",
+          "vi": "Hào Sáu Đầu: Kêu sự vui, hung!"
+        },
+        {
+          "position": 2,
+          "zh": "六二: 介于石, 不終日, 貞吉.",
+          "vi": "Hào Sáu Hai: Tiết tháo như đá, không trọn ngày, chính bền thì tốt."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 盱豫, 悔遲, 有悔.",
+          "vi": "Hào Sáu Ba: Nhìn sự vui, ăn năn chậm, có ăn năn."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 由豫, 大有得, 勿疑, 朋盡簪.",
+          "vi": "Hào Chín Tư: Bởi đó là vui, cả có được, chớ nghi ngờ, bè bạn tụ họp."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 貞疾, 恆不死.",
+          "vi": "Hào Sáu Năm: Chính bền có tật, thường không chết."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 冥豫成, 有渝, 無咎.",
+          "vi": "Lời Tượng nói rằng: Mờ tối về sự vui, việc thành rồi, có thay đổi, không lỗi."
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "name_zh": "隨",
+      "name_pinyin": "Suí",
+      "judgment": {
+        "zh": "隨元亨利貞, 無咎.",
+        "vi": "Quẻ Tùy cả, hanh, lợi, trinh, không lỗi."
+      },
+      "image": {
+        "zh": "象曰: 澤中有雷, 隨, 君子以嚮晦入宴息.",
+        "vi": "Lời Tượng nói rằng: Trong chằm có sấm, là quẻ Tùy, đấng quân tử coi đó mà sắp tối vào nghỉ ngơi."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 官有渝, 貞吉, 出門交有功.",
+          "vi": "Hào Chín Đầu: Quan có thay đổi, chính thì tốt, ra cửa kết bạn thì có công."
+        },
+        {
+          "position": 2,
+          "zh": null,
+          "vi": null
+        },
+        {
+          "position": 3,
+          "zh": "六三: 係丈夫, 失小子, 隨有求, 得利, 居貞.",
+          "vi": "Hào Sáu Ba: Quấn quít đấng trượng phu, mất kẻ tiểu tử, theo mà có tìm, lợi về ở trinh."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 隨有獲, 貞凶. 有孚在道, 以明, 何啓.",
+          "vi": "Hào Chín tư: Theo có được, chính mà hung; có tin ở đạo, dùng sáng, lỗi gì?"
+        },
+        {
+          "position": 5,
+          "zh": "九五: 孚于嘉, 吉.",
+          "vi": "Hào Chín Năm: Tin về kẻ lành, tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 拘係之, 乃從維之, 王用亨于西山.",
+          "vi": "Hào Sáu Trên: Cầm buộc đó, bèn theo ràng đó, vua dùng hưởng ở non Tây."
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "name_zh": "蠱",
+      "name_pinyin": "Gǔ",
+      "judgment": {
+        "zh": "蠱元亨, 利涉大川, 先甲三曰, 後甲三曰:",
+        "vi": "Quẻ Cổ cả, hanh, lợi về sang sông lớn. Trước Giáp ba ngày, sau Giáp ba ngày."
+      },
+      "image": {
+        "zh": "象曰: 山下有風, 蠱. 君子以振民育德.",
+        "vi": "Lời Tượng nói rằng: Dưới núi có gió, là quẻ Cổ, đấng quân tử coi đó mà chấn dân nuôi đức."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 幹父之蠱, 有子, 考无咎, 厲, 終吉.",
+          "vi": "Hào Sáu Đầu: Cán đáng cuộc Cổ của cha, có con, không lỗi, nguy, sau chót tốt."
+        },
+        {
+          "position": 2,
+          "zh": "初九: 幹姆之蠱, 不可貞.",
+          "vi": "Hào Chín Hai: Cán đáng sự Cổ của mẹ, không thể trinh."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 幹父之蠱, 小有悔, 無大咎.",
+          "vi": "Hào Chín Ba: Cán đáng sự Cổ của cha, hơi có ăn năn, không có lỗi lớn."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 裕父之蠱, 往見吝.",
+          "vi": "Hào Sáu Tư: Rộng rãi với sự Cổ của cha, đi thấy tiếc."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 幹父之蠱, 用誊.",
+          "vi": "Hào Sáu Năm: Cán đáng sự Cổ của cha, dùng khen."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 不事王侯, 高尚其事.",
+          "vi": "Hào Chín Trên: Chẳng thờ tước vương tước hầu, cao nâng thửa việc."
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "name_zh": "臨",
+      "name_pinyin": "Lín",
+      "judgment": {
+        "zh": "臨元亨利貞, 至于八月有凶.",
+        "vi": "Quẻ Lâm, cả, hanh, lợi, trinh, đến chưng tám tháng sau, có hung."
+      },
+      "image": {
+        "zh": "象曰: 澤上有地, 臨, 君子以教思无窮, 容保民无疆.",
+        "vi": "Lời Tượng nói rằng: Trên chằm có đất là quẻ Lâm, đấng quân tử coi đó mà tứ dậy không cùng, dong giữ dân không bờ."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 咸臨, 貞吉.",
+          "vi": "Hào Chín Đầu: Đều tới, chính tốt."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 咸臨, 吉, 无不利.",
+          "vi": "Hào Chín Hai: Đều tới, tốt, không gì không lợi."
+        },
+        {
+          "position": 3,
+          "zh": null,
+          "vi": null
+        },
+        {
+          "position": 4,
+          "zh": "六四: 至臨, 無咎.",
+          "vi": "Hào Sáu Tư; Rất tới, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 知臨, 大君之宜, 吉.",
+          "vi": "Hào Sáu Năm: Khôn tới, sự nên của vua cả, tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 敦臨, 吉, 無咎.",
+          "vi": "Hào Sáu Trên: Dầy tới, tốt, không lỗi."
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "name_zh": "觀",
+      "name_pinyin": "Guān",
+      "judgment": {
+        "zh": "觀盥而不薦, 有孚顒若.",
+        "vi": "Quẻ Quán, rửa mà không cứng, có tin, dường cung kính vậy."
+      },
+      "image": {
+        "zh": "象曰: 風行地上, 觀. 先王以省方觀民設教.",
+        "vi": "Lời Tượng nói rằng: Gió đi trên đất là quẻ Quán, đấng tiên vương coi đó mà xét các phương, xem tục dân, đặt sự dạy."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 童觀, 小人無咎, 君子吝.",
+          "vi": "Hào Sáu Đầu: Trẻ xem, kẻ tiểu nhân không lỗi, đấng quân tử đáng tiếc."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 窥觀, 利女貞.",
+          "vi": "Hào Sáu Hai: Nhòm xem, lợi về sự trinh của con gái."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 觀我生, 進退.",
+          "vi": "Hào Sáu Ba: Xem ta sinh, tiến lui."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 觀國之光, 利用賓于王.",
+          "vi": "Hào Sáu Tư: Xem sự sáng láng của nước, lợi dụng làm khách chưng vua."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 觀我生, 君子無咎.",
+          "vi": "Hào Chín Năm: Xem ta sinh, quân tử, không lỗi."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 觀其生, 君子無咎.",
+          "vi": "Hào Chín Trên: Xem thửa sinh, quân tử không lỗi."
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "name_zh": "噬嗑",
+      "name_pinyin": "Shì Kè",
+      "judgment": {
+        "zh": "噬嗑亨, 利用獄.",
+        "vi": "Quẻ Phệ Hạp hanh, lợi dùng việc ngục."
+      },
+      "image": {
+        "zh": "象曰: 雷電噬嗑, 先王以明罰敕去.",
+        "vi": "Lời Tượng nói rằng: Sấm chớp là quẻ Phệ Hạp, đấng tiên vương coi đó để tỏ phạt truyền phép."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 履校滅趾, 無咎.",
+          "vi": "Hào Chín Đầu; Xéo xiềng, đứt ngón chân, không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 噬膚, 滅鼻, 無咎.",
+          "vi": "Hào Sáu Hai: Cắn da, dứt mũi, không lỗi."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 噬臘肉, 遇毒, 小吝, 無咎.",
+          "vi": "Hào Sáu Ba: cắn mắm khô, gặp độc, hơi tiếc, không lỗi."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 噬乾秭, 得金矢, 利艱貞, 吉.",
+          "vi": "Hào Chín Tư: Cắn chạo khô, được tên vàng, lợi về khó nhọc, chính bền tốt."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 噬乾肉, 得黄金, 貞厲, 無咎.",
+          "vi": "Hào Sáu Năm: Cắn thịt khô, được vàng sắc vàng, chính bền, lo sợ, không lỗi."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 何校, 滅耳, 凶.",
+          "vi": "Hào Chín trên: Đội xiềng, đứt tai, hung."
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "name_zh": "賁",
+      "name_pinyin": "Bì",
+      "judgment": {
+        "zh": "賁亨, 小利有攸往.",
+        "vi": "Quẻ Bí hanh, hơi lợi có thửa đi."
+      },
+      "image": {
+        "zh": "象曰: 山下有火, 賁, 君子以明庶政, 无敢折獄.",
+        "vi": "Lời Tượng nói rằng: Dưới núi có lửa là quẻ Bí, đấng quản tử coi đó mà tỏ mọi chính, không quả cảm về việc đoán ngục."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 賁其址, 舍車而徒.",
+          "vi": "Hào Chín Đầu: Trang sức thửa ngón chân, bỏ xe mà đi không."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 賁其須.",
+          "vi": "Hào Sáu Hai: Trang sức cái râu của mình."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 賁如, 濡如, 永貞吉.",
+          "vi": "Hào Chín Ba: Rõ ràng vậy, bóng mượt vậy; mãi mãi chính bền, tốt."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 賁如, 播如, 白馬翰如, 匪底, 婚媾.",
+          "vi": "Hào Sáu Tư: Rỡ ràng vậy, phơ phơ vậy, ngựa trắng có cánh vậy. Chẳng phải giặc, là dâu gia."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 賁于丘園, 束帛戔戔, 吝, 终吉.",
+          "vi": "Hào Sáu Năm: Trang sức ở gò vườn, bó lụa mỏng hẹp, đáng tiếc, sau chót tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 白賁, 無咎.",
+          "vi": "Hào Chín Trên: Trang sức bằng màu trắng, không lỗi."
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "name_zh": "剝",
+      "name_pinyin": "Bō",
+      "judgment": {
+        "zh": "剝. 不利有攸往.",
+        "vi": "Quẻ Bác không lợi có thửa đi."
+      },
+      "image": {
+        "zh": "象曰: 山附於地, 剝. 君子以厚下安宅.",
+        "vi": "Lời Tượng nói rằng: Núi phụ ở đất, là quẻ Bác, người trên coi đó mà hậu cho kẻ dưới, làm yên chỗ ở."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 剝床以足, 蔑貞凶.",
+          "vi": "Hào Sáu Đầu: Đẽo giường bằng chân, không trinh, hung."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 剝床以辨, 蔑貞凶.",
+          "vi": "Hào Sáu Hai: Đẽo giường bằng bễ, chẳng trinh, hung."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 剝之, 無咎.",
+          "vi": "Hào Sáu Ba: Đẽo đó, không lỗi."
+        },
+        {
+          "position": 4,
+          "zh": null,
+          "vi": null
+        },
+        {
+          "position": 5,
+          "zh": "六無: 貫魚以宮人龍, 無不利.",
+          "vi": "Hào Sáu Năm: Xâu cá; lấy cung nhân được yên, không gì không lợi."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 碩果不食, 君子得輿, 小人剥廬.",
+          "vi": "Hào Chín Trên: Trái lớn không ăn, đấng quân tử được xe, kẻ tiểu nhân đẽo nhà."
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "name_zh": "復",
+      "name_pinyin": "Fù",
+      "judgment": {
+        "zh": "復亨, 出入無疾, 朋來無咎.反復其道, 七日來復, 利有攸往.",
+        "vi": "Quẻ Phục hanh, ra vào không tật, bạn đến không lỗi. Lật đi lật lại thửa đạo, bảy ngày lại trở lại, lợi có thửa đi."
+      },
+      "image": {
+        "zh": "象曰: 雷夺地中, 復. 先王以至日閉關, 商旅不行, 後不省方.",
+        "vi": "Lời Tượng nói rằng: Sấm ở trong đất, là quẻ Phục, đấng tiên vương coi đó mà ngày chí đóng cửa ải, kẻ thương lữ không đi, các vua không xét các phương."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 不遠復, 無祗悔, 元吉.",
+          "vi": "Hào Chín Đầu: Chẳng xa trở lại, không đến ăn năn, cả tốt."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 休復, 吉.",
+          "vi": "Hào Sáu Hai: Đẹp sự trở lại, tốt."
+        },
+        {
+          "position": 3,
+          "zh": null,
+          "vi": null
+        },
+        {
+          "position": 4,
+          "zh": "六四: 中行獨復.",
+          "vi": "Hào Sáu Tư: Đi giữa một mình trở lại."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 敦復, 無悔.",
+          "vi": "Hào Sáu Năm: Dốc lòng về sự trở lại, không phải ăn năn."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 迷復, 凶, 有災眚, 用行師, 終有大敗, 以其國君, 凶, 至于十年, 不可征.",
+          "vi": "Hào Sáu Trên: Lú lấp sự trở lại, hung. Có vạ tội, dùng để trẩy quân, sau chót có thua lớn; tới cả vua nước đó cũng hung, đến chừng mười năm, không thể đi."
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "name_zh": "無妄",
+      "name_pinyin": "Wú Wàng",
+      "judgment": {
+        "zh": "無妄元亨利貞, 其匪正, 有眚, 不利有攸往.",
+        "vi": "Quẻ Vô Vọng cả hanh, lợi về sự chính bền; thửa chẳng chính có tội, không lợi có thửa đi."
+      },
+      "image": {
+        "zh": "象曰: 天下雷行物與, 無妄, 先王以茂對時, 育萬物.",
+        "vi": "Lời Tượng nói rằng: Dưới trời sấm chạy vật được phú tính, là quẻ Vô Vọng; đấng tiên vương coi đó mà tốt việc đối thì, nuôi muôn vật."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 無妄, 往吉.",
+          "vi": "Hào Chín Đầu: Không càn, đi tốt."
+        },
+        {
+          "position": 2,
+          "zh": "夫二: 不耕獲, 不菌畲, 則利有攸往.",
+          "vi": "Hào Sáu Hai: Chẳng cày, gặt; chẳng ngả, ngấu thì lợi có thửa đi."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 無妄之災, 或繫之牛, 行人之得, 邑人之災.",
+          "vi": "Hào Sáu Ba: Cái hại của sự không càn, hoặc buộc con trâu, kẻ đi đường mà được, người ấp bị hại."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 可貞, 无咎.",
+          "vi": "Hào Chín Tư: Khả trinh, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 無妄之疾, 勿藥, 有喜.",
+          "vi": "Hào Chín Năm: Cái tật không càn, đừng thuốc, có mừng."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 無妄行, 有眚, 無攸利.",
+          "vi": "Hào Chín Trên: Không càn mà đi, có tội, không thửa lợi."
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "name_zh": "大畜",
+      "name_pinyin": "Dà Chù",
+      "judgment": {
+        "zh": "大畜: 利貞, 不家食, 吉, 利涉大川",
+        "vi": "Quẻ Đại Súc lợi về sự chính, chẳng ăn ở nhà, tốt lợi sang sông lớn."
+      },
+      "image": {
+        "zh": "象曰: 天在山中, 大畜, 君子以多識前言往行以畜其德.",
+        "vi": "Lời Tượng nói rằng: Trời ở trong núi, là quẻ Đại Súc, đấng quân tử coi đó mà ghi nhiều lời trước, nết xưa, để nuôi đức mình."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 有厲, 利已.",
+          "vi": "Hào Chín Đầu: Có nguy, lợi thôi."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 輿說輻.",
+          "vi": "Hào Chín Hai: Xe trút bánh."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 良馬逐, 利艱貞, 日閑輿衞, 利有攸往.",
+          "vi": "Hào Chín Ba: Ngựa hay ruổi, ngày quen xe, lại có thửa đi."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 童牛之梏, 元吉.",
+          "vi": "Hào Sáu Tư: Cái cùm trâu non, cả tốt."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 猪豕之牙, 吉.",
+          "vi": "Hào Sáu Năm: Nanh con lợn thiến, tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 何天之衢亨.",
+          "vi": "Hào Chín Trên: Sao đường trời hanh."
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "name_zh": "頤",
+      "name_pinyin": "Yí",
+      "judgment": {
+        "zh": "頤貞吉, 觀頤, 自求口實.",
+        "vi": "Quẻ Di chính tốt, xem sự nuôi, tự tìm cái thật của miệng."
+      },
+      "image": {
+        "zh": "象曰: 山下有雷, 頤, 君子以慎言語, 節飲食.",
+        "vi": "Lời Tượng nói rằng: Dưới núi có sấm, là quẻ Di, đấng quân tử coi đó mà cẩn thận nói năng, dè dặt uống ăn."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 舍爾靈龜, 觀我朵頤, 凶.",
+          "vi": "Hào Chín Đầu: Bỏ con rùa thiêng của mày, xem ta trễ mép, hung."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 顛頤, 狒經于丘, 征凶.",
+          "vi": "Hào Sáụ Hai: Đảo nuôi, trái thường ở gò, đi thì hung."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 拂頤, 貞凶, 十年勿用, 無攸利.",
+          "vi": "Hào Sáu Ba: Trái nuôi, chính hung, mười năm chớ dùng, không thửa lợi."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 顛頓, 吉, 虎視眈眈, 其欲逐逐, 無咎.",
+          "vi": "Hào Sáu Tư: Đảo nuôi, tốt, hổ trông hau háu, lòng muốn của nó liền liền, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 拂經, 居貞吉, 不可涉大川.",
+          "vi": "Hào Sáu Năm: Trái thường, ở chính tốt, chăng khá sang sông lớn."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 由頤, 厲, 吉, 利涉大川.",
+          "vi": "Hào Chín Trên: Bởi nuôi, nguy, tốt, lợi sang sông lớn."
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "name_zh": "大過",
+      "name_pinyin": "Dà Guò",
+      "judgment": {
+        "zh": "大過, 棟橈, 利有攸往, 亨.",
+        "vi": "Quẻ Đại Quá, cột ỏe, lợi có thửa đi, hanh."
+      },
+      "image": {
+        "zh": "象曰: 澤滅木, 大過, 君子以獨立不懼, 遯世無悶.",
+        "vi": "Lời Tượng nói rằng: Chằm ngập cây, là quẻ Đại Quá, đấng quân tử coi đó mà đứng một mình không sợ, trốn đời không buồn."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 藉用白茅, 無咎.",
+          "vi": "Hào Sáu Đầu: Trải dùng cỏ tranh trắng, không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 枯楊生梯, 老夫得其女妻, 無不利.",
+          "vi": "Hào Chín Hai: Cây Dương khô mọc rễ, chồng già được vợ con gái, không gì không lợi."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 棟橈, 凶.",
+          "vi": "Hào Chín Ba: Cột ỏe, hung."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 棟隆, 吉, 有它, 吝.",
+          "vi": "Hào Chín Tư: cột cao, tốt; có khí khác, đáng tiếc."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 枯楊生莓, 老婦得其士夫, 無咎無譽.",
+          "vi": "Hào Chín Năm: Cây dương khô mọc hoa, vợ già được chồng con trai, không lỗi không khen."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 過涉滅頂, 凶, 無咎.",
+          "vi": "Hào Sáu Trên: Quá lội ngập đỉnh đầu, hung, không lỗi."
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "name_zh": "坎",
+      "name_pinyin": "Kǎn",
+      "judgment": {
+        "zh": "習坎有孚維心, 亨, 行有尚.",
+        "vi": "Quẻ Khảm kép, có tin, bui lòng, hanh, đi có chuộng."
+      },
+      "image": {
+        "zh": "象曰: 水楊至習坎, 君子以常德行, 習教事.",
+        "vi": "Lời Tượng nói rằng: Nước lại tới, là quẻ Khảm kép, đấng quân tử coi đó mà giữ cho đức hạnh có thường, tập cho giáo sự được quen."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 習坎, 如雨坎審, 凶.",
+          "vi": "Hào Sáu Đầu: Chỗ hiểm kép, vào cái hố trong chỗ hiểm, hung."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 坎有險, 求小得.",
+          "vi": "Hào Chín Hai: Chỗ trũng có sự hiểm, tìm hơi được."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 來之坎坎, 險且枕, 入于坎審, 物用.",
+          "vi": "Hào Sáu Ba: Lại đi hiểm hiểm, hiểm vào gối, vào cái hố của hiểm, chớ dùng."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 樽酒, 簋貳, 用缶, 納約自牖, 終无咎.",
+          "vi": "Hào Sáu Tư: Chén rượu, rá xôi, thêm dùng hồ sành, nộp ước tự cửa sổ tròn, sau chót không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 坎不盈, 柢既平, 無咎.",
+          "vi": "Hào Chín Năm: Chỗ trũng chẳng đầy, đến đã phẳng, không lỗi."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 係用徽纏, 寘于叢棘, 三歲不得, 凶.",
+          "vi": "Hào Sáu Trên: Trói dùng chạc thừng, đặt ở bụi gai, ba năm chẳng được, hung."
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "name_zh": "離",
+      "name_pinyin": "Lí",
+      "judgment": {
+        "zh": "離利貞, 亨, 畜牝牛, 吉.",
+        "vi": "Quẻ Ly lợi về sự chính, hanh, nuôi trâu cái, tốt."
+      },
+      "image": {
+        "zh": "象曰: 明兩作, 離. 大人以繼明照乎四方.",
+        "vi": "Lời Tượng nói rằng; Sự sáng hai lần dấy, là quẻ Ly, bậc người lớn coi đó mà kế tiếp sáng soi ở bốn phương."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 履錯然, 敬之無咎.",
+          "vi": "Hào Chín Đầu: Xéo bừa vậy, kính đó không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "六一: 黄離, 元吉.",
+          "vi": "Hào Sáu Hai: Vàng sáng, cả tốt."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 日昃之離, 不鼓缶而歌, 則大奎之差, 凶.",
+          "vi": "Hào Chín Ba: Sự sáng của mặt trời dé. Chẳng gõ chậu sành mà hát thì là cả già mà than, hung."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 突如, 其來如, 焚如, 死如, 棄如.",
+          "vi": "Hào Chín Tư: Đột như, thửa lai vậy, cháy vậy, chết vậy, bỏ vậy!"
+        },
+        {
+          "position": 5,
+          "zh": "六五: 涕沱若, 戚嗟若, 吉.",
+          "vi": "Hào Sáu Năm: Nước mắt giàn giụa vậy, ngậm ngùi than vậy, tốt!"
+        },
+        {
+          "position": 6,
+          "zh": "上九: 王用出征, 有嘉, 折首, 獲匪其醜, 無咎.",
+          "vi": "Hào Chín Trên: Vua dùng ra đánh, có sự tốt, bẻ đầu, bắt chẳng phải loài, không lỗi."
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "name_zh": "咸",
+      "name_pinyin": "Xián",
+      "judgment": {
+        "zh": "咸亨, 利貞, 取女吉.",
+        "vi": "Quẻ Hàm hanh, lợi chính, lấy con gái, tốt."
+      },
+      "image": {
+        "zh": "象曰: 山上有澤, 咸. 君子以虛受人.",
+        "vi": "Lời Tượng nói rằng: Trên núi có chằm, là quẻ Hàm, đấng quân tử coi đó mà trống rỗng lòng mình để nhận người ta."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 咸其拇.",
+          "vi": "Hào Sáu Đầu: Cảm thửa ngón chân cái."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 咸其腓, 凶, 居吉.",
+          "vi": "Hào Sáu Hai: Cảm thửa bụng chân, hung. Ở yên, tốt."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 咸其股, 執其隨, 往吝.",
+          "vi": "Hào Chính Ba: Cảm thửa đùi, giữ thửa sự theo, đi thì đáng tiếc."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 貞吉, 悔亡, 憧憧往來, 朋從爾思,",
+          "vi": "Hào Chín Tư: Chính bền thì tốt, sự ăn năn sẽ mất; săng sắc đi lại, bạn theo sự nghĩ của mày."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 咸其腾, 无悔.",
+          "vi": "Hào Chín Năm: Cảm thửa thăn thịt, không ăn năn."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 咸其辅, 頰, 舌.",
+          "vi": "Hào Sáu Trên: Cảm thửa xương má, mép, lưỡi."
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "name_zh": "恆",
+      "name_pinyin": "Héng",
+      "judgment": {
+        "zh": "恆亨, 無咎, 利貞, 利有攸往.",
+        "vi": "Quẻ Hằng hanh, lợi về sự chính, lợi có thửa đi."
+      },
+      "image": {
+        "zh": "象曰: 雷風恆, 君子以立不易方.",
+        "vi": "Lời Tượng nói rằng: Sấm gió là quẻ Hằng, đấng quân tử coi đó mà đứng chẳng đổi phương."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": null,
+          "vi": null
+        },
+        {
+          "position": 2,
+          "zh": "九二: 悔亡.",
+          "vi": "Hào Chín Hai: Sự ăn năn mất."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 不恆其德, 或承之羞, 貞吝.",
+          "vi": "Hào Chín Ba: Chẳng thường thửa đức, hoặc vâng đấy thẹn, trinh cùng đáng tiếc."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 田無禽.",
+          "vi": "Hào Chín Tư: Săn không loài cầm."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 恆其德, 貞, 婦人吉, 夫子凶.",
+          "vi": "Hào Sáu Năm: Thường thửa đức, chính, đàn bà tốt, đàn ông hung."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 掁恆, 凶.",
+          "vi": "Hào Chín Trên: Xốc thường, hung."
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "name_zh": "遯",
+      "name_pinyin": "Dùn",
+      "judgment": {
+        "zh": "遯亨, 小利貞.",
+        "vi": "Quẻ độn hanh, nhỏ lợi trinh."
+      },
+      "image": {
+        "zh": "象曰: 天下有山, 遯, 君子以遠小人, 不惡而嚴.",
+        "vi": "Lời Tượng nói rằng: Dưới trời có núi, là quẻ Độn, đấng quân tử coi đó mà xa kẻ tiểu nhân, không ác mà nghiêm."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 遯尾, 厲, 勿用有攸往.",
+          "vi": "Hào Sáu Đầu: Trốn đuôi, nguy. Chớ dùng, có thửa đi."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 執之用黄牛之革, 莫之滕說.",
+          "vi": "Hào Sáu Hai: Giữ đó, dùng da trâu vàng, không ai trút nổi?"
+        },
+        {
+          "position": 3,
+          "zh": "九三: 繫遯有疾, 厲, 畜臣妾, 吉.",
+          "vi": "Hào Chín Ba: Vướng trốn, có tật, nguy. Nuôi đầy tớ nàng hầu, tốt."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 好遯, 君子吉, 小人否.",
+          "vi": "Hào Chín Tư: Yêu việc trốn, đấng quân tử tốt, kẻ tiểu nhân không."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 嘉遯, 貞吉.",
+          "vi": "Hào Chín Năm: Trốn tốt, chính tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 肥遯, 無不利.",
+          "vi": "Hào Chín Trên: Trốn hay, không gì không lợi."
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "name_zh": "大壯",
+      "name_pinyin": "Dà Zhuàng",
+      "judgment": {
+        "zh": "大壯, 利貞.",
+        "vi": "Quẻ Đại Tráng lợi về sự chính."
+      },
+      "image": {
+        "zh": "象曰: 雷在天上, 大壯. 君子以非禮弗履.",
+        "vi": "Lời Tượng nói rằng: Sấm ở trên trời, là quẻ Đại Tráng. Đấng quân tử coi đó mà không phải lễ chớ xéo vào."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 壯于趾, 征凶, 有孚.",
+          "vi": "Hào Chín Đầu: Mạnh ở ngón chân, đi thì hung, có tin."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 貞吉.",
+          "vi": "Hào Chín Hai: Chính tốt."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 小人用壯, 君子用罔, 貞厲. 羝羊觸藩, 羸其角.",
+          "vi": "Hào Chín Ba: Kẻ tiểu nhân dùng sức mạnh, đấng quân tử dùng chẳng [kiêng dè], chính, nguy. Dê đực húc giậu, mắc thửa sừng."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 貞吉, 悔亡, 藩決不羸, 壯于大輿之輹.",
+          "vi": "Hào Chín Tư: Chính thì tốt, ăn năn mất, phên bựt chẳng mắc, mạnh ở vành trục xe lớn."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 喪羊予易, 無悔.",
+          "vi": "Hào Sáu Năm: Mất dê ở sự dễ, không ăn năn."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 羝羊觸藩, 不能退, 不能逐, 無攸利, 艱則吉.",
+          "vi": "Hào Sáu Trên: Dê đực húc giậu, chẳng hay lui, chẳng hay toại, không thửa lợi, khó thì tốt."
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "name_zh": "晉",
+      "name_pinyin": "Jìn",
+      "judgment": {
+        "zh": "晉, 康侯用锡馬蕃庶, 書日三接.",
+        "vi": "Quẻ Tấn, tước hầu yên dừng cho ngựa giậm nhiều, ban ngày ba lần tiếp."
+      },
+      "image": {
+        "zh": "象曰: 火在地上, 晉, 君子以自眧明德.",
+        "vi": "Lời Tượng nói rằng: Lửa ở trên đất, là quẻ Tấn, đấng quân tử coi đó để tự làm tỏ đức sáng."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "軔六: 晉如, 摧如, 貞吉, 罔孚, 裕無咎.",
+          "vi": "Hào Sáu Đầu; Dường tiến lên vậy, dường nén lui vậy, chính thì tốt, chẳng tin, khoan thai không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 晉如, 愁如, 貞吉, 受兹介福于其王母.",
+          "vi": "Hào Sáu Hai: Dường tiến vậy, dường sầu vậy, chính thì tốt, nhận phúc lớn ấy chưng thuở bà nội."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 衆允, 悔亡",
+          "vi": "Hào Sáu Ba: Mọi người tin, ăn năn mất."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 晉如, 鼦鼠, 貞麗.",
+          "vi": "Hào Chín Tư: Dường tiến vậy, con chuột đồng, chính bền, nguy!"
+        },
+        {
+          "position": 5,
+          "zh": "六異: 悔亡, 失得勿恤, 往吉, 無不利.",
+          "vi": "Hào Sáu Năm: Ăn năn mất, mất được chớ lo, đi thì tốt, không gì không lợi."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 晉其角, 維用伐邑, 厲, 吉無咎, 貞吝.",
+          "vi": "Hào Chín Trên: Tiến thửa sừng, bui dùng đánh làng, tốt, không lỗi, trinh thì đáng tiếc."
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "name_zh": "明夷",
+      "name_pinyin": "Míng Yí",
+      "judgment": {
+        "zh": "明夷, 利艱貞.",
+        "vi": "Quẻ Minh Di lợi về khó nhọc trinh chính."
+      },
+      "image": {
+        "zh": "象曰: 明入地中, 明夷, 君子以蔽泉, 用晦而明.",
+        "vi": "Lời Tượng nói rằng: Sáng vào trong đất là quẻ Minh Di. Đấng quân tử coi đó để trị dân chúng, dùng tối mà sáng."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 明夷于飛, 垂其翼, 君子于行, 三日不食, 有攸往, 主人有言.",
+          "vi": "Hào Chín Đầu: Sáng đau chưng bay, đủ thửa cánh; đấng quân tử chưng đi, ba ngày chẳng ăn, có thửa đi, người chủ có nói."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 明夷, 夷于左股, 用拯, 馬狀吉.",
+          "vi": "Hào Sáu Hai: Sáng đau, đau ở đùi bên tả, dùng cách cứu, ngựa mạnh tốt."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 明夷于南狩, 得其大首, 不可疾貞.",
+          "vi": "Hào Chín Ba: Sáng đau chưng cuộc săn bên Nam được thừa đầu lớn, chẳng khá kíp chính."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 入于左腹, 獲明夷之心, 于出門庭.",
+          "vi": "Hào Sáu Tư: Vào chưng bụng bên tả được cái lòng sáng đau, chưng ra cửa sân."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 箕子之明夷, 利貞.",
+          "vi": "Hào Sáu Năm, ông Cơ Tử chưng sáng đau, lợi về chính bền."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 不明, 晦, 初登于天, 後入于地.",
+          "vi": "Hào Sáu Trên: Chẳng sáng, tối; đầu thì lên chưng trời, sau vào chưng đất."
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "name_zh": "家人",
+      "name_pinyin": "Jiā Rén",
+      "judgment": {
+        "zh": "家人利女貞.",
+        "vi": "Quẻ Gia Nhân lợi về gái chính."
+      },
+      "image": {
+        "zh": "象曰: 風自火出, 家人, 君子以言有物, 而行有恆.",
+        "vi": "Lời Tượng nói rằng: Gió từ lửa ra, là quẻ Gia Nhân, đấng quân tử coi đó mà nói có vật, nết có thường."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 閑有家, 悔亡.",
+          "vi": "Hào Chín Đầu: Ngăn ngừa có nhà, ăn năn mất."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 無攸逐, 在中饋, 貞吉.",
+          "vi": "Hào Sáu Hai: không thửa thỏa, ở trong, chủ việc ăn uống, chính tốt."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 家人 嗃嗃, 悔, 厲, 吉, 婦子嘻嘻, 終吝.",
+          "vi": "Hào Chín Ba: Người nhà nem nép (?), hối dữ, tốt; vợ con hơn hớn, sau chót thẹn tiếc."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 富家, 大吉.",
+          "vi": "Hào Sáu Tư: Nhà giàu, cả tốt."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 王假有家, 勿恤, 吉.",
+          "vi": "Hào Chín Năm: Vua đến có nhà, chớ lo, tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 有孚威如, 終吉.",
+          "vi": "Hào Chín Trên: Có tin, dường oai nghiêm vậy, trọn tốt,"
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "name_zh": "睽",
+      "name_pinyin": "Kuí",
+      "judgment": {
+        "zh": "睽, 小事吉.",
+        "vi": "Quẻ Khuê, việc nhỏ tốt."
+      },
+      "image": {
+        "zh": "象曰: 上火下澤, 睽. 君子以同而異.",
+        "vi": "Lời Tượng nói rằng: Trên lửa, dưới chằm, là quẻ Khuê. Đấng quân tử coi đó để cùng mà khác."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 晦亡, 喪馬, 勿逐, 自復, 見惡人, 無咎.",
+          "vi": "Hào Chín Đầu: Ăn năn mất, mất ngựa, chớ đuổi theo tự nhiên trở lại, thấy người ác, không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 遇主于巷, 無咎.",
+          "vi": "Hào Chín Hai: Gặp chúa ở ngõ, không lỗi."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 見輿曳, 其牛掣, 其人 天且劓, 无初有終.",
+          "vi": "Hào Sáu Ba: Thấy xe kéo, thửa trâu kìm, thửa người gọt đầu và xẻo mũi. Không lúc đầu, có chót."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 睽孤, 遇元夫, 交孚, 厲, 無咎.",
+          "vi": "Hào Chín Tư: Lìa côi, gặp chàng lành, tin lẫn, nguy, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 晦亡, 厥宗噬膚, 往何咎？",
+          "vi": "Ăn năn mất, thửa họ cắn da, đi có lỗi gì?"
+        },
+        {
+          "position": 6,
+          "zh": "上九: 睽孤. 見豕負涂, 載鬼一車, 先張之弧, 后說之弧, 匪寇婚媾, 往遇雨則吉.",
+          "vi": "Hào Chín Trên: Lìa cô. Thấy lợn đội bùn, chở ma một xe, trước giương chưng cung, sau tháo chưng cung, chẳng phải giặc, là dâu gia đó, đi gặp mưa thì tốt."
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "name_zh": "蹇",
+      "name_pinyin": "Jiǎn",
+      "judgment": {
+        "zh": "蹇利西南, 不利柬北, 利見大人, 貞吉.",
+        "vi": "Quẻ Kiển, lợi Tây Nam không lợi Đông Bắc, lợi về sự thấy người lớn, chính thì tốt."
+      },
+      "image": {
+        "zh": "象曰: 山上有水, 蹇, 君子以反身修德.",
+        "vi": "Lời Tượng nói rằng: Trên núi có nước, là quẻ Kiển, đấng quân tử coi đó mà trở lại mình, sửa đức."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 往蹇, 來譽.",
+          "vi": "Hào Sáu Đầu: Đi thì kiển, trở lại được tiếng khen."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 王臣蹇蹇, 匪躬之故",
+          "vi": "Hào Sáu Hai: Bề tôi kiển kiển, chẳng phải cớ của mình."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 往蹇來反.",
+          "vi": "Hào Chín Ba: Đi thì kiển, nên trở lại."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 往蹇來連.",
+          "vi": "Hào Sáu Tư: Đi thì kiển, trở lại thì liền."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 大蹇朋來.",
+          "vi": "Hào Chín Năm: Kiển lớn, bạn lại."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 往蹇來碩, 吉, 利見大人.",
+          "vi": "Hào Sáu trên: Đi thì kiển, trở lại được lợi lớn, tốt; lợi thấy người lớn."
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "name_zh": "解",
+      "name_pinyin": "Xiè",
+      "judgment": {
+        "zh": "解利西南, 無所往, 其來復, 吉, 有攸往, 夙吉.",
+        "vi": "Quẻ Giải lợi về phương Tây Nam, không thửa đi thì lại lại, có thửa đi, sớm thì tốt."
+      },
+      "image": {
+        "zh": "象曰: 雷雨作, 解. 君子以赦過宥罪.",
+        "vi": "Lời Tượng nói rằng: Sấm mưa nổi lên, là quẻ Giải. Đấng quân tử coi đó mà xá lỗi, tha tội."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 無咎.",
+          "vi": "Hào Sáu Đầu: Không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 田擭三狐, 得黄矢, 貞吉.",
+          "vi": "Hào Chín Hai: Săn được ba con cáo, được tên vàng, chính bền thì tốt."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 負且乘, 致寇至, 貞吝.",
+          "vi": "Hào Sáu Ba: Đội và cưỡi, dắt giặc đến, chính bền cũng đáng tiếc."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 解而拇, 朋至斯孚.",
+          "vi": "Hào Chín Tư: Giải ngón chân cái mày, bằng đến ấy tin."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 君子維有解, 吉, 有孚于小人.",
+          "vi": "Hào Sáu Năm: Đấng quân tử chỉ có giải, tốt, có tin chưng kẻ tiểu nhân."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 公用射準于高墉之上, 獲之, 無不利.",
+          "vi": "Hào Sáu Trên: Ông dùng bắn chim cắt ở trên tường cao, được chim, không gì không lợi."
+        }
+      ]
+    },
+    {
+      "number": 41,
+      "name_zh": "損",
+      "name_pinyin": "Sǔn",
+      "judgment": {
+        "zh": "损有孚, 元吉, 無咎, 可貞, 利有攸往曷之用? 二蒉可用亨.",
+        "vi": "Quẻ Tổn, có tin, cả tốt, không lỗi, khá trinh, lợi có thửa đi. Chưng dùng gì? Hai quĩ khá dùng hưởng."
+      },
+      "image": {
+        "zh": "象曰: 善下有澤, 損. 君子以懲忿, 窒欲.",
+        "vi": "Lời Tượng nói rằng: Dưới núi có chằm, là quẻ Tổn đấng quân tử coi đó mà răn sự giận, lấp lòng dục."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 已事, 遄往, 無咎, 酌損之.",
+          "vi": "Hào Chín Đầu: Xong việc, mau đi, không lỗi, châm chước mà bớt đấy."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 利貞, 征凶, 弗损, 益之.",
+          "vi": "Hào Chín Hai: Lợi về chính bền, đi thì hung, chớ bớt, thêm đấy."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 三人行則损一人, 一人作則得其友.",
+          "vi": "Hào Sáu Ba: Ba người đi thì tổn một người, một người đi thì được thửa bạn."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 損其疾, 使遄有喜, 元吉, 無啓.",
+          "vi": "Hào Sáu Tư: Bớt thửa tật, khiến chóng có mừng, cả tốt, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 或益之十朋之龜, 弗克違, 元吉.",
+          "vi": "Hào Sáu Năm: Hoặc ích cho đấy, chưng con rùa mười “bằng” chẳng hay trái, cả tốt!"
+        },
+        {
+          "position": 6,
+          "zh": "上九: 弗损, 益之, 無咎, 貞吉, 利肴攸往, 得臣無彖",
+          "vi": "Hào Chín Trên: Chẳng bớt, thêm đấy, không lỗi, chính bền tốt, lợi có thửa đi, được bề tôi không nhà."
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "name_zh": "益",
+      "name_pinyin": "Yì",
+      "judgment": {
+        "zh": "益, 利有攸往, 利涉大川.",
+        "vi": "Quẻ Ích lợi có thửa đi, lợi về sang sông lớn."
+      },
+      "image": {
+        "zh": "象曰: 風雨益, 君子以見善則遷, 有過則改.",
+        "vi": "Lời Tượng nói rằng: Gió sấm là quẻ Ích, đấng quân tử coi đó mà thấy điều thiện thì dời sang, có lỗi thì đổi đi."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 利用為大作, 元吉, 無咎.",
+          "vi": "Hào Chín Đầu: Lợi dùng làm việc lớn, cả tốt, không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 或益之十朋之龜, 弗克違, 永貞, 吉, 王用亨于帝, 吉.",
+          "vi": "Hào Sáu Hai: Hoặc ích đấy, chưng rùa mười bằng, chẳng hay trái, vĩnh viễn chính bền, tốt, vua dùng hưởng chưng trời, tốt."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 益之, 用凶事, 無咎, 有孚, 中行, 告公用圭.",
+          "vi": "Hào Sáu Ba: Ích đây, dùng việc hung, không lỗi, có tin, đường giữa, bảo tước công dùng ngọc khuê."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 中行, 告公從, 利用為依, 遷國.",
+          "vi": "Hào Sáu Tư: Đường giữa, tâu tước công theo, lợi dụng làm tựa, dời nước."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 有孚, 惠心, 勿問, 元吉, 有孚, 惠我德.",
+          "vi": "Hào Chín Năm: Có tin lòng ơn, chớ hỏi, cả tốt, có tin, ơn đức ta."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 莫益之, 或擊之, 立新勿恆, 凶",
+          "vi": "Hào Chín Trên: Chẳng ích nó, hoặc đánh nó, lập tâm chớ thường hung."
+        }
+      ]
+    },
+    {
+      "number": 43,
+      "name_zh": "夬",
+      "name_pinyin": "Guài",
+      "judgment": {
+        "zh": "夬, 揚于王庭, 孚號有厲. 告自邑, 不利即戎, 利有鈦往.",
+        "vi": "Quẻ Quải, giơ chưng sân vua, tin gọi, có nguy. Báo từ làng, chẳng lợi tới quân, lợi có thửa đi."
+      },
+      "image": {
+        "zh": "象曰: 澤上於天, 夬, 君子以施祿及下, 居德則忌.",
+        "vi": "Lời Tượng nói rằng: Chằm lên chưng trời, là quẻ Quải. Đấng quân tử coi đó mà ra lộc tới dưới, ở đức phép kỵ."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 壯于前趾, 往不勝, 為咎.",
+          "vi": "Hào Chín Đầu: Mạnh chưng ngón chân trước, đi thẳng được, là lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 惕號, 莫夜有戎, 勿恤.",
+          "vi": "Hào Chín Hai: Sợ kêu, đêm hôm có quân, chớ ngại."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 壯于傾, 有凶, 君子夬夬, 獨行遇雨, 若濡, 有愠, 无咎.",
+          "vi": "Hào Chín Ba: Mạnh chưng gò má, có sự hung, đấng quân tử quyết quyết, đi một mình gặp mưa, đường ướt, có giận, không lỗi."
+        },
+        {
+          "position": 4,
+          "zh": "士四: 殿无膚, 其行次且, 牽羊, 悔亡, 聞言不信.",
+          "vi": "Hào Chin Tư: Đít không da, thửa đi chật vật, dắt dê, ăn năn mất, nghe nói chẳng tin."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 筧六夬夬, 中行无咎.",
+          "vi": "Hào Chín Năm: Rau sam quyết quyết, đi đường giữa không lỗi."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 無號, 終有凶.",
+          "vi": "Hào Sáu Trên: Không kêu, sau chót có hung."
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "name_zh": "姤",
+      "name_pinyin": "Gòu",
+      "judgment": {
+        "zh": "垢, 女壯, 勿用取女.",
+        "vi": "Quẻ Cấu, con gái mạnh, chớ dùng lấy con gái."
+      },
+      "image": {
+        "zh": "象曰: 天下有風, 垢, 後以施命告四方.",
+        "vi": "Lời Tượng nói rằng: Dưới trời có gió, là quẻ Cấu vui coi đó mà ra mệnh bảo bốn phương."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 繋于金柅, 貞吉, 有攸往, 見凶, 羸豕孚蹢躅.",
+          "vi": "Hào Sáu Đầu: Buộc chưng neo sắt, chính tốt, có thửa đi, thấy hung, con lợn còm tin nhảy nhót."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 包有魚, 无咎, 不利賓.",
+          "vi": "Hào Chín Hai: Bọc có cá, không lỗi chẳng lợi khách."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 臀無膚, 其行次且, 厲, 無大咎.",
+          "vi": "Hào Chín Ba: Đít không da, thửa đi chật vật, nguy, không lỗi lớn."
+        },
+        {
+          "position": 4,
+          "zh": null,
+          "vi": null
+        },
+        {
+          "position": 5,
+          "zh": "九五: 以杞包瓜, 含章, 有隕自天.",
+          "vi": "Hào Chín Năm: lấy cây kỷ bọc quả dưa, ngậm văn vẻ, có sa tự trời."
+        },
+        {
+          "position": 6,
+          "zh": "土九: 垢其角, 吝, 無咎.",
+          "vi": "Hào Chín Trên: Gặp thửa sừng, đáng tiếc, không lỗi."
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "name_zh": "萃",
+      "name_pinyin": "Cuì",
+      "judgment": {
+        "zh": "萃亨, 王假有廟.利見大人, 亨, 利貞.用大牲, 吉, 利有攸往.",
+        "vi": "Quẻ Tụy hanh, vua đến có miếu. Lợi thấy bậc người lớn, hạnh, lợi về chính bền. Dùng con sinh, lớn, tốt, lợi có thửa đi."
+      },
+      "image": {
+        "zh": "彖曰: 澤上於地, 萃, 君子以除戎器, 戒不虞.",
+        "vi": "Lời Tượng nói rằng: Chằm lên chưng đất, là quẻ Tụy, đấng quân tử coi đó mà trừ đồ quân, răn sự chẳng lường."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 有孚, 不終, 乃亂, 乃萃, 若號, 一握為笑, 勿恤, 往無咎.",
+          "vi": "Hào Chín Đầu: Có tin, không chót, bèn loạn, bèn họp, bằng kêu, một nắm làm cười, chớ lo, đi không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 引吉, 無咎, 孚乃利, 用禴.",
+          "vi": "Hào Sáu Hai: Dẫn tốt, không lỗi, tin bèn lợi, dùng tế thược."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 萃如, 嗟如, 無攸利, 往無咎, 小吝.",
+          "vi": "Hào Sáu Ba: Dường họp vậy, dường than vậy không thửa lợi, đi không lỗi, hơi tiếc."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 大吉, 無咎.",
+          "vi": "Hào Chín Tư: Cả tốt, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 萃有位, 無咎, 匪孚, 元永貞, 悔亡.",
+          "vi": "Hào Chín Năm: Họp có ngôi, không lỗi, chẳng tin, cả, dài, chính, ăn năn mất."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 齎咨, 涕演, 无咎.",
+          "vi": "Háo Sáu Trên: Than thở, nước mắt, nước mũi, không lỗi."
+        }
+      ]
+    },
+    {
+      "number": 46,
+      "name_zh": "升",
+      "name_pinyin": "Shēng",
+      "judgment": {
+        "zh": "升元亨, 用見大人, 勿恤, 南征吉",
+        "vi": "Quẻ Thăng, cả hanh, dùng thấy người lớn, chớ lo, đi về phương Nam tốt."
+      },
+      "image": {
+        "zh": "象曰: 地中生木, 升, 君子以順德, 積小而高大.",
+        "vi": "Lời Tượng nói rằng: Trong đất mọc cây là quẻ Thăng, đấng quân tử coi đó mà thuận đức, chứa điều nhỏ để cao lớn."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 允升, 大吉.",
+          "vi": "Hào Sáu Đầu: Tin lên, cả tốt."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 孚乃利, 用禴, 無咎.",
+          "vi": "Hào Chín Hai: Tin bèn lợi, dùng tế thược, không lỗi."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 升虛邑.",
+          "vi": "Hào Chín Ba: Lên làng trống không."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 王用亨于岐山, 吉, 無咎.",
+          "vi": "Hào Sáu Tư: Vua dùng hưởng ở núi Kỳ, tốt, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 貞吉, 升階.",
+          "vi": "Hào Sáu Năm: Chính bền, tốt, lên thềm."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 冥升, 利于不息之貞.",
+          "vi": "Hào Sáu Trên: Tối sự lên, lợi về sự chính bền chẳng nghỉ."
+        }
+      ]
+    },
+    {
+      "number": 47,
+      "name_zh": "困",
+      "name_pinyin": "Kùn",
+      "judgment": {
+        "zh": "困亨貞, 大人吉, 無咎, 有言不信.",
+        "vi": "Quẻ Khốn hanh, chính bền, người lớn tốt, không lỗi, có nói không tin."
+      },
+      "image": {
+        "zh": "象曰: 澤無水, 困, 君子以致命遂志.",
+        "vi": "Lời Tượng nói rằng: Chằm không nước là quẻ Khốn, đấng quân tử coi đó mà đến mệnh thỏa chí."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 殿困于株木, 入于幽谷, 三歲不覿.",
+          "vi": "Hào Sáu Đầu: Đít khốn chưng trồi cây, vào chưng hang tối, ba năm chẳng thấy."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 困于酒食, 朱敝方來, 利用亨祀, 征凶, 無咎.",
+          "vi": "Hào Chín Hai: Khốn chưng rượu cơm, cái phất đỏ đương lại, lợi dùng cúng tế, đi hung không lỗi."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 困于石, 據于蒺藜, 入于其宫, 不見其妻, 凶.",
+          "vi": "Hào Sáu Ba: Khốn chưng đá, vin chưng cây cà gai, vào chưng thửa buồng, chẳng thấy thửa vợ, hung."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 來徐徐, 困于金車, 吝, 有終.",
+          "vi": "Hào Chín Tư: Lại thong thả, khốn chưng xe sắt, đáng tiếc, có chót."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 劓刖, 困于赤敝, 乃徐有説, 利用祭祀.",
+          "vi": "Xẻo mũi, chặt chân, khốn chưng cái phất đỏ, bèn thong thả có đẹp lòng, lợi dùng tế tự."
+        },
+        {
+          "position": 6,
+          "zh": "困于葛蠤, 于跪脆, 日: 動悔, 有悔, 征吉.",
+          "vi": "Hào Sáu Trên: Khốn chưng cây sắn dây nhưng cheo leo, rằng: động ăn năn, có ăn năn, đi tốt."
+        }
+      ]
+    },
+    {
+      "number": 48,
+      "name_zh": "井",
+      "name_pinyin": "Jǐng",
+      "judgment": {
+        "zh": "井, 改邑不改井, 無喪無得, 往來井井.汽至, 亦未繙井, 羸其瓶凶.",
+        "vi": "Quẻ Tỉnh, đổi làng chẳng đổi giếng, không được, không mất, đi lại giếng giếng. Hầu đến, cũng chưa dong trạc đến giếng, hỏng thửa lọ, hung."
+      },
+      "image": {
+        "zh": "象曰: 木上有水, 井, 君子以勞民勸相.",
+        "vi": "Lời Tượng nói rằng: Trên cây có nước là quẻ Tỉnh, đấng quân tử coi đó mà yên ủi dân, khuyến khích sự giúp đỡ."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 井泥不食, 舊井无禽.",
+          "vi": "Hào Sáu Đầu: Giếng bùn chẳng ăn, giếng cũ không chim."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 井谷, 射鲋, 甕敝漏.",
+          "vi": "Hào Chín Hai: Giếng hang, bắn loài ếch nhái, vò nát dò."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 井渫不食, 為我心惻, 可用汲, 王明, 並受其福.",
+          "vi": "Hào chín Ba: Giếng trong chẳng ăn, làm sự bùi ngùi cho lòng ta, khá dùng múc nước; vua sáng, cùng chịu thửa phúc."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 井鹙, 无咎.",
+          "vi": "Hào Sáu Tư: Giếng xây bờ, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 井冽, 寒泉食",
+          "vi": "Hào Chín Năm: Giếng mát, suối lạnh, ăn."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 井收, 勿幕, 有孚, 元吉.",
+          "vi": "Hào Sáu Trên: Giếng thu, chớ trùm, có tin, cả tốt."
+        }
+      ]
+    },
+    {
+      "number": 49,
+      "name_zh": "革",
+      "name_pinyin": "Gé",
+      "judgment": {
+        "zh": "革, 已日乃孚, 元亨利貞, 悔亡.",
+        "vi": "Quẻ Cách, hết ngày bèn tin, cả hanh lợi trinh, ăn năn mất."
+      },
+      "image": {
+        "zh": "象曰: 澤中有火, 革. 君子以治厤明時.",
+        "vi": "Lời Tượng nói rằng: Trong chằm có lửa, là quẻ Cách. Đấng quân tử coi đó mà trị lịch rõ mùa."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 鞏用黄牛之革.",
+          "vi": "Hào Chín Đầu: Giàng bó dùng da trâu vàng."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 已日乃革之, 征吉, 無咎.",
+          "vi": "Hào Sáu Hai: Hết ngày bèn đổi đấy, đi tốt, không lỗi."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 征凶, 貞厲, 革言三就, 有孚.",
+          "vi": "Hào Chín Ba: Đi hung, chính nguy, nói đổi ba lần nên có tin."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 悔亡, 有孚, 改命吉.",
+          "vi": "Hào Chín Tư: Ăn năn mất, có tin, đổi mệnh tốt."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 大人虎變, 未占有孚.",
+          "vi": "Hào Chín Năm: Người lớn cọp biến, chưa xem có tin."
+        },
+        {
+          "position": 6,
+          "zh": "象曰: 君子豹變, 小人革面, 征凶, 居貞.",
+          "vi": "Hào Sáu Trên: Đấng quân tử beo biến, kẻ tiểu nhân đổi mặt, đi hung, ở chính."
+        }
+      ]
+    },
+    {
+      "number": 50,
+      "name_zh": "鼎",
+      "name_pinyin": "Dǐng",
+      "judgment": {
+        "zh": "鼎, 元吉亨.",
+        "vi": "Quẻ Đỉnh, cả tốt hanh."
+      },
+      "image": {
+        "zh": "象曰: 木上有火, 鼎, 君子以正位凝命.",
+        "vi": "Lời Tượng nói rằng: Trên cây có lửa, là quẻ Đỉnh. Đấng quân tử coi đó mà chính ngôi đóng mệnh."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 鼎顛趾, 利出否, 得妾以其子, 無咎.",
+          "vi": "Hào Sáu Đầu: Vạc chổng chân, lợi thải bỏ vật hư xấu, được nàng hầu, lấy thửa con, không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 鼎有實, 我仇有疾, 不我能即, 吉.",
+          "vi": "Hào Chín Hai: Vạc có cái chứa, kẻ thù ta có tật, chẳng ta hay tới, tốt."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 鼎耳革, 其行塞, 雉膏不食, 方雨, 虧悔終, 吉.",
+          "vi": "Hào Chín Ba: Tai vạc đổi, thửa đi lấp, mỡ con chim trĩ không ăn, đang mưa, hết ăn năn về thiếu, trọn tốt."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 鼎折足, 覆公錬, 其形屋, 凶.",
+          "vi": "Hào Chín Tư: Vạc gẫy chân, đổ đồ ăn của ông, thửa tội giết kín, hung."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 鼎黄耳, 金鉉, 利貞.",
+          "vi": "Hào Sáu Năm: Vạc tai vàng, quai màu vàng, lợi về chính bền."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 鼎玉鉉, 大吉, 無不利.",
+          "vi": "Hào Chín Trên: Đỉnh quai ngọc, cả tốt, không gì không lợi."
+        }
+      ]
+    },
+    {
+      "number": 51,
+      "name_zh": "震",
+      "name_pinyin": "Zhèn",
+      "judgment": {
+        "zh": "震亨, 震來虢虢, 笑言啞啞, 震驚百里, 不喪匕鬯.",
+        "vi": "Quẻ Chấn hanh, sợ lại ngơm ngớp, cười nói khanh khách, chấn kinh trăm dặm, chẳng mất môi và rượu xưởng."
+      },
+      "image": {
+        "zh": "象曰: 洊雷, 震, 君子以恐懼修省.",
+        "vi": "Lời Tượng nói rằng: Liền sấm là quẻ Chấn, đấng quân tử coi đó mà sợ hãi sửa xét."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 震來虢虢, 後笑言啞啞, 吉.",
+          "vi": "Hào Chín Đầu: Chấn lại ngơm ngớp, sau cười nói khanh khách, tốt."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 震來厲憶, 喪貝, 躋于九陵, 勿逐, 七日得.",
+          "vi": "Hào Chín Hai: Chấn lại, nguy đồ (?) mất của, lên chân chín gò, chớ đuổi, bảy ngày được."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 震蘇蘇, 震行无眚.",
+          "vi": "Hào Sáu Ba: Chấn, thom thỏm, chấn đi, không tội."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 震遂泥.",
+          "vi": "Hào Chín Tư: Chấn bèn đắm."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 震往來, 厲, 億無喪有.",
+          "vi": "Hào Sáu Năm: Chấn đi lại, nguy, đồ (?) không mất cái có."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 震索索, 視矍矍, 征凶, 震不于其躬, 于其鄰, 無咎, 婚媾有言.",
+          "vi": "Hào Sáu Trên: Chấn xơ xác, trông ngơ ngác, đi thì hung; chấn chẳng chưng thửa mình, chưng thửa láng giềng, không lỗi, dâu gia có điều tiếng."
+        }
+      ]
+    },
+    {
+      "number": 52,
+      "name_zh": "艮",
+      "name_pinyin": "Gèn",
+      "judgment": {
+        "zh": "艮其背, 不獲其身, 行其庭, 不見其人, 无咎.",
+        "vi": "Đậu thửa lưng, chẳng được thửa mình, đi thửa sân, chẳng thấy thửa người, không lỗi."
+      },
+      "image": {
+        "zh": "象曰: 兼山艮, 君子以思不出其位.",
+        "vi": "Lời Tượng nói rằng: Gồm núi là quẻ Cấn. Đấng quân tử coi đó mà nghĩ chẳng việc thửa ngôi."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 艮其趾, 無咎, 利永貞.",
+          "vi": "Hào Sáu Đầu: Đậu thửa ngón chân, không lỗi, lợi về dài lâu chính bền."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 艮其腓, 不拯其隨, 其心不快.",
+          "vi": "Hào Sáu Hai: Đậu thửa bụng chân, chẳng cứu thửa theo, thửa lòng chẳng sướng."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 艮其限, 列其夤, 厲薰心.",
+          "vi": "Hào Chín Ba: Đậu thửa hạn, xé thửa thăn, nguy hun lòng."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 艮其身, 無咎.",
+          "vi": "Hào Sáu Tư: Đậu thửa mình, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 艮其輔, 言有序, 悔亡.",
+          "vi": "Hào Sáu Năm: Đậu thửa mép, nói có thứ tự, ăn năn mất."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 敦艮, 吉.",
+          "vi": "Hào Chín Trên: Dầy đậu, tốt."
+        }
+      ]
+    },
+    {
+      "number": 53,
+      "name_zh": "漸",
+      "name_pinyin": "Jiàn",
+      "judgment": {
+        "zh": "漸女歸, 吉, 利貞.",
+        "vi": "Quẻ Tiệm, con gái về, tốt, lợi về chính bền."
+      },
+      "image": {
+        "zh": "象曰: 山上有木, 漸. 君子以居賢德, 善俗.",
+        "vi": "Lời Tượng nói rằng: Trên núi có cây là quẻ Tiệm. Đấng quân tử coi đó mà chứa đức hiền, làm hay thói tục."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 鴻漸于干, 小子厲, 有言, 無咎.",
+          "vi": "Hào Sáu Đầu: Con sếu tiến chưng bến, trẻ nhỏ nguy, có điều tiếng, không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "鴻漸于磐, 飲食衍衍.",
+          "vi": "Con sếu tiến chưng tảng đá, ăn uống hơn hớn."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 鴻漸于陸, 夫征不復, 婦孕不育, 凶, 利禦寇.",
+          "vi": "Hào Chín Ba: Con sếu tiến chưng đất liền, chồng đi chẳng lại, vợ chửa chẳng nuôi, hung, lợi về chống giặc."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 鴻漸于木, 或得其桷, 无咎.",
+          "vi": "Hào Sáu Tư: Con sếu tiến chưng cây, hoặc được thửa cành ngang, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 鴻漸于陸, 婦三歲不孕, 終莫之勝, 吉.",
+          "vi": "Hào Chín Năm: Con sếu tiến chưng gò, vợ ba năm chẳng chửa, rốt lại không gì thắng nó, tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 鴻漸于逵, 其羽可用為儀, 吉.",
+          "vi": "Hào Chín Trên: Con sếu tiến chưng đường mây, lông nó khá dùng làm miều cờ, tốt."
+        }
+      ]
+    },
+    {
+      "number": 54,
+      "name_zh": "歸妹",
+      "name_pinyin": "Guī Mèi",
+      "judgment": {
+        "zh": "歸妺征凶, 無攸利.",
+        "vi": "Quẻ Qui Muội, đi hung không thửa lợi."
+      },
+      "image": {
+        "zh": "象曰: 澤上有雷, 歸妺, 君子以永終知敝.",
+        "vi": "Lời Tượng nói rằng: Trên chằm có sấm là quẻ Qui Muội. Đấng quân tử coi đó mà làm dài lâu lúc chót, biết điều hỏng."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 歸妹以娣, 跛能履, 征吉.",
+          "vi": "Hào Chín Đầu: Em gái về nhà chồng như vợ lẽ, quẻ biết xẻo, đi tốt."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 眇能視, 利幽人之貞.",
+          "vi": "Hào Chín Hai: Chột biết trông, lợi về sự chính bền của bậc u nhân."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 歸妺以須, 反歸以娣.",
+          "vi": "Hào Sáu Ba: Em gái về bằng sự đợi, lại về như vợ lẽ."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 歸妺愆 期, 遲歸有時.",
+          "vi": "Hào Chín Tư: Em gái về nhà chồng lỗi hẹn, chậm về, có thời."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 帝乙歸妹, 其君之袂, 不如其娣之袂良, 月幾望, 吉.",
+          "vi": "Hào Sáu Năm: Vua Đế Ất gả chồng em gái, vạt áo của vua nó không đẹp bằng vạt áo của vợ lẽ nó. Mặt trăng hầu tuần vọng, tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 女承筐, 無實, 士刲羊無血, 無攸利.",
+          "vi": "Hào Sáu Trên: Con gái vâng giỏ, không đồ đựng; con trai giết dê, không máu; không thửa lợi."
+        }
+      ]
+    },
+    {
+      "number": 55,
+      "name_zh": "豐",
+      "name_pinyin": "Fēng",
+      "judgment": {
+        "zh": "豐亨, 王假之, 勿憂宜, 日中.",
+        "vi": "Quẻ Phong hanh thông, vua đến đấy, chớ lo, nên mặt trời giữa."
+      },
+      "image": {
+        "zh": "象曰: 雷電皆至, 豐, 君子以折獄致刑.",
+        "vi": "Sấm chớp đều đến là quẻ Phong. Đấng quân tử coi mà bẻ ngục đến hình."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 遇其配主, 雖旬無咎, 往有尚.",
+          "vi": "Hào Chín Đầu: Gặp thử chủ sánh, đều không lỗi, đi có chuộng."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 豐其蔀, 日中見斗, 往得疑疾, 有孚發若, 吉.",
+          "vi": "Hào Sáu Hai: Thịnh thửa trướng che, giữa ban ngày thấy sao Đẩu, đi thì găp ngờ ghét, có tin dường mở ra vậy, tốt."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 豐其沛, 日中見沫, 折其右肱, 無咎.",
+          "vi": "Hào Chín Ba: Thịnh thửa màn, giữa ban ngày thấy sao Mạt, gãy thửa cánh tay phải, không lỗi."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 豐其蔀, 日中見斗, 遇其夷主, 吉.",
+          "vi": "Hào Chín Tư: Thịnh thửa trướng, giữa ban ngày thấy sao Đẩu, gặp thửa chủ ngang, tốt."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 來章有慶譽, 吉.",
+          "vi": "Hào Sáu Năm: Lại đẹp có phúc khen, tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 豐其屋, 蔀其家, 闚其戶, 闃其無人, 三歲不覿, 凶.",
+          "vi": "Hào Sáu Trên: Thịnh thửa mái, che thửa nhà nhòm thửa cửa, hiu quạnh thửa không người, ba năm chẳng thấy, hung."
+        }
+      ]
+    },
+    {
+      "number": 56,
+      "name_zh": "旅",
+      "name_pinyin": "Lǚ",
+      "judgment": {
+        "zh": "旅小亨, 旅貞吉.",
+        "vi": "Quẻ Lữ, hanh thông nhỏ, đi đường chính bền tốt."
+      },
+      "image": {
+        "zh": "象曰: 山上有火, 旅, 君子以明順用刑而不留獄.",
+        "vi": "Lời Tượng nói rằng: Trên núi có lửa là quẻ Lữ, đấng quân tử coi đó mà sáng ghín dùng hình, mà chẳng để đọng ngục."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 旅瑣瑣, 斯其所取災.",
+          "vi": "Hào Sáu Đầu: Hành lữ nhỏ mọn, ấy là cái lấy vạ."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 旅即次, 懷其資, 得童僕貞.",
+          "vi": "Hào Sáu Hai: Hành lữ tới chỗ trọ, ôm thửa của, được thằng nhỏ đầy tớ chính bền."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 旅焚其次, 喪其童僕, 貞厲.",
+          "vi": "Hào Chín Ba: Hành lữ cháy thửa nhà trọ, mất thửa thằng nhỏ đầy tớ, chính bền nguy."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 旅于處, 淂其資斧, 我心不快.",
+          "vi": "Hào Chín Tư: Hành lữ chưng ở, được thửa của búa, lòng ta chẳng sướng."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 射雉, 一矢亡, 終以譽命.",
+          "vi": "Hào Sáu Năm: Bắn chim trĩ, một phát tên mất, chót được khen mệnh."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 鳥焚其巢, 旅人先笑, 後號眺, 喪牛于易, 凶.",
+          "vi": "Hào Chín Trên: Chim cháy thửa tổ, kẻ hành lữ trước cười, sau kêu gào, mất trâu dễ dàng, hung."
+        }
+      ]
+    },
+    {
+      "number": 57,
+      "name_zh": "巽",
+      "name_pinyin": "Xùn",
+      "judgment": {
+        "zh": "巽小亨, 利有攸往, 利見大人.",
+        "vi": "Quẻ Tốn nhỏ hanh thông, lợi có thửa đi, lời thấy người lớn."
+      },
+      "image": {
+        "zh": "象曰: 隨風巽. 君子以申命行事.",
+        "vi": "Lời Tượng nói rằng: Theo gió là quẻ Tốn. Đấng quân tử coi đó mà nhắc lại mệnh lệnh, làm việc."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 進退, 利武人之貞.",
+          "vi": "Hào Sáu Đầu: Tiến lui, lợi về sự chính bền của người võ."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 巽在床下, 用史巫紛若, 吉, 无咎",
+          "vi": "Hào Chín Hai: Nhún ở dưới giường, dùng thày bói, thày cúng bời bời vậy, tốt, không lỗi."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 頻巽吝.",
+          "vi": "Hào Chín Ba: Liền nhún, đáng tiếc."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 悔亡, 田獲三品.",
+          "vi": "Hào Sáu Tư: Ăn năn mất, săn được ba phẩm."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 貞吉, 悔亡, 無不利, 無初有終, 先庚三日, 后庚三日, 吉.",
+          "vi": "Hào Chín Năm: Chính bền tốt, ăn năn mất, không gì lợi, không đầu có cuối, trước Canh ba ngày, sau Canh ba ngày, tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 巽在床下, 喪其資斧, 貞凶.",
+          "vi": "Hào Chín Trên: Nhún ở dưới giường, mất thửa của búa, hung."
+        }
+      ]
+    },
+    {
+      "number": 58,
+      "name_zh": "兌",
+      "name_pinyin": "Duì",
+      "judgment": {
+        "zh": null,
+        "vi": null
+      },
+      "image": {
+        "zh": "象曰: 麗澤, 兌. 君子以朋友講習.",
+        "vi": "Lời Tượng nói rằng: Bám chằm là quẻ Đoái, đấng quân tử coi đó mà bè bạn giảng tập."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": null,
+          "vi": null
+        },
+        {
+          "position": 2,
+          "zh": "九二: 孚兌, 吉, 悔亡.",
+          "vi": "Hào Chín Hai: Tin đẹp lòng, tốt, ăn năn mất."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 來兌, 凶.",
+          "vi": "Hào Sáu Ba: Lại làm đẹp lòng, hung."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 商兌, 未寧, 介疾, 有喜.",
+          "vi": "Hào Chín Tư: Đắn đo đẹp lòng chưa yên, thẳng ghét, có mừng."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 孚于剝, 有厲.",
+          "vi": "Hào Chín Năm: Tin chung đẽo, có nguy."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 引兌.",
+          "vi": "Hào Sáu Trên: Kéo dài sự đẹp lòng."
+        }
+      ]
+    },
+    {
+      "number": 59,
+      "name_zh": "渙",
+      "name_pinyin": "Huàn",
+      "judgment": {
+        "zh": "渙亨, 王假有廟, 利涉大川, 利貞.",
+        "vi": "Quẻ Hoán hanh, vua đến có miếu, lợi sang sông lớn, lợi về chính bền."
+      },
+      "image": {
+        "zh": "象曰: 風行水上, 渙. 先王以享于帝立廟.",
+        "vi": "Lời Tượng nói rằng: Gió đi trên nước là quẻ Hoán. Đấng tiên vương coi đó mà cúng trời, dựng miếu."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 拯馬壯, 吉.",
+          "vi": "Hào Sáu Đầu: Vớt ngựa mạnh, tốt."
+        },
+        {
+          "position": 2,
+          "zh": null,
+          "vi": null
+        },
+        {
+          "position": 3,
+          "zh": "六三: 渙其躬, 無悔.",
+          "vi": "Hào Sáu Ba: Tan thửa mình, không ăn năn."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 渙其群, 元吉. 渙有丘, 匪夷所思.",
+          "vi": "Hào Sáu Tư: Tan thửa đàn, cả tốt; tan có gò, chẳng phải thường thửa nghĩ."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 渙汗其大號, 渙王居, 無咎.",
+          "vi": "Hào Chín Năm: Tan bồ hôi thửa hiệu lớn, tan chỗ ở của vua, không lỗi."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 渙其血去, 逖出, 无咎",
+          "vi": "Hào Chín Trên: Tan thửa máu đi, rùng rợn ra, không lỗi."
+        }
+      ]
+    },
+    {
+      "number": 60,
+      "name_zh": "節",
+      "name_pinyin": "Jié",
+      "judgment": {
+        "zh": "節亨, 苦節不可貞.",
+        "vi": "Quẻ Tiết hanh, sự dè dặt khổ không thể chính bền."
+      },
+      "image": {
+        "zh": "象曰: 澤上有水, 節. 君子以制數度, 議德行.",
+        "vi": "Lời Tượng nói rằng: Trên chằm có nước là quẻ Tiết. Đấng quân tử coi đó mà chế độ, bàn đức nết."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 不出戶庭, 無咎.",
+          "vi": "Hào Chín Đầu: Chẳng ra sân cửa, không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 不出門庭, 凶.",
+          "vi": "Hào Chín Hai: Chẳng ra sân cổng, hung."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 不節若, 則嗟若, 無咎.",
+          "vi": "Hào Sáu Ba: Chẳng dè dặt vậy thì than thở vậy, không lỗi."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 安節, 亨.",
+          "vi": "Hào Sáu Tư: Yên dè dặt, hanh."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 甘節, 吉, 往有尚.",
+          "vi": "Hào Chín Năm: Sự dè dặt ngọt, tốt, đi có chuộng."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 苦節, 貞凶, 悔亡.",
+          "vi": "Hào Sáu Trên: Sự dè dặt khổ, chính bền hung, ăn năn mất."
+        }
+      ]
+    },
+    {
+      "number": 61,
+      "name_zh": "中孚",
+      "name_pinyin": "Zhōng Fú",
+      "judgment": {
+        "zh": "中孚, 豚魚吉, 利涉大川, 利貞.",
+        "vi": "Quẻ Trung Phu: Cá lợn tốt, lợi sang sông lớn, lợi về chính bền."
+      },
+      "image": {
+        "zh": "象曰: 澤上有風, 中孚, 君子以議獄緩死.",
+        "vi": "Lời Tượng nói rằng: Trên chằm có gió là quẻ Trung Phu. Đấng quân tử coi đó mà bàn việc ngục, hoãn tội chết."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 虞吉, 有他, 不燕.",
+          "vi": "Hào Chín Đầu: Lo tốt, có khác, chẳng yên."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 鳴鶴在陰. 其子和之, 我有好爵, 吾與爾靡之.",
+          "vi": "Hào Chín Hai: Con Hạc kêu ở chỗ tối, con nó họa đấy; ta có tước tốt, tao cùng mày thích đấy."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 得敵, 或鼓或罷, 或泣或歌.",
+          "vi": "Hào Sáu Ba: Được kẻ địch, hoặc khua trống hoặc thôi, hoặc khóc hoặc múa."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 月几望, 馬匹亡, 無咎.",
+          "vi": "Hào Sáu Tư: mặt trăng hầu tuần vọng, đôi ngựa mất, không lỗi."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 有孚攣如, 無 咎.",
+          "vi": "Hào Chín Năm: Có tin dường như co quắp vậy, không lỗi."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 翰音登于天, 貞凶.",
+          "vi": "Hào Chín Trên: Tiếng cánh lên chưng trời, chính bền hung."
+        }
+      ]
+    },
+    {
+      "number": 62,
+      "name_zh": "小過",
+      "name_pinyin": "Xiǎo Guò",
+      "judgment": {
+        "zh": "小過, 亨, 利貞. 可小事, 不可大事, 飛鳥遺之音, 不宜上, 宜下, 大吉.",
+        "vi": "Quẻ Tiểu Quá hanh, lợi về chính bền. Khá việc nhỏ, chẳng khá việc lớn, chim bay để chưng tiếng, chẳng nên lên, nên xuống, cả tốt."
+      },
+      "image": {
+        "zh": "象曰: 山上有雷, 小過. 君子以行過乎恭, 喪過乎哀, 用過乎儉.",
+        "vi": "Lời Tượng nói rằng: Trên núi có sấm là quẻ Tiểu Quá. Đấng quân tử coi đó mà nên nết quá chưng kính, tang quá chưng thương, dùng quá chưng kiệm."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 飛鳥以凶.",
+          "vi": "Hào Sáu Đầu: Chim bay là hung."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 過其祖, 遇其妣; 不及其君, 遇其臣, 無咎.",
+          "vi": "Hào Sáu Hai: Quá thửa ông, gặp thửa bà; chẳng kịp thửa vua, gặp thửa bề tôi, không lỗi."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 弗過防之, 從或戕之, 凶.",
+          "vi": "Hào Chín Ba: Chẳng quá ngừa đó, theo hoặc hại đó, hung."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 無咎, 弗過遇之, 往厲, 必戒, 勿用永貞.",
+          "vi": "Hào Chín Tự: Không lỗi chẳng quá gặp đấy, đi nguy, ắt răn, chớ dùng dài lâu chính bền."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 密云不雨, 自我西郊, 公弋取彼, 在穴.",
+          "vi": "Hào Sáu Năm: Mây dầy chẳng mưa, ở cõi Tây lại, ông bắn lấy nó ở hang."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 弗遇過之, 飛鳥離之, 凶, 是謂災眚.",
+          "vi": "Hào Sáu Trên: Chẳng gặp, quá đấy, chim bay lìa đấy, hung, ấy rằng vạ tội."
+        }
+      ]
+    },
+    {
+      "number": 63,
+      "name_zh": "既濟",
+      "name_pinyin": "Jì Jì",
+      "judgment": {
+        "zh": "既濟, 亨, 小利貞, 初吉, 終亂.",
+        "vi": "Quẻ Ký Tế hanh, lợi nhỏ về chính bền, đầu tốt, chót loạn."
+      },
+      "image": {
+        "zh": "象曰: 水在火上, 既濟. 君子以思患而預防之.",
+        "vi": "Lời Tượng nói rằng: Nước ở trên lửa là quẻ Ký Tế. Đấng quân tử coi đó để nghĩ sự lo mà ngừa sẵn đấy."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初九: 曳其輪, 濡其尾, 無咎.",
+          "vi": "Hào Chín Đầu: Kéo thửa bánh xe, ướt thửa đuôi không lỗi."
+        },
+        {
+          "position": 2,
+          "zh": "六二: 婦喪其茀, 勿逐, 七日得.",
+          "vi": "Hào Sáu Hai: Đàn bà mất thửa khăn trùm chớ đuổi, bảy ngày được."
+        },
+        {
+          "position": 3,
+          "zh": "九三: 高宗伐鬼方, 三年克之, 小人勿用.",
+          "vi": "Hào Chín Ba: Vua Cao Tông đánh nước Quỷ Phương, ba năm được đấy, kẻ tiểu nhân chờ dùng."
+        },
+        {
+          "position": 4,
+          "zh": "六四: 繻有衣袽, 終日戒.",
+          "vi": "Hào Sáu Tư: Ướt đã có áo giẻ, trọn ngày răn."
+        },
+        {
+          "position": 5,
+          "zh": "九五: 東鄰殺牛不如西鄰之禴祭. 實受其福.",
+          "vi": "Hào Chín Năm: Láng giềng bên Đông giết trâu chẳng bằng láng giềng bên Tây tế Thược, thật chịu thửa phúc."
+        },
+        {
+          "position": 6,
+          "zh": "上六: 濡其首, 厲.",
+          "vi": "Hào Sáu Trên: Ướt thửa đầu, nguy!"
+        }
+      ]
+    },
+    {
+      "number": 64,
+      "name_zh": "未濟",
+      "name_pinyin": "Wèi Jì",
+      "judgment": {
+        "zh": "未濟, 亨, 小狐汔濟, 濡其尾, 無攸利.",
+        "vi": "Quẻ Vị Tế hanh, con cáo nhỏ hầu sang, ướt thửa đuôi, không thửa lợi."
+      },
+      "image": {
+        "zh": "象曰: 火在水上, 未濟. 君子以慎辨物, 居方.",
+        "vi": "Lời Tượng nói rằng: Lửa ở trên nước, là quẻ Vị Tế. Đấng quân tử coi đó mà cẩn thận phân biệt các vật, ở phương."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "zh": "初六: 濡其尾, 吝.",
+          "vi": "Hào Sáu Đầu: Ướt thửa đuôi, đáng thẹn."
+        },
+        {
+          "position": 2,
+          "zh": "九二: 曳其輪, 貞吉.",
+          "vi": "Hào Chín hai: Kéo thửa bánh xe, chính bền, tốt."
+        },
+        {
+          "position": 3,
+          "zh": "六三: 未濟, 征凶, 利涉大川.",
+          "vi": "Hào Sáu ba: Chưa sang, đi hung, lợi về sang sông lớn."
+        },
+        {
+          "position": 4,
+          "zh": "九四: 貞吉, 悔亡. 震用伐鬼方, 三年有賞于大國.",
+          "vi": "Hào Chín Tư: Chính bền, ăn năn mất, chấn dùng đánh nước Quỷ Phương, ba năm có thưởng chưng nước lớn."
+        },
+        {
+          "position": 5,
+          "zh": "六五: 貞吉, 無悔, 君子之光, 有孚, 吉.",
+          "vi": "Hào Sáu Năm: Chính bền tốt, không ăn năn, sự sáng của đấng quân tử, có tin tốt."
+        },
+        {
+          "position": 6,
+          "zh": "上九: 有孚于飲酒, 無咎, 濡其首, 有孚, 失是.",
+          "vi": "Hào Chín Trên: có tin chưng uống rượu, không lỗi, ướt thửa đầu, có tin, đúng là mất."
+        }
+      ]
+    }
+  ]
+}
