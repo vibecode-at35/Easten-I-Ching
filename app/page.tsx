@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { castFromLineValues, castHexagram } from "../lib/iching/casting";
 import type { CastResult } from "../lib/iching/types";
 import { Landing } from "../components/Landing";
@@ -9,6 +10,7 @@ import { CastingCeremony } from "../components/CastingCeremony";
 import { ReadingScreen } from "../components/ReadingScreen";
 import { ExitButton } from "../components/ExitButton";
 import { useLocale } from "../lib/i18n/LocaleProvider";
+import { sceneVariants } from "../lib/motion";
 
 /**
  * The core loop's orchestration: landing -> question entry -> casting
@@ -62,12 +64,10 @@ export default function HomePage() {
     setPhase("casting");
   }
 
-  if (phase === "landing") {
-    return <Landing onBegin={() => setPhase("entry")} />;
-  }
-
   const screen =
-    phase === "casting" && cast ? (
+    phase === "landing" ? (
+      <Landing onBegin={() => setPhase("entry")} />
+    ) : phase === "casting" && cast ? (
       <CastingCeremony
         question={question}
         cast={cast}
@@ -90,11 +90,23 @@ export default function HomePage() {
     );
 
   // Every in-flow screen (entry / casting / reading) gets the always-available
-  // exit back to the landing screen; the landing itself returned above.
+  // exit back to the landing; the landing itself has nothing to exit from.
+  // AnimatePresence cross-fades one scene out as the next rises in (mode="wait"
+  // so they never overlap); the persistent MysticBackdrop sits behind it all.
   return (
     <>
-      <ExitButton onExit={goHome} />
-      {screen}
+      {phase !== "landing" && <ExitButton onExit={goHome} />}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={phase}
+          variants={sceneVariants}
+          initial="initial"
+          animate="enter"
+          exit="exit"
+        >
+          {screen}
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 }

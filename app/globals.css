@@ -1,37 +1,49 @@
 @import "tailwindcss";
 
 /*
- * "Ink by night" — the dark, gold-accented design system (M4 redesign).
- * Promoted from the M3 stub to the real default theme. Components use these
- * as ordinary utility classes (bg-bg, text-text, text-gold, bg-surface, …).
+ * "Imperial lacquer" — the maximalist, ancient-Eastern-mystique design system
+ * (the post-M4 redesign: the opposite of minimalism). Components use these as
+ * ordinary utility classes (bg-bg, text-text, text-gold, bg-surface, …); the
+ * token *names* are unchanged from the old "ink by night" theme so existing
+ * references keep working — only the values and the additions are new.
  *
- * Palette intent: a deep night-ink canvas, warm parchment text, and gold as
- * the single carrying accent (wordmark, hexagram lines, primary actions).
- * Cinnabar is reserved for the seal and changing-line marks — the one note
- * of strong red against the gold-and-ink field.
+ * Palette intent: a deep ox-blood lacquer ground (temple doors, palace
+ * walls), heavy imperial gold as the carrying accent (wordmark, filigree,
+ * hexagram lines, primary actions), warm parchment text, and cinnabar for
+ * seals and changing-line marks. Smoke/ember haze (ash) and gold leaf carry
+ * the ornament layer.
  */
 @theme {
-  /* Surfaces — darkest canvas up to raised cards/inputs. */
-  --color-bg: #14161e;
-  --color-surface: #1c2030;
-  --color-surface-raised: #262b3d;
+  /* Surfaces — deep lacquer ground up to raised carved-wood panels. */
+  --color-bg: #2b0a07;
+  --color-bg-deep: #160403;
+  --color-surface: #3d120c;
+  --color-surface-raised: #4f1810;
 
   /* Text — warm parchment, with a muted step for labels/captions. */
-  --color-text: #ece6d6;
-  --color-text-muted: #978f7c;
+  --color-text: #f0e6cf;
+  --color-text-muted: #c2a585;
 
-  /* Gold — the primary accent; -bright for hover/emphasis, -dim for hairlines. */
-  --color-gold: #c9a24a;
-  --color-gold-bright: #e3c074;
-  --color-gold-dim: rgba(201, 162, 74, 0.35);
+  /* Gold — the carrying accent; -bright for hover/emphasis, -dim for hairlines,
+     -leaf for filigree/engraved strokes. */
+  --color-gold: #d4af37;
+  --color-gold-bright: #f4d77a;
+  --color-gold-dim: rgba(212, 175, 55, 0.38);
+  --color-gold-leaf: #b8902e;
 
-  /* Cinnabar — seal + changing-line marks only. */
-  --color-cinnabar: #b23f2c;
-  --color-cinnabar-deep: #8f2f20;
+  /* Cinnabar / vermilion — seal, changing-line marks, ritual accents. */
+  --color-cinnabar: #c8412a;
+  --color-cinnabar-deep: #9c2e1c;
+  --color-vermilion: #e2543a;
 
-  --color-hairline: rgba(236, 230, 214, 0.12);
+  /* Smoke & ember haze for the atmosphere layer. */
+  --color-ash: rgba(232, 220, 198, 0.10);
 
-  /* Serif for content (the reading, hexagram names); sans for chrome (buttons, labels). */
+  --color-hairline: rgba(240, 230, 207, 0.16);
+
+  /* Brush calligraphy for the wordmark / seals / hexagram names; serif for
+     content; sans for chrome. */
+  --font-brush: var(--font-ma-shan), var(--font-noto-serif-tc), serif;
   --font-serif: var(--font-noto-serif), var(--font-noto-serif-tc), serif;
   --font-sans: var(--font-inter), sans-serif;
 
@@ -41,6 +53,45 @@
 
   /* Hexagram name (CJK): large, 40-56px. Midpoint default; tune per screen. */
   --text-hexagram-name: 3rem;
+}
+
+/*
+ * Texture utilities for the lacquer ground and ornament (the immersive,
+ * "overwhelming" layer). Used by MysticBackdrop and the carved frames.
+ */
+.lacquer-ground {
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(95, 24, 16, 0.9) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 70% at 50% 110%, rgba(20, 5, 4, 0.95) 0%, transparent 55%),
+    linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-deep) 100%);
+}
+
+/* Faint craquelure / aged-lacquer grain laid over the ground. */
+.craquelure {
+  background-image:
+    repeating-linear-gradient(58deg, rgba(0, 0, 0, 0.06) 0 2px, transparent 2px 7px),
+    repeating-linear-gradient(-32deg, rgba(0, 0, 0, 0.05) 0 2px, transparent 2px 9px);
+  mix-blend-mode: multiply;
+}
+
+/* Heavy edge vignette to pull focus to the center. */
+.altar-vignette {
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(10, 2, 2, 0.72) 100%);
+}
+
+/* Gold-foil sheen for engraved/filigree text and frames. */
+.gold-foil {
+  background: linear-gradient(
+    135deg,
+    var(--color-gold-leaf) 0%,
+    var(--color-gold) 30%,
+    var(--color-gold-bright) 50%,
+    var(--color-gold) 70%,
+    var(--color-gold-leaf) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /*
@@ -292,11 +343,79 @@
   animation: slow-spin 80s linear infinite;
 }
 
+/*
+ * ── Imperial-lacquer ornament motion (the maximalist redesign) ──
+ * The atmosphere/particle motion (drifting smoke, embers, glyph rain) runs in
+ * a single requestAnimationFrame loop on canvas (MysticBackdrop) and is gated
+ * in JS by prefers-reduced-motion; the keyframes below drive the SVG ornament
+ * (bagua rings, carved frames, lanterns, gold glints) and any CSS-particle
+ * fallbacks.
+ */
+
+/* Slow, ceremonial rotation of a bagua / trigram ring. */
+@keyframes bagua-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-bagua { animation: bagua-rotate 120s linear infinite; }
+.animate-bagua-reverse { animation: bagua-rotate 90s linear infinite reverse; }
+
+/* A roaming glint that crosses gold filigree, like candlelight on leaf. */
+@keyframes gold-glint {
+  0% { background-position: -160% 0; }
+  100% { background-position: 260% 0; }
+}
+.animate-gold-glint {
+  background-size: 250% 100%;
+  animation: gold-glint 7s ease-in-out infinite;
+}
+
+/* A carved frame settling into place — a slight press-in with a gold flare. */
+@keyframes frame-carve-in {
+  0% { opacity: 0; transform: scale(1.04); filter: drop-shadow(0 0 0 rgba(212, 175, 55, 0)); }
+  60% { opacity: 1; filter: drop-shadow(0 0 14px rgba(212, 175, 55, 0.45)); }
+  100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.18)); }
+}
+.animate-frame-carve-in { animation: frame-carve-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Lantern / candle flicker — an uneven warm pulse for glows behind ornament. */
+@keyframes lantern-flicker {
+  0%, 100% { opacity: 0.85; }
+  20% { opacity: 0.62; }
+  35% { opacity: 0.95; }
+  55% { opacity: 0.7; }
+  72% { opacity: 0.9; }
+}
+.animate-lantern { animation: lantern-flicker 5.5s ease-in-out infinite; }
+
+/* CSS fallbacks for the particle motifs (the canvas loop is primary). */
+@keyframes smoke-rise {
+  0% { opacity: 0; transform: translateY(0) scale(0.8); }
+  25% { opacity: 0.5; }
+  100% { opacity: 0; transform: translateY(-60vh) scale(1.8); }
+}
+@keyframes ember-float {
+  0% { opacity: 0; transform: translateY(0) translateX(0); }
+  20% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateY(-70vh) translateX(12px); }
+}
+@keyframes glyph-drift {
+  0% { opacity: 0; transform: translateY(-10vh); }
+  15% { opacity: 0.5; }
+  85% { opacity: 0.5; }
+  100% { opacity: 0; transform: translateY(105vh); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .gold-shimmer,
   .animate-slow-spin,
   .animate-pop-in,
-  .animate-fade-up {
+  .animate-fade-up,
+  .animate-bagua,
+  .animate-bagua-reverse,
+  .animate-gold-glint,
+  .animate-frame-carve-in,
+  .animate-lantern {
     animation: none;
   }
   .gold-shimmer {

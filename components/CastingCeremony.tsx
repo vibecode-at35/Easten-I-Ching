@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import type { CastResult, CoinFace } from "../lib/iching/types";
 import { coinFacesForLine } from "../lib/iching/casting";
 import { LineRow } from "./HexagramGlyph";
 import { Seal } from "./Seal";
 import { getAllHexagramIdentities } from "../lib/db/hexagrams";
 import { useT } from "../lib/i18n/LocaleProvider";
+import { BaguaRing } from "./ornament/BaguaRing";
+import { riseFromAsh, staggerContainer } from "../lib/motion";
 
 /**
  * The casting ceremony — docs/TASKS/milestone-3-reading-experience.md §6.2.
@@ -138,43 +141,64 @@ export function CastingCeremony({ question, cast, onComplete }: CastingCeremonyP
   const identity = hexagramIdentities.find((h) => h.number === cast.primaryHexagram);
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center gap-10 px-6 py-16 sm:gap-16 sm:py-20">
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0"
-        style={{
-          background: "radial-gradient(circle at center, transparent 45%, rgba(0, 0, 0, 0.45) 100%)",
-        }}
-      />
+    <motion.main
+      variants={staggerContainer}
+      initial="initial"
+      animate="enter"
+      className="relative flex min-h-screen flex-col items-center justify-center gap-10 px-6 py-16 sm:gap-14 sm:py-20"
+    >
+      <motion.p
+        variants={riseFromAsh}
+        className="max-w-md text-center font-serif text-base italic text-text-muted"
+      >
+        {question}
+      </motion.p>
 
-      <p className="animate-fade-up max-w-md text-center font-serif text-base italic text-text-muted">{question}</p>
-
-      <div className="flex items-center gap-8 sm:gap-10">
-        <div className="flex flex-col items-center gap-3" aria-live="polite">
-          {topToBottom.map((line) =>
-            line.position <= revealed ? (
-              <div key={line.position} className="brush-reveal">
-                <LineRow
-                  isYang={(line.value & 1) === 1}
-                  isChanging={changingPositions.has(line.position)}
-                  size="large"
-                />
-              </div>
-            ) : (
-              <div key={line.position} className="flex h-4 w-44 items-center gap-2" aria-hidden />
-            ),
-          )}
+      {/* The casting altar: the hexagram forms at the center of a turning bagua
+          ring; the seal stamps in beside it on completion with an ember flare. */}
+      <motion.div variants={riseFromAsh} className="relative flex items-center justify-center">
+        <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <BaguaRing size={440} className="opacity-55" />
         </div>
 
-        {isComplete && identity && (
-          <div className="animate-seal-stamp flex flex-col items-center gap-2">
-            <Seal label={identity.nameZh} />
-            <span className="font-sans text-sm text-text-muted">#{identity.number}</span>
+        <div className="relative flex items-center gap-8 sm:gap-12">
+          <div className="flex flex-col items-center gap-3" aria-live="polite">
+            {topToBottom.map((line) =>
+              line.position <= revealed ? (
+                <div key={line.position} className="brush-reveal">
+                  <LineRow
+                    isYang={(line.value & 1) === 1}
+                    isChanging={changingPositions.has(line.position)}
+                    size="large"
+                  />
+                </div>
+              ) : (
+                <div key={line.position} className="flex h-4 w-44 items-center gap-2" aria-hidden />
+              ),
+            )}
           </div>
-        )}
-      </div>
 
-      <div className="flex flex-col items-center gap-6">
+          {isComplete && identity && (
+            <div className="relative flex flex-col items-center gap-2">
+              {/* ember flare igniting behind the seal as it stamps */}
+              <div
+                aria-hidden
+                className="animate-pop-in pointer-events-none absolute -inset-6 rounded-full"
+                style={{
+                  background:
+                    "radial-gradient(circle, rgba(244,170,90,0.35) 0%, rgba(200,65,42,0.18) 45%, transparent 72%)",
+                }}
+              />
+              <div className="animate-seal-stamp relative flex flex-col items-center gap-2">
+                <Seal label={identity.nameZh} />
+                <span className="font-sans text-sm text-text-muted">#{identity.number}</span>
+              </div>
+            </div>
+          )}
+        </div>
+      </motion.div>
+
+      <motion.div variants={riseFromAsh} className="flex flex-col items-center gap-6">
         <div className="flex gap-5 sm:gap-6" style={{ perspective: "800px" }} aria-hidden>
           {[0, 1, 2].map((i) => (
             <Coin key={`${i}-${tossId}`} index={i} tossId={tossId} face={faces ? faces[i] : null} />
@@ -182,24 +206,28 @@ export function CastingCeremony({ question, cast, onComplete }: CastingCeremonyP
         </div>
 
         {!isComplete ? (
-          <button
+          <motion.button
             type="button"
             onClick={handleToss}
             disabled={busy}
-            className="rounded-full border border-gold px-10 py-2.5 font-sans text-sm tracking-widest uppercase text-gold transition-colors duration-200 enabled:hover:bg-gold enabled:hover:text-bg disabled:border-hairline disabled:text-text-muted"
+            whileHover={!busy ? { scale: 1.04 } : undefined}
+            whileTap={!busy ? { scale: 0.97 } : undefined}
+            className="rounded-full border border-gold bg-gold/5 px-10 py-2.5 font-sans text-sm tracking-widest uppercase text-gold shadow-[0_0_18px_rgba(212,175,55,0.14)] transition-colors duration-300 enabled:hover:bg-gold enabled:hover:text-bg disabled:border-hairline disabled:text-text-muted disabled:shadow-none"
           >
             {revealed === 0 ? t("cast.first") : t("cast.line", { n: revealed + 1 })}
-          </button>
+          </motion.button>
         ) : (
-          <button
+          <motion.button
             type="button"
             onClick={() => onComplete(cast)}
-            className="rounded-full border border-gold px-10 py-2.5 font-sans text-sm tracking-widest uppercase text-gold transition-colors duration-200 hover:bg-gold hover:text-bg"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            className="rounded-full border border-gold bg-gold/5 px-10 py-2.5 font-sans text-sm tracking-widest uppercase text-gold shadow-[0_0_18px_rgba(212,175,55,0.14)] transition-colors duration-300 hover:bg-gold hover:text-bg"
           >
             {t("cast.continue")}
-          </button>
+          </motion.button>
         )}
-      </div>
-    </main>
+      </motion.div>
+    </motion.main>
   );
 }

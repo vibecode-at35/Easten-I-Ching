@@ -64,6 +64,8 @@ export interface Messages {
 
   // Navigation
   "nav.exit": string;
+  /** Aria-label for the ambient-sound toggle (state via aria-pressed). */
+  "nav.sound": string;
 }
 
 export type MessageKey = keyof Messages;
@@ -112,6 +114,7 @@ export const messages: Record<Locale, Messages> = {
     "lang.zh": "中文",
     "lang.en": "English",
     "nav.exit": "Thoát",
+    "nav.sound": "Âm thanh nền",
   },
   zh: {
     "landing.subtitle": "周易",
@@ -156,6 +159,7 @@ export const messages: Record<Locale, Messages> = {
     "lang.zh": "中文",
     "lang.en": "English",
     "nav.exit": "退出",
+    "nav.sound": "环境音",
   },
   en: {
     "landing.subtitle": "BOOK OF CHANGES",
@@ -200,6 +204,7 @@ export const messages: Record<Locale, Messages> = {
     "lang.zh": "中文",
     "lang.en": "English",
     "nav.exit": "Exit",
+    "nav.sound": "Ambient sound",
   },
 };
 

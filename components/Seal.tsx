@@ -27,10 +27,10 @@ export function Seal({ label }: SealProps) {
 
   return (
     <div
-      className="flex h-20 w-20 items-center justify-center bg-cinnabar shadow-[inset_0_1px_2px_rgba(0,0,0,0.25)]"
+      className="flex h-20 w-20 items-center justify-center bg-cinnabar shadow-[inset_0_1px_2px_rgba(0,0,0,0.3),0_0_18px_rgba(212,175,55,0.28)]"
       style={{ clipPath: CARVED_EDGE }}
     >
-      <span className={`font-serif text-text ${isMultiChar ? "text-xl" : "text-3xl"}`}>
+      <span className={`font-brush text-text ${isMultiChar ? "text-2xl" : "text-4xl"}`}>
         {label}
       </span>
     </div>

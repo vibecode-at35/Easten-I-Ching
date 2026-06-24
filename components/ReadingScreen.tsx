@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import type { CastResult } from "../lib/iching/types";
 import type { Locale } from "../lib/interpretation/types";
 import { getHexagramStructure } from "../lib/db/hexagrams";
@@ -8,6 +9,10 @@ import { trigramImage, trigramName } from "../lib/i18n/trigrams";
 import { HexagramGlyph } from "./HexagramGlyph";
 import { useT } from "../lib/i18n/LocaleProvider";
 import type { MessageKey } from "../lib/i18n/messages";
+import { BaguaRing } from "./ornament/BaguaRing";
+import { CarvedFrame } from "./ornament/CarvedFrame";
+import { CloudScroll } from "./ornament/CloudScroll";
+import { riseFromAsh, staggerContainer } from "../lib/motion";
 
 /**
  * The reading screen (M4 redesign).
@@ -69,7 +74,7 @@ function extractBottomLine(text: string): string | null {
 function StatCell({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex flex-col items-center gap-1 px-3 py-4 text-center">
-      <span className="font-sans text-[0.62rem] tracking-[0.18em] uppercase text-text-muted">{label}</span>
+      <span className="font-sans text-[0.62rem] tracking-[0.18em] uppercase text-gold/70">{label}</span>
       <span className="font-serif text-base text-text">{value}</span>
     </div>
   );
@@ -77,13 +82,15 @@ function StatCell({ label, value }: { label: string; value: string }) {
 
 function Card({ icon, label, children }: { icon: string; label: string; children: React.ReactNode }) {
   return (
-    <div className="animate-pop-in rounded-lg border-l-2 border-gold bg-surface/60 py-4 pl-5 pr-5">
-      <div className="mb-2 flex items-center gap-2">
-        <span aria-hidden className="text-gold">{icon}</span>
-        <span className="font-sans text-xs tracking-[0.18em] uppercase text-text-muted">{label}</span>
+    <CarvedFrame corner="cloud" className="w-full">
+      <div className="rounded-2xl bg-surface/55 px-6 py-5">
+        <div className="mb-2 flex items-center gap-2">
+          <span aria-hidden className="text-gold-bright">{icon}</span>
+          <span className="font-sans text-xs tracking-[0.18em] uppercase text-gold/80">{label}</span>
+        </div>
+        <div className="font-serif text-base leading-relaxed text-text">{children}</div>
       </div>
-      <div className="font-serif text-base leading-relaxed text-text">{children}</div>
-    </div>
+    </CarvedFrame>
   );
 }
 
@@ -188,34 +195,54 @@ export function ReadingScreen({ question, context, cast, locale = "en", onCastAn
   const bottomLine = status === "done" ? extractBottomLine(text) : null;
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center px-6 py-14">
-      <div className="animate-fade-up flex w-full max-w-2xl flex-col items-center gap-8">
-        {/* ── Glyph ── */}
-        <HexagramGlyph cast={cast} size="large" />
+    <motion.main
+      variants={staggerContainer}
+      initial="initial"
+      animate="enter"
+      className="relative flex min-h-screen flex-col items-center px-6 py-16"
+    >
+      <div className="flex w-full max-w-2xl flex-col items-center gap-8">
+        {/* ── Glyph framed by a turning bagua ring ── */}
+        <motion.div variants={riseFromAsh} className="relative flex items-center justify-center py-4">
+          <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <BaguaRing size={300} className="opacity-45" />
+          </div>
+          <div className="relative">
+            <HexagramGlyph cast={cast} size="large" />
+          </div>
+        </motion.div>
 
         {/* ── Name ── */}
-        <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="font-serif text-gold" style={{ fontSize: "clamp(2.75rem, 11vw, 4rem)", letterSpacing: "0.1em" }}>
+        <motion.div variants={riseFromAsh} className="flex flex-col items-center gap-1 text-center">
+          <h1
+            className="gold-foil font-brush leading-none"
+            style={{ fontSize: "clamp(3rem, 13vw, 4.5rem)", letterSpacing: "0.08em" }}
+          >
             {structure.nameZh}
           </h1>
           <p className="font-serif text-xl italic text-text-muted">{structure.namePinyin}</p>
-          <span className="mt-1 font-sans text-xs tracking-[0.18em] uppercase text-text-muted">
+          <span className="mt-1 font-sans text-xs tracking-[0.18em] uppercase text-gold/70">
             #{structure.number}
           </span>
-        </div>
+          <CloudScroll width={170} className="mt-3" />
+        </motion.div>
 
         {/* ── Trigram stats ── */}
-        <div className="grid w-full grid-cols-3 divide-x divide-hairline rounded-xl border border-hairline bg-surface/40">
-          <StatCell label={t("reading.upperTrigram")} value={trigramName(locale, structure.upperTrigram)} />
-          <StatCell label={t("reading.lowerTrigram")} value={trigramName(locale, structure.lowerTrigram)} />
-          <StatCell
-            label={t("reading.image")}
-            value={trigramImage(locale, structure.upperTrigram, structure.lowerTrigram)}
-          />
-        </div>
+        <motion.div variants={riseFromAsh} className="w-full">
+          <CarvedFrame corner="cloud">
+            <div className="grid w-full grid-cols-3 divide-x divide-hairline rounded-2xl bg-surface/40">
+              <StatCell label={t("reading.upperTrigram")} value={trigramName(locale, structure.upperTrigram)} />
+              <StatCell label={t("reading.lowerTrigram")} value={trigramName(locale, structure.lowerTrigram)} />
+              <StatCell
+                label={t("reading.image")}
+                value={trigramImage(locale, structure.upperTrigram, structure.lowerTrigram)}
+              />
+            </div>
+          </CarvedFrame>
+        </motion.div>
 
         {/* ── Cards ── */}
-        <div className="flex w-full flex-col gap-4">
+        <motion.div variants={riseFromAsh} className="flex w-full flex-col gap-5">
           {judgment && (
             <Card icon="☰" label={t("reading.cardJudgment")}>
               {judgment}
@@ -242,7 +269,7 @@ export function ReadingScreen({ question, context, cast, locale = "en", onCastAn
               </span>
             )}
           </Card>
-        </div>
+        </motion.div>
 
         {/* ── Full reading toggle ── */}
         <button
@@ -310,14 +337,16 @@ export function ReadingScreen({ question, context, cast, locale = "en", onCastAn
         )}
 
         {/* ── Actions ── */}
-        <div className="mt-4 flex w-full flex-col items-center gap-4">
-          <button
+        <motion.div variants={riseFromAsh} className="mt-4 flex w-full flex-col items-center gap-4">
+          <motion.button
             type="button"
             onClick={onCastAnother}
-            className="w-full max-w-sm rounded-full border border-gold px-10 py-3.5 font-sans text-sm tracking-widest uppercase text-gold transition-colors duration-200 hover:bg-gold hover:text-bg"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full max-w-sm rounded-full border border-gold bg-gold/5 px-10 py-3.5 font-sans text-sm tracking-widest uppercase text-gold shadow-[0_0_20px_rgba(212,175,55,0.15)] transition-colors duration-300 hover:bg-gold hover:text-bg"
           >
             {t("reading.castAnother")}
-          </button>
+          </motion.button>
           <button
             type="button"
             onClick={onHome}
@@ -325,8 +354,8 @@ export function ReadingScreen({ question, context, cast, locale = "en", onCastAn
           >
             {t("reading.home")}
           </button>
-        </div>
+        </motion.div>
       </div>
-    </main>
+    </motion.main>
   );
 }

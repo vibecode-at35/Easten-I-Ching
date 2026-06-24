@@ -1,7 +1,12 @@
 "use client";
 
 import { useState, useRef, useLayoutEffect } from "react";
+import { motion } from "framer-motion";
 import { useLocale, useT } from "../lib/i18n/LocaleProvider";
+import { BaguaRing } from "./ornament/BaguaRing";
+import { CarvedFrame } from "./ornament/CarvedFrame";
+import { CloudScroll } from "./ornament/CloudScroll";
+import { riseFromAsh, staggerContainer } from "../lib/motion";
 
 export interface QuestionEntryProps {
   /**
@@ -119,45 +124,63 @@ export function QuestionEntry({ onReady }: QuestionEntryProps) {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-12 px-6 py-16">
-      {/* 易經 mark */}
-      <div className="animate-fade-up flex flex-col items-center gap-4" style={{ animationDelay: "0ms" }}>
-        <span className="font-serif text-gold" style={{ fontSize: "3rem", letterSpacing: "0.06em" }}>
-          易經
-        </span>
-        <span aria-hidden className="block h-px w-16 bg-gold-dim" />
+    <motion.main
+      variants={staggerContainer}
+      initial="initial"
+      animate="enter"
+      className="relative flex min-h-screen flex-col items-center justify-center gap-10 px-6 py-20"
+    >
+      {/* Faint bagua centerpiece behind the altar. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <BaguaRing size={460} className="opacity-35" />
       </div>
 
-      <div className="animate-fade-up flex w-full max-w-2xl flex-col items-center gap-8" style={{ animationDelay: "120ms" }}>
-        <textarea
-          ref={textareaRef}
-          value={question}
-          onChange={(event) => handleQuestionChange(event.target.value)}
-          onKeyDown={handleQuestionKeyDown}
-          rows={1}
-          placeholder={t("entry.placeholder")}
-          disabled={isLoading}
-          className="w-full resize-none bg-transparent px-4 py-2 text-center font-serif text-2xl leading-relaxed text-text placeholder:text-text-muted/50 focus:outline-none transition-colors disabled:opacity-50 sm:text-3xl"
-          style={{ overflow: "hidden" }}
-        />
+      {/* 易經 brush mark + cloud-scroll. */}
+      <motion.div variants={riseFromAsh} className="relative flex flex-col items-center gap-4">
+        <span
+          className="gold-foil font-brush leading-none"
+          style={{ fontSize: "3.4rem", letterSpacing: "0.06em" }}
+        >
+          易經
+        </span>
+        <CloudScroll width={180} />
+      </motion.div>
 
-        {/* Inline AI suggestion — appears right here, never on another screen */}
-        {clarifyState === "shown" && suggestion && (
-          <div className="animate-pop-in w-full rounded-lg border border-gold-dim bg-surface/60 p-5 text-left">
-            <div className="mb-3 flex items-center gap-2">
-              <span aria-hidden className="text-gold">✦</span>
-              <p className="font-serif text-base italic leading-relaxed text-text">{suggestion}</p>
-            </div>
+      {/* The question altar. */}
+      <motion.div variants={riseFromAsh} className="relative flex w-full max-w-2xl flex-col items-center gap-8">
+        <CarvedFrame glow corner="cloud" className="w-full">
+          <div className="rounded-2xl bg-bg/80 px-6 py-8 backdrop-blur-md sm:px-10 sm:py-10">
             <textarea
-              value={context}
-              onChange={(event) => setContext(event.target.value)}
-              onKeyDown={handleContextKeyDown}
-              rows={2}
-              placeholder={t("clarify.placeholder")}
-              className="w-full resize-none rounded-md border border-hairline bg-bg/40 px-3 py-2 font-serif text-base leading-relaxed text-text placeholder:text-text-muted/40 focus:border-gold-dim focus:outline-none"
+              ref={textareaRef}
+              value={question}
+              onChange={(event) => handleQuestionChange(event.target.value)}
+              onKeyDown={handleQuestionKeyDown}
+              rows={1}
+              placeholder={t("entry.placeholder")}
+              disabled={isLoading}
+              className="w-full resize-none bg-transparent text-center font-serif text-2xl leading-relaxed text-text placeholder:text-text-muted/70 transition-colors focus:outline-none disabled:opacity-50 sm:text-3xl"
+              style={{ overflow: "hidden" }}
             />
+
+            {/* Inline AI suggestion — appears right here, never on another screen */}
+            {clarifyState === "shown" && suggestion && (
+              <div className="animate-pop-in mt-6 w-full rounded-lg border border-gold-dim bg-bg/40 p-5 text-left">
+                <div className="mb-3 flex items-center gap-2">
+                  <span aria-hidden className="text-gold-bright">✦</span>
+                  <p className="font-serif text-base italic leading-relaxed text-text">{suggestion}</p>
+                </div>
+                <textarea
+                  value={context}
+                  onChange={(event) => setContext(event.target.value)}
+                  onKeyDown={handleContextKeyDown}
+                  rows={2}
+                  placeholder={t("clarify.placeholder")}
+                  className="w-full resize-none rounded-md border border-hairline bg-bg/50 px-3 py-2 font-serif text-base leading-relaxed text-text placeholder:text-text-muted/40 focus:border-gold-dim focus:outline-none"
+                />
+              </div>
+            )}
           </div>
-        )}
+        </CarvedFrame>
 
         {/* Controls */}
         <div className="flex min-h-12 flex-col items-center gap-3">
@@ -173,13 +196,15 @@ export function QuestionEntry({ onReady }: QuestionEntryProps) {
           ) : (
             isReady && (
               <>
-                <button
+                <motion.button
                   type="button"
                   onClick={handleCast}
-                  className="rounded-full border border-gold px-10 py-3 font-sans text-sm tracking-widest uppercase text-gold transition-colors duration-200 hover:bg-gold hover:text-bg"
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="rounded-full border border-gold bg-gold/5 px-10 py-3 font-sans text-sm tracking-widest uppercase text-gold shadow-[0_0_20px_rgba(212,175,55,0.15)] transition-colors duration-300 hover:bg-gold hover:text-bg"
                 >
                   {t("entry.submit")}
-                </button>
+                </motion.button>
 
                 {/* Ask-AI affordance (before consulting) / skip-context link (after) */}
                 {clarifyState === "shown" ? (
@@ -206,7 +231,7 @@ export function QuestionEntry({ onReady }: QuestionEntryProps) {
             )
           )}
         </div>
-      </div>
-    </main>
+      </motion.div>
+    </motion.main>
   );
 }
