@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import type { CastResult } from "../lib/iching/types";
+import type { CastResult, CoinFace } from "../lib/iching/types";
+import { coinFacesForLine } from "../lib/iching/casting";
 import { LineRow } from "./HexagramGlyph";
 import { Seal } from "./Seal";
 import { getAllHexagramIdentities } from "../lib/db/hexagrams";
+import { useT } from "../lib/i18n/LocaleProvider";
 
 /**
  * The casting ceremony — docs/TASKS/milestone-3-reading-experience.md §6.2.
@@ -31,34 +33,96 @@ export interface CastingCeremonyProps {
   onComplete: (cast: CastResult) => void;
 }
 
-/** Matches the coin-toss keyframes' total duration in globals.css (spin + settle). */
-const FLIP_DURATION_MS = 1400;
+/** Per-coin spin start offset, for a little life (see FLIP_DURATION_MS note). */
+const COIN_STAGGER_MS = 90;
+/**
+ * Time to wait after a toss before drawing the line. Must cover the coin-toss
+ * keyframe (1400ms in globals.css) plus the last coin's stagger.
+ */
+const FLIP_DURATION_MS = 1400 + COIN_STAGGER_MS * 2;
 /** The still beat after the coins land, before the line is drawn. */
 const PAUSE_AFTER_LANDING_MS = 400;
 
 const hexagramIdentities = getAllHexagramIdentities();
 
-/** A traditional round coin with a square center hole — ink-colored, evenodd cutout. */
-function Coin({ tossId }: { tossId: number }) {
+/**
+ * A casting coin drawn as a real 方孔錢 — a round Chinese cash coin with a
+ * square hole and the 乾隆通寶 reign inscription around it, the kind diviners
+ * actually toss. The face is the engine-derived one (coinFacesForLine), never
+ * invented here: bright gold = yang, aged bronze = yin, and a neutral muted
+ * coin at rest (face === null) before the first toss. The tone keeps yin/yang
+ * legible at a glance (M4 feedback #5) while looking like a genuine coin.
+ */
+type CoinPalette = { disc: string; rim: string; inner: string; char: string; sheen: string };
+
+const COIN_PALETTE: Record<"yang" | "yin" | "rest", CoinPalette> = {
+  yang: { disc: "#cda64d", rim: "#866627", inner: "#a9842f", char: "#2f240c", sheen: "rgba(255,248,225,0.55)" },
+  yin: { disc: "#6e5d3c", rim: "#42361f", inner: "#564629", char: "#d7b76a", sheen: "rgba(255,240,200,0.16)" },
+  rest: { disc: "#4b4736", rim: "#2b2920", inner: "#3a382b", char: "#9a927e", sheen: "rgba(255,255,255,0.08)" },
+};
+
+/** 乾隆通寶, placed top–bottom–right–left in the conventional reading order. */
+const COIN_INSCRIPTION = [
+  { ch: "乾", x: 32, y: 14 },
+  { ch: "隆", x: 32, y: 50 },
+  { ch: "通", x: 50, y: 32 },
+  { ch: "寶", x: 14, y: 32 },
+];
+
+function Coin({ face, tossId, index }: { face: CoinFace | null; tossId: number; index: number }) {
+  const p = COIN_PALETTE[face ?? "rest"];
+
   return (
-    <svg viewBox="0 0 40 40" className={`h-9 w-9 ${tossId > 0 ? "animate-coin-toss" : ""}`}>
-      <path
-        d="M 20 2 A 18 18 0 1 1 20 38 A 18 18 0 1 1 20 2 Z M 15 15 L 25 15 L 25 25 L 15 25 Z"
-        fillRule="evenodd"
-        className="fill-ink"
-      />
-    </svg>
+    <div
+      key={`${index}-${tossId}`}
+      className={`h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] ${tossId > 0 ? "animate-coin-toss" : ""}`}
+      style={{ animationDelay: tossId > 0 ? `${index * COIN_STAGGER_MS}ms` : undefined }}
+    >
+      <svg viewBox="0 0 64 64" className="h-full w-full drop-shadow-[0_2px_4px_rgba(0,0,0,0.45)]">
+        {/* disc + raised outer rim */}
+        <circle cx="32" cy="32" r="31" fill={p.disc} stroke={p.rim} strokeWidth="1.6" />
+        <circle cx="32" cy="32" r="27" fill="none" stroke={p.inner} strokeWidth="1" opacity="0.85" />
+        {/* metallic sheen */}
+        <ellipse cx="24" cy="21" rx="15" ry="9" fill={p.sheen} />
+        {/* square hole — raised inner border (內郭) then the cutout to the page bg */}
+        <rect x="22" y="22" width="20" height="20" rx="1.5" fill={p.inner} />
+        <rect x="24.5" y="24.5" width="15" height="15" rx="1" fill="var(--color-bg)" />
+        {/* 乾隆通寶 */}
+        {COIN_INSCRIPTION.map(({ ch, x, y }) => (
+          <text
+            key={ch}
+            x={x}
+            y={y}
+            textAnchor="middle"
+            dominantBaseline="central"
+            fontFamily="var(--font-serif)"
+            fontSize="11"
+            fontWeight="600"
+            fill={p.char}
+          >
+            {ch}
+          </text>
+        ))}
+      </svg>
+    </div>
   );
 }
 
 export function CastingCeremony({ question, cast, onComplete }: CastingCeremonyProps) {
+  const t = useT();
   const [revealed, setRevealed] = useState(0);
   const [busy, setBusy] = useState(false);
   const [tossId, setTossId] = useState(0);
+  const [faces, setFaces] = useState<[CoinFace, CoinFace, CoinFace] | null>(null);
   const isComplete = revealed >= 6;
 
   function handleToss() {
     if (busy || isComplete) return;
+    // Faces for the line being cast now (position revealed+1) — derived by the
+    // engine so the coins always sum to the actual cast line (golden rule #1).
+    const castingLine = cast.lines.find((l) => l.position === revealed + 1);
+    if (castingLine) setFaces(coinFacesForLine(castingLine.value));
+
     setBusy(true);
     setTossId((id) => id + 1);
     setTimeout(() => {
@@ -74,18 +138,18 @@ export function CastingCeremony({ question, cast, onComplete }: CastingCeremonyP
   const identity = hexagramIdentities.find((h) => h.number === cast.primaryHexagram);
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center gap-20 px-6 py-20">
+    <main className="relative flex min-h-screen flex-col items-center justify-center gap-10 px-6 py-16 sm:gap-16 sm:py-20">
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0"
         style={{
-          background: "radial-gradient(circle, transparent 55%, rgba(58, 46, 28, 0.15) 100%)",
+          background: "radial-gradient(circle at center, transparent 45%, rgba(0, 0, 0, 0.45) 100%)",
         }}
       />
 
-      <p className="max-w-md text-center font-serif text-base text-ink-muted">{question}</p>
+      <p className="animate-fade-up max-w-md text-center font-serif text-base italic text-text-muted">{question}</p>
 
-      <div className="flex items-center gap-10">
+      <div className="flex items-center gap-8 sm:gap-10">
         <div className="flex flex-col items-center gap-3" aria-live="polite">
           {topToBottom.map((line) =>
             line.position <= revealed ? (
@@ -103,17 +167,17 @@ export function CastingCeremony({ question, cast, onComplete }: CastingCeremonyP
         </div>
 
         {isComplete && identity && (
-          <div className="flex flex-col items-center gap-2 [animation:seal-fade-in_400ms_ease-out_both]">
+          <div className="animate-seal-stamp flex flex-col items-center gap-2">
             <Seal label={identity.nameZh} />
-            <span className="font-sans text-sm text-ink-muted">#{identity.number}</span>
+            <span className="font-sans text-sm text-text-muted">#{identity.number}</span>
           </div>
         )}
       </div>
 
       <div className="flex flex-col items-center gap-6">
-        <div className="flex gap-4" style={{ perspective: "400px" }} aria-hidden>
+        <div className="flex gap-5 sm:gap-6" style={{ perspective: "800px" }} aria-hidden>
           {[0, 1, 2].map((i) => (
-            <Coin key={`${i}-${tossId}`} tossId={tossId} />
+            <Coin key={`${i}-${tossId}`} index={i} tossId={tossId} face={faces ? faces[i] : null} />
           ))}
         </div>
 
@@ -122,17 +186,17 @@ export function CastingCeremony({ question, cast, onComplete }: CastingCeremonyP
             type="button"
             onClick={handleToss}
             disabled={busy}
-            className="rounded-full border border-cinnabar px-8 py-2 font-sans text-sm tracking-wide text-cinnabar transition-colors enabled:hover:bg-cinnabar enabled:hover:text-paper-base disabled:border-hairline disabled:text-ink-muted"
+            className="rounded-full border border-gold px-10 py-2.5 font-sans text-sm tracking-widest uppercase text-gold transition-colors duration-200 enabled:hover:bg-gold enabled:hover:text-bg disabled:border-hairline disabled:text-text-muted"
           >
-            {revealed === 0 ? "Cast the first line" : `Cast line ${revealed + 1} of 6`}
+            {revealed === 0 ? t("cast.first") : t("cast.line", { n: revealed + 1 })}
           </button>
         ) : (
           <button
             type="button"
             onClick={() => onComplete(cast)}
-            className="rounded-full border border-cinnabar px-8 py-2 font-sans text-sm tracking-wide text-cinnabar transition-colors hover:bg-cinnabar hover:text-paper-base"
+            className="rounded-full border border-gold px-10 py-2.5 font-sans text-sm tracking-widest uppercase text-gold transition-colors duration-200 hover:bg-gold hover:text-bg"
           >
-            Continue to the reading
+            {t("cast.continue")}
           </button>
         )}
       </div>

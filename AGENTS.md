@@ -48,6 +48,7 @@ This file governs how any AI agent works in this repository. Read it fully befor
 ## 5. Product & safety guardrails
 
 - Readings are **reflective, not prescriptive prophecy.** The voice guides thinking; it does not predict fixed outcomes or claim certainty. See `docs/INTERPRETATION_PROMPT.md`.
+- **Clarification Exception:** The system may optionally evaluate a user's question before casting and offer a "Clarification Phase" to gently ask for context. However, if the user skips this or provides a vague question, the interpretation model must embrace the vagueness and still never invent, guess, or assume missing details.
 - For weighty topics (health, legal, financial, self-harm, crisis), the product encourages reflection and points toward qualified human help; it never poses as a substitute. Bake this into the system prompt, not as an afterthought.
 - Respect privacy: a user's questions and journal are sensitive. Minimize logging, scope data access, and never expose one user's readings to another.
 

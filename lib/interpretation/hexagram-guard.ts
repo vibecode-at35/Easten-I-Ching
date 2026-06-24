@@ -57,7 +57,11 @@ export function findFabricatedHexagramReferences(text: string, allowed: AllowedH
   const found: string[] = [];
 
   for (const h of forbidden) {
-    const zhMatch = h.nameZh.length > 0 && text.includes(h.nameZh);
+    // Chinese hexagram names (e.g., 需, 否, 困, 家人, 同人) are common words in ordinary Chinese prose.
+    // To avoid massive false positives, we only flag the Chinese name if it's explicitly formatted
+    // as a hexagram (followed by 卦) or enclosed in common CJK quotes/brackets.
+    const zhPattern = new RegExp(`(${h.nameZh}卦|「${h.nameZh}」|『${h.nameZh}』|《${h.nameZh}》|〈${h.nameZh}〉|【${h.nameZh}】)`);
+    const zhMatch = h.nameZh.length > 0 && zhPattern.test(text);
     const numberMatch = containsNumberToken(text, h.number);
     if (zhMatch || numberMatch) {
       found.push(`#${h.number} (${h.nameZh})`);

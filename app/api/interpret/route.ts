@@ -40,10 +40,14 @@ function validateInterpretRequest(body: unknown): ValidationResult {
     return { ok: false, error: "Request body must be a JSON object." };
   }
 
-  const { cast, question, locale, tier } = body;
+  const { cast, question, context, locale, tier } = body;
 
   if (typeof question !== "string" || question.trim().length === 0) {
     return { ok: false, error: "`question` is required and must be a non-empty string." };
+  }
+
+  if (context !== undefined && typeof context !== "string") {
+    return { ok: false, error: "`context` must be a string if provided." };
   }
 
   if (typeof locale !== "string" || !VALID_LOCALES.includes(locale as Locale)) {
@@ -66,6 +70,7 @@ function validateInterpretRequest(body: unknown): ValidationResult {
     params: {
       cast: cast as CastResult,
       question,
+      context,
       locale: locale as Locale,
       tier: tier as ModelTier | undefined,
     },

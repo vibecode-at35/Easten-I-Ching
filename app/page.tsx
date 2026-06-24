@@ -3,44 +3,71 @@
 import { useState } from "react";
 import { castFromLineValues, castHexagram } from "../lib/iching/casting";
 import type { CastResult } from "../lib/iching/types";
+import { Landing } from "../components/Landing";
 import { QuestionEntry } from "../components/QuestionEntry";
 import { CastingCeremony } from "../components/CastingCeremony";
-import { HexagramGlyph } from "../components/HexagramGlyph";
+import { ReadingScreen } from "../components/ReadingScreen";
+import { ExitButton } from "../components/ExitButton";
+import { useLocale } from "../lib/i18n/LocaleProvider";
 
 /**
- * The core loop's orchestration (docs/TASKS/milestone-3-reading-experience.md
- * §4): question entry -> casting ceremony -> reading. The reading screen
- * itself is Task 6 — what's rendered here for "reading" is a placeholder
- * that only confirms the completed CastResult arrived, not the real screen.
+ * The core loop's orchestration: landing -> question entry -> casting
+ * ceremony -> reading.
  *
- * Dev toggle (§8): append ?devHexagram=1 or ?devHexagram=2 to force the cast
- * to a seeded hexagram for testing before the full corpus exists. Read only
- * at cast time (inside handleReady, after a user action), never during the
- * initial render, so there's no SSR/CSR markup mismatch.
+ * The AI clarification step is no longer a screen of its own (M4 — feedback
+ * #3): QuestionEntry consults /api/clarify and shows any suggestion inline,
+ * then hands back the question plus whatever context the person added.
+ *
+ * Dev toggle: append ?devHexagram=1 or ?devHexagram=2 to force the cast to a
+ * seeded hexagram and skip the ceremony (straight to the reading) for fast
+ * iteration. Read only at cast time (inside handleReady, after a user
+ * action), never during the initial render, so there's no SSR/CSR mismatch.
  */
-type Phase = "entry" | "casting" | "reading";
+type Phase = "landing" | "entry" | "casting" | "reading";
 
 export default function HomePage() {
-  const [phase, setPhase] = useState<Phase>("entry");
+  const { locale } = useLocale();
+  const [phase, setPhase] = useState<Phase>("landing");
   const [question, setQuestion] = useState("");
   const [cast, setCast] = useState<CastResult | null>(null);
+  const [context, setContext] = useState("");
 
-  function handleReady(submittedQuestion: string) {
+  function goHome() {
+    setPhase("landing");
+    setQuestion("");
+    setCast(null);
+    setContext("");
+  }
+
+  function castAnother() {
+    setQuestion("");
+    setCast(null);
+    setContext("");
+    setPhase("entry");
+  }
+
+  function handleReady(submittedQuestion: string, addedContext?: string) {
     const forced = new URLSearchParams(window.location.search).get("devHexagram");
-    const newCast =
-      forced === "1"
-        ? castFromLineValues([7, 7, 7, 7, 7, 7])
-        : forced === "2"
-          ? castFromLineValues([8, 8, 8, 8, 8, 8])
-          : castHexagram();
 
     setQuestion(submittedQuestion);
-    setCast(newCast);
+    setContext(addedContext ?? "");
+
+    if (forced === "1" || forced === "2") {
+      setCast(forced === "1" ? castFromLineValues([7, 7, 7, 7, 7, 7]) : castFromLineValues([8, 8, 8, 8, 8, 8]));
+      setPhase("reading");
+      return;
+    }
+
+    setCast(castHexagram());
     setPhase("casting");
   }
 
-  if (phase === "casting" && cast) {
-    return (
+  if (phase === "landing") {
+    return <Landing onBegin={() => setPhase("entry")} />;
+  }
+
+  const screen =
+    phase === "casting" && cast ? (
       <CastingCeremony
         question={question}
         cast={cast}
@@ -49,20 +76,25 @@ export default function HomePage() {
           setPhase("reading");
         }}
       />
+    ) : phase === "reading" && cast ? (
+      <ReadingScreen
+        question={question}
+        context={context}
+        cast={cast}
+        locale={locale}
+        onCastAnother={castAnother}
+        onHome={goHome}
+      />
+    ) : (
+      <QuestionEntry onReady={handleReady} />
     );
-  }
 
-  if (phase === "reading" && cast) {
-    return (
-      <main className="flex min-h-screen flex-col items-center justify-center gap-8 px-6 py-16 text-center">
-        <HexagramGlyph cast={cast} />
-        <p className="max-w-md font-serif text-base text-ink-muted">{question}</p>
-        <p className="font-sans text-sm text-ink-muted">
-          The reading screen is next (Task 6) — this only confirms the cast arrived.
-        </p>
-      </main>
-    );
-  }
-
-  return <QuestionEntry onReady={handleReady} />;
+  // Every in-flow screen (entry / casting / reading) gets the always-available
+  // exit back to the landing screen; the landing itself returned above.
+  return (
+    <>
+      <ExitButton onExit={goHome} />
+      {screen}
+    </>
+  );
 }

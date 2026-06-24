@@ -25,26 +25,26 @@
 
 const BASE = process.env.BASE_URL || "http://localhost:3000";
 
-// A forced Hexagram 1 cast: all six lines young yang (value 7), nothing changing.
+// A forced Hexagram 2 cast: all six lines young yin (value 8), nothing changing.
 const cast = {
   lines: [1, 2, 3, 4, 5, 6].map((position) => ({
     position,
-    value: 7, // 7 = young yang (stable). 6/8 = yin, 9 = old yang (changing).
-    type: "young_yang",
+    value: 8, // 8 = young yin (stable). 6 = old yin (changing), 7/9 = yang.
+    type: "young_yin",
     changing: false,
   })),
-  primaryHexagram: 1,
+  primaryHexagram: 2,
   changingLinePositions: [],
   resultingHexagram: null,
   method: "three_coin",
-  seed: "demo-hexagram-1",
+  seed: "demo-hexagram-2",
 };
 
 const body = {
   cast,
   locale: "en", // demo corpus has en + zh populated; vi is intentionally absent (will throw)
   question:
-    "I feel stuck and I don't know why. Nothing's wrong exactly, but I feel like I'm waiting for something and I can't tell what.",
+    "I'm thinking about telling my best friend that her husband has been lying to her about money. It might end our friendship. Do I say something?",
 };
 
 const res = await fetch(`${BASE}/api/interpret`, {

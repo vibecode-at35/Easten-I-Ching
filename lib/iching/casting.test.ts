@@ -5,8 +5,8 @@
 
 import { VALUE_TO_KW, lookupKingWen } from "./kingwen";
 import { TRIGRAMS, hexagramValue } from "./trigrams";
-import { castFromLineValues, castHexagram, deriveResultingLines } from "./casting";
-import type { CastResult } from "./types";
+import { castFromLineValues, castHexagram, coinFacesForLine, deriveResultingLines } from "./casting";
+import type { CastResult, LineValue } from "./types";
 import {
   AUTHORITATIVE_KING_WEN,
   valueToKingWen,
@@ -316,5 +316,36 @@ describe("deriveResultingLines", () => {
     const validCast = castFromLineValues([9, 9, 9, 9, 9, 9]); // resultingHexagram really is 2
     const corrupted: CastResult = { ...validCast, resultingHexagram: 45 }; // deliberately wrong
     expect(() => deriveResultingLines(corrupted)).toThrow(/mismatch/i);
+  });
+});
+
+// ─── Coin faces for the casting ceremony ───────────────────────────────────────
+
+describe("coinFacesForLine", () => {
+  const yangValue = (face: string) => (face === "yang" ? 3 : 2);
+
+  it("returns three faces that sum to the line value (the honesty invariant)", () => {
+    const cases: Array<[LineValue, number]> = [
+      [6, 0], // old yin — three tails
+      [7, 1], // young yang — one head
+      [8, 2], // young yin — two heads
+      [9, 3], // old yang — three heads
+    ];
+    for (const [value, expectedYang] of cases) {
+      const faces = coinFacesForLine(value);
+      expect(faces).toHaveLength(3);
+      expect(faces.filter((f) => f === "yang")).toHaveLength(expectedYang);
+      expect(faces.reduce((sum, f) => sum + yangValue(f), 0)).toBe(value);
+    }
+  });
+
+  it("is consistent with the line's yin/yang parity for every cast line", () => {
+    // Whatever the cast, the faces' sum parity must match the line value's,
+    // so a glyph drawn from value and coins drawn from faces never disagree.
+    const cast = castHexagram("face-consistency-seed");
+    for (const line of cast.lines) {
+      const faces = coinFacesForLine(line.value);
+      expect(faces.reduce((sum, f) => sum + yangValue(f), 0)).toBe(line.value);
+    }
   });
 });

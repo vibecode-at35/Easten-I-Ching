@@ -1,51 +1,46 @@
 @import "tailwindcss";
 
 /*
- * Warm-traditional design tokens — "paper" (light), the M3 default.
- * docs/TASKS/milestone-3-reading-experience.md §5.1, §5.3.
+ * "Ink by night" — the dark, gold-accented design system (M4 redesign).
+ * Promoted from the M3 stub to the real default theme. Components use these
+ * as ordinary utility classes (bg-bg, text-text, text-gold, bg-surface, …).
  *
- * Registered in Tailwind's @theme so components can use ordinary utility
- * classes (bg-paper-base, text-ink, font-serif, etc.) instead of arbitrary
- * values — these are the only tokens any component may use until the dark
- * variant below is actually built.
+ * Palette intent: a deep night-ink canvas, warm parchment text, and gold as
+ * the single carrying accent (wordmark, hexagram lines, primary actions).
+ * Cinnabar is reserved for the seal and changing-line marks — the one note
+ * of strong red against the gold-and-ink field.
  */
 @theme {
-  --color-paper-base: #efe7d6;
-  --color-paper-raised: #f4eee0;
-  --color-ink: #3a2e1c;
-  --color-ink-muted: #8b7a5c;
-  --color-cinnabar: #9a3324;
-  --color-cinnabar-deep: #7c2a1e;
-  --color-hairline: rgba(58, 46, 28, 0.15);
+  /* Surfaces — darkest canvas up to raised cards/inputs. */
+  --color-bg: #14161e;
+  --color-surface: #1c2030;
+  --color-surface-raised: #262b3d;
+
+  /* Text — warm parchment, with a muted step for labels/captions. */
+  --color-text: #ece6d6;
+  --color-text-muted: #978f7c;
+
+  /* Gold — the primary accent; -bright for hover/emphasis, -dim for hairlines. */
+  --color-gold: #c9a24a;
+  --color-gold-bright: #e3c074;
+  --color-gold-dim: rgba(201, 162, 74, 0.35);
+
+  /* Cinnabar — seal + changing-line marks only. */
+  --color-cinnabar: #b23f2c;
+  --color-cinnabar-deep: #8f2f20;
+
+  --color-hairline: rgba(236, 230, 214, 0.12);
 
   /* Serif for content (the reading, hexagram names); sans for chrome (buttons, labels). */
   --font-serif: var(--font-noto-serif), var(--font-noto-serif-tc), serif;
   --font-sans: var(--font-inter), sans-serif;
 
-  /* Reading body: ~17-18px, line-height ~1.75 — generous, meant to be sat with (§5.3). */
+  /* Reading body: ~17-18px, line-height ~1.75 — generous, meant to be sat with. */
   --text-reading-body: 1.125rem;
   --text-reading-body--line-height: 1.75;
 
-  /* Hexagram name (CJK): large, 40-56px (§5.3). Midpoint default; tune per screen. */
+  /* Hexagram name (CJK): large, 40-56px. Midpoint default; tune per screen. */
   --text-hexagram-name: 3rem;
-}
-
-/*
- * "Ink by night" dark variant — STUBBED ONLY (§5.2: "Define tokens ... so
- * this variant can be added in a later pass without rework. Do not build
- * the toggle now.").
- *
- * Deliberately plain CSS variables, NOT registered in @theme above, so no
- * Tailwind utility classes (e.g. bg-ink-night-bg) are generated for them.
- * Nothing in this milestone reads these. A later pass would register a
- * proper theme object (likely under a [data-theme="ink-night"] selector)
- * and would also need raised/muted/hairline equivalents not specified yet
- * in the spec — only the three values §5.2 actually gives are stubbed here.
- */
-:root {
-  --ink-night-bg: #14161e;
-  --ink-night-text: #e8e3d5;
-  --ink-night-gold: #c9a24a;
 }
 
 /*
@@ -108,3 +103,204 @@
     opacity: 1;
   }
 }
+
+/*
+ * Seal "stamp" — the completed hexagram's seal presses down like a carved
+ * stamp meeting paper: a quick over-scale that settles, with a faint rock.
+ * Used by CastingCeremony once all six lines are revealed (M4 — feedback #4).
+ */
+@keyframes seal-stamp {
+  0% {
+    opacity: 0;
+    transform: scale(1.55) rotate(-5deg);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(0.93) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.animate-seal-stamp {
+  animation: seal-stamp 520ms cubic-bezier(0.34, 1.4, 0.5, 1) both;
+}
+
+/*
+ * Blinking cursor appended to streaming reading text while the API stream
+ * is in progress. A single narrow bar, ink-colored, half-second period.
+ * Subtle — present to signal "still arriving," gone once the stream ends.
+ */
+@keyframes cursor-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.reading-cursor::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--color-gold);
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  animation: cursor-blink 700ms ease-in-out infinite;
+}
+
+/*
+ * Entrance animation used by QuestionEntry (易經 mark, label, form) and
+ * ReadingScreen (question text, reading body). Combines a gentle upward
+ * drift with a fade so the screen feels like it settles rather than pops.
+ */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 600ms ease-out both;
+}
+
+/*
+ * Softer, opacity-only fade for the reading body text — avoids movement
+ * competing with the streaming arrival of text. Used on the right column
+ * of ReadingScreen once the stream begins.
+ */
+@keyframes text-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-text-fade-in {
+  animation: text-fade-in 500ms ease-out both;
+}
+
+/*
+ * Oracle loading indicator — three dots that breathe in sequence, used on
+ * the ReadingScreen while the full interpretation is being assembled.
+ * No spinner: the spec (§2) calls for calm, not mechanical feedback.
+ * Implemented as a slow pulse (2.4s) with staggered delays per dot so the
+ * three breathe in gentle succession rather than all together.
+ */
+@keyframes oracle-dot-breathe {
+  0%, 100% {
+    opacity: 0.18;
+    transform: scale(0.75);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.1);
+  }
+}
+
+.oracle-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: var(--color-gold);
+  animation: oracle-dot-breathe 2.4s ease-in-out infinite;
+}
+
+.oracle-dot:nth-child(2) { animation-delay: 0.6s; }
+.oracle-dot:nth-child(3) { animation-delay: 1.2s; }
+
+/*
+ * ── M4 motion (feedback #4: "add motion / pop-ups to make it feel alive") ──
+ */
+
+/*
+ * Pop reveal — a gentle scale + fade used when a screen or card enters as a
+ * distinct moment (landing content, the reading panel arriving). A touch of
+ * scale gives it presence without bouncing.
+ */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-pop-in {
+  animation: pop-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/*
+ * Gold shimmer — a slow sweep of light across the 易經 wordmark, so the
+ * landing has a living glint rather than sitting flat. Applied as a moving
+ * gradient clipped to the text.
+ */
+@keyframes gold-shimmer {
+  0% {
+    background-position: -150% 0;
+  }
+  100% {
+    background-position: 250% 0;
+  }
+}
+
+.gold-shimmer {
+  background: linear-gradient(
+    100deg,
+    var(--color-gold) 0%,
+    var(--color-gold) 38%,
+    var(--color-gold-bright) 50%,
+    var(--color-gold) 62%,
+    var(--color-gold) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 6s ease-in-out infinite;
+}
+
+/*
+ * Slow rotation for the yin-yang watermark behind the landing — a near-still
+ * drift (one turn per ~80s) so the screen breathes without distracting.
+ */
+@keyframes slow-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-slow-spin {
+  animation: slow-spin 80s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gold-shimmer,
+  .animate-slow-spin,
+  .animate-pop-in,
+  .animate-fade-up {
+    animation: none;
+  }
+  .gold-shimmer {
+    color: var(--color-gold);
+  }
+}
+

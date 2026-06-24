@@ -10,6 +10,7 @@
 import demoCorpus from "../../data/hexagrams.demo.json";
 import seedCorpus from "../../data/hexagrams.seed.json";
 import type { Locale } from "../interpretation/types";
+import type { TrigramKey } from "../iching/trigrams";
 
 export interface LocalizedText {
   vi: string | null;
@@ -64,9 +65,19 @@ export function getHexagramRecord(number: number): HexagramRecord {
   return record;
 }
 
-/** Resolve a localized text field to a non-null string. Throws if the field is missing for this locale. */
-export function resolveLocaleText(text: LocalizedText, locale: Locale, context: string): string {
-  const value = text[locale];
+/**
+ * Resolve a localized text field to a non-null string. Throws
+ * MissingHexagramTextError if the field is missing for this locale — including
+ * when the whole text object is absent (a corpus entry whose line records were
+ * populated with judgment/image but no per-line `text`, as happens for a
+ * partially-seeded hexagram). That is a content gap (→ 422), never a crash.
+ */
+export function resolveLocaleText(
+  text: LocalizedText | null | undefined,
+  locale: Locale,
+  context: string,
+): string {
+  const value = text?.[locale];
   if (value === null || value === undefined || value === "") {
     throw new MissingHexagramTextError(context, locale);
   }
@@ -97,9 +108,41 @@ export interface HexagramIdentity {
 interface SeedEntry {
   number: number;
   name_zh: string;
+  name_pinyin: string;
+  upper_trigram: TrigramKey;
+  lower_trigram: TrigramKey;
 }
 
 const seedIdentities = seedCorpus as unknown as SeedEntry[];
+
+/** Structural facts for one hexagram — name + trigrams, no judgment/line text. */
+export interface HexagramStructure {
+  number: number;
+  nameZh: string;
+  namePinyin: string;
+  upperTrigram: TrigramKey;
+  lowerTrigram: TrigramKey;
+}
+
+/**
+ * Returns a hexagram's structural identity (name + trigrams) from the tiny M1
+ * seed (data/hexagrams.seed.json) — safe to call from client components, since
+ * it never touches the 250KB demo corpus (which stays in the server bundle).
+ * Used by the reading screen's structural summary.
+ */
+export function getHexagramStructure(number: number): HexagramStructure {
+  const entry = seedIdentities.find((h) => h.number === number);
+  if (!entry) {
+    throw new HexagramTextNotFoundError(number);
+  }
+  return {
+    number: entry.number,
+    nameZh: entry.name_zh,
+    namePinyin: entry.name_pinyin,
+    upperTrigram: entry.upper_trigram,
+    lowerTrigram: entry.lower_trigram,
+  };
+}
 
 /**
  * Returns the number + Chinese name for all 64 hexagrams, from the M1 structural

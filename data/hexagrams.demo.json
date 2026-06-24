@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "purpose": "RIGHTS-CLEAN corpus. Lets the interpretation pipeline produce real, grounded readings. 56 of 64 hexagrams populated (zh/en); 57-64 are a clearly-scoped follow-up, blocked mid-sourcing by the upstream source's rate limit, not a design gap.",
+    "purpose": "RIGHTS-CLEAN corpus. Lets the interpretation pipeline produce real, grounded readings. All 64 hexagrams populated (zh/en/vi where sourced). Hexagrams 57-64 were merged from the two single-lineage candidate files in data/sources/ — see AGENTS.md §7 and the status note below for the provenance and its caveats.",
     "shape_note": "Fields follow docs/DATA_MODEL.md. Loader confirmed to read this shape directly (extra fields like value/upper_trigram/all_lines_changing are ignored harmlessly). `lines` is an array of 6, bottom-to-top (position 1 = bottom). `all_lines_changing` is the special 用九/用六 text, used only when every line changes.",
     "sources": {
-      "chinese_original": "Classical Zhouyi (周易) — ancient, public domain.",
-      "english": "James Legge, 'The Yi King' (Sacred Books of the East, vol. 16, 2nd ed. 1899). Public domain (Legge d. 1897). Retrieved verbatim via the Chinese Text Project (ctext.org), parallel Chinese/Legge edition.",
-      "vietnamese": "Ngô Tất Tố, 'Kinh Dịch trọn bộ' — classic Vietnamese translation (Ngô Tất Tố d. 1954; public domain in Vietnam, life + 50 years p.m.a.). Extracted programmatically (matched against the verified Chinese text) from a locally-supplied epub edition. A small number of individual lines (see `vi: null` entries) had no separately extractable translation block in that source and are left null rather than guessed — never machine-invent vi text."
+      "chinese_original": "Classical Zhouyi (周易) — ancient, public domain. Hexagrams 1-56 via ctext.org; 57-64 via zh.wikisource.org (from data/sources/hexagrams.1-64.legge.json).",
+      "english": "James Legge, 'The Yi King' (Sacred Books of the East, vol. 16). Public domain (Legge d. 1897). Hexagrams 1-56: 2nd ed. 1899, retrieved verbatim via the Chinese Text Project (ctext.org). Hexagrams 57-64: 1882 1st ed., read from an archive.org OCR scan (a DIFFERENT edition — wording may differ slightly from the 1899 house style; hex 64 line 6 was reassembled from two genuine OCR fragments and is the one field most worth re-verifying). Merged from data/sources/hexagrams.1-64.legge.json.",
+      "vietnamese": "Ngô Tất Tố, 'Kinh Dịch trọn bộ' — classic Vietnamese translation (Ngô Tất Tố d. 1954; public domain in Vietnam, life + 50 years p.m.a.). Extracted programmatically (matched against the verified Chinese text) from locally-supplied epub editions; 57-64 from data/sources/hexagrams.1-64.ngotatto.json. A small number of individual lines (see `vi: null` entries — including hex 58 judgment, hex 58 line 1, hex 59 line 2) had no separately extractable translation block in that source and are left null rather than guessed — never machine-invent vi text."
     },
     "license": "All text in this file is public domain.",
-    "status": "56 of 64 hexagrams populated (zh/en/vi where sourced) as of 2026-06-21. Hexagrams 57-64 are not yet in this file at all (a cast landing on one of them still correctly returns 422 — the service refuses to invent missing text). Populating them is a clearly-scoped follow-up, blocked mid-sourcing only by ctext.org's rate limit, not a design decision. Hexagrams 1-2 are still the canonical changing-line pair exercising the resulting-hexagram path end to end."
+    "status": "All 64 hexagrams populated (zh/en/vi where sourced) as of 2026-06-22. Hexagrams 57-64 were merged from the data/sources/ candidate files (after reading both files' _meta pros/cons per AGENTS.md §7); their line texts were normalized from a flat {position,zh,vi,en} shape into the nested {position,text:{...}} shape the loader expects. Residual gaps left null (never invented): hex 58 judgment vi, hex 58 line 1 vi, hex 59 line 2 vi — a vi cast hitting one of these still returns 422 by design; zh/en cover them. Caveat: 57-64 English is Legge's 1882 1st edition (vs 1899 for 1-56). Hexagrams 1-2 remain the canonical all-lines-changing pair exercising the 用九/用六 path."
   },
   "hexagrams": [
     {
@@ -4220,6 +4220,526 @@
         "vi": null,
         "en": null
       }
+    },
+    {
+      "number": 57,
+      "name_zh": "巽",
+      "name_pinyin": "Xùn",
+      "judgment": {
+        "zh": "巽：小亨。利有攸往。利見大人。",
+        "en": "Xun intimates that (under the conditions which it denotes) there will be some little attainment and progress. There will be advantage in movement onward in whatever direction. It will be advantageous (also) to see the great man.",
+        "vi": "Quẻ Tốn nhỏ hanh thông, lợi có thửa đi, lời thấy người lớn."
+      },
+      "image": {
+        "zh": "隨風，巽；君子以申命行事。",
+        "en": "(Two trigrams representing) wind, following each other, form Xun. The superior man, in accordance with this, reiterates his orders, and secures the practice of his affairs.",
+        "vi": "Lời Tượng nói rằng: Theo gió là quẻ Tốn. Đấng quân tử coi đó mà nhắc lại mệnh lệnh, làm việc."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "text": {
+            "zh": "初六：進退，利武人之貞。",
+            "vi": "Hào Sáu Đầu: Tiến lui, lợi về sự chính bền của người võ.",
+            "en": "The first line, divided, shows its subject (now) advancing, (now) receding. It would be advantageous for him to have the firm correctness of a brave soldier."
+          }
+        },
+        {
+          "position": 2,
+          "text": {
+            "zh": "九二：巽在牀下，用史巫紛若，吉无咎。",
+            "vi": "Hào Chín Hai: Nhún ở dưới giường, dùng thày bói, thày cúng bời bời vậy, tốt, không lỗi.",
+            "en": "The second line, undivided, shows the representative of Xun beneath a couch, and employing diviners and exorcists in a way bordering on confusion. There will be good fortune and no error."
+          }
+        },
+        {
+          "position": 3,
+          "text": {
+            "zh": "九三：頻巽，吝。",
+            "vi": "Hào Chín Ba: Liền nhún, đáng tiếc.",
+            "en": "The third line, undivided, shows its subject penetrating (only) by violent and repeated efforts. There will be occasion for regret."
+          }
+        },
+        {
+          "position": 4,
+          "text": {
+            "zh": "六四：悔亡，田獲三品。",
+            "vi": "Hào Sáu Tư: Ăn năn mất, săn được ba phẩm.",
+            "en": "The fourth line, divided, shows all occasion for repentance (in its subject) passed away. He takes game for its threefold use in his hunting."
+          }
+        },
+        {
+          "position": 5,
+          "text": {
+            "zh": "九五：貞吉悔亡，无不利。无初有終，先庚三日，後庚三日，吉。",
+            "vi": "Hào Chín Năm: Chính bền tốt, ăn năn mất, không gì lợi, không đầu có cuối, trước Canh ba ngày, sau Canh ba ngày, tốt.",
+            "en": "The fifth line, undivided, shows that with firm correctness there will be good fortune (to its subject). All occasion for repentance will disappear, and all his movements will be advantageous. There may have been no (good) beginning, but there will be a (good) end. Three days before making any changes, (let him give notice of them); and three days after, (let him reconsider them). There will (thus) be good fortune."
+          }
+        },
+        {
+          "position": 6,
+          "text": {
+            "zh": "上九：巽在牀下，喪其資斧，貞凶。",
+            "vi": "Hào Chín Trên: Nhún ở dưới giường, mất thửa của búa, hung.",
+            "en": "The sixth line, undivided, shows the representative of penetration beneath a couch, and having lost the axe with which he executed his decisions. However firm and correct he may (try to) be, there will be evil."
+          }
+        }
+      ]
+    },
+    {
+      "number": 58,
+      "name_zh": "兌",
+      "name_pinyin": "Duì",
+      "judgment": {
+        "zh": "兌：亨。利貞。",
+        "en": "Dui intimates that (under its conditions) there will be progress and attainment. (But) it will be advantageous to be firm and correct.",
+        "vi": null
+      },
+      "image": {
+        "zh": "麗澤，兌；君子以朋友講習。",
+        "en": "(Two symbols representing) the waters of a marsh, one over the other, form Dui. The superior man, in accordance with this, (encourages) the conversation of friends and (the stimulus of) their (common) practice.",
+        "vi": "Lời Tượng nói rằng: Bám chằm là quẻ Đoái, đấng quân tử coi đó mà bè bạn giảng tập."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "text": {
+            "zh": "初九：和兌，吉。",
+            "vi": null,
+            "en": "The first line, undivided, shows the pleasure of (inward) harmony. There will be good fortune."
+          }
+        },
+        {
+          "position": 2,
+          "text": {
+            "zh": "九二：孚兌，吉，悔亡。",
+            "vi": "Hào Chín Hai: Tin đẹp lòng, tốt, ăn năn mất.",
+            "en": "The second line, undivided, shows the pleasure arising from (inward) sincerity. There will be good fortune. Occasion for repentance will disappear."
+          }
+        },
+        {
+          "position": 3,
+          "text": {
+            "zh": "六三：來兌，凶。",
+            "vi": "Hào Sáu Ba: Lại làm đẹp lòng, hung.",
+            "en": "The third line, divided, shows its subject bringing round himself whatever can give pleasure. There will be evil."
+          }
+        },
+        {
+          "position": 4,
+          "text": {
+            "zh": "九四：商兌，未寧，介疾有喜。",
+            "vi": "Hào Chín Tư: Đắn đo đẹp lòng chưa yên, thẳng ghét, có mừng.",
+            "en": "The fourth line, undivided, shows its subject deliberating about what to seek his pleasure in, and not at rest. He borders on what would be injurious, but there will be cause for joy."
+          }
+        },
+        {
+          "position": 5,
+          "text": {
+            "zh": "九五：孚于剝，有厲。",
+            "vi": "Hào Chín Năm: Tin chung đẽo, có nguy.",
+            "en": "The fifth line, undivided, shows its subject trusting in one who would injure him. The situation is perilous."
+          }
+        },
+        {
+          "position": 6,
+          "text": {
+            "zh": "上六：引兌。",
+            "vi": "Hào Sáu Trên: Kéo dài sự đẹp lòng.",
+            "en": "The topmost line, divided, shows the pleasure of its subject in leading and attracting others."
+          }
+        }
+      ]
+    },
+    {
+      "number": 59,
+      "name_zh": "渙",
+      "name_pinyin": "Huàn",
+      "judgment": {
+        "zh": "渙：亨。王假有廟，利涉大川，利貞。",
+        "en": "Huan intimates that (under its conditions) there will be progress and success. The king goes to his ancestral temple; and it will be advantageous to cross the great stream. It will be advantageous to be firm and correct.",
+        "vi": "Quẻ Hoán hanh, vua đến có miếu, lợi sang sông lớn, lợi về chính bền."
+      },
+      "image": {
+        "zh": "風行水上，渙；先王以享于帝立廟。",
+        "en": "(The trigram representing) water and that for wind moving above the water form Huan. The ancient kings, in accordance with this, presented offerings to God and established the ancestral temple.",
+        "vi": "Lời Tượng nói rằng: Gió đi trên nước là quẻ Hoán. Đấng tiên vương coi đó mà cúng trời, dựng miếu."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "text": {
+            "zh": "初六：用拯馬壯，吉。",
+            "vi": "Hào Sáu Đầu: Vớt ngựa mạnh, tốt.",
+            "en": "The first line, divided, shows its subject engaged in rescuing (from the impending evil) and having (the assistance of) a strong horse. There will be good fortune."
+          }
+        },
+        {
+          "position": 2,
+          "text": {
+            "zh": "九二：渙奔其机，悔亡。",
+            "vi": null,
+            "en": "The second line, undivided, shows its subject, amid the dispersion, hurrying to his contrivance (for security). All occasion for repentance will disappear."
+          }
+        },
+        {
+          "position": 3,
+          "text": {
+            "zh": "六三：渙其躬，无悔。",
+            "vi": "Hào Sáu Ba: Tan thửa mình, không ăn năn.",
+            "en": "The third line, divided, shows its subject discarding any regard to his own person. There will be no occasion for repentance."
+          }
+        },
+        {
+          "position": 4,
+          "text": {
+            "zh": "六四：渙其群，元吉。渙有丘，匪夷所思。",
+            "vi": "Hào Sáu Tư: Tan thửa đàn, cả tốt; tan có gò, chẳng phải thường thửa nghĩ.",
+            "en": "The fourth line, divided, shows its subject scattering the (different) parties (in the state); which leads to great good fortune. From the dispersion (he collects again good men standing out, a crowd) like a mound, which is what ordinary men would not have thought of."
+          }
+        },
+        {
+          "position": 5,
+          "text": {
+            "zh": "九五：渙汗其大號，渙王居，无咎。",
+            "vi": "Hào Chín Năm: Tan bồ hôi thửa hiệu lớn, tan chỗ ở của vua, không lỗi.",
+            "en": "The fifth line, undivided, shows its subject amidst the dispersion issuing his great announcements as the perspiration (flows from his body). He scatters abroad (also) the accumulations in the royal granaries. There will be no error."
+          }
+        },
+        {
+          "position": 6,
+          "text": {
+            "zh": "上九：渙其血，去逖出，无咎。",
+            "vi": "Hào Chín Trên: Tan thửa máu đi, rùng rợn ra, không lỗi.",
+            "en": "The topmost line, undivided, shows its subject disposing of (what may be called) its bloody wounds, and going and separating himself from its anxious fears. There will be no error."
+          }
+        }
+      ]
+    },
+    {
+      "number": 60,
+      "name_zh": "節",
+      "name_pinyin": "Jié",
+      "judgment": {
+        "zh": "節：亨。苦節不可貞。",
+        "en": "Jie intimates that (under its conditions) there will be progress and attainment. (But) if the regulations (which it prescribes) be severe and difficult, they cannot be permanent.",
+        "vi": "Quẻ Tiết hanh, sự dè dặt khổ không thể chính bền."
+      },
+      "image": {
+        "zh": "澤上有水，節；君子以制數度，議德行。",
+        "en": "(The trigram representing) a lake, and above it that for water, form Jie. The superior man, in accordance with this, constructs his (methods of) numbering and measurement, and discusses (points of) virtue and conduct.",
+        "vi": "Lời Tượng nói rằng: Trên chằm có nước là quẻ Tiết. Đấng quân tử coi đó mà chế độ, bàn đức nết."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "text": {
+            "zh": "初九：不出戶庭，无咎。",
+            "vi": "Hào Chín Đầu: Chẳng ra sân cửa, không lỗi.",
+            "en": "The first line, undivided, shows its subject not quitting the courtyard outside his door. There will be no error."
+          }
+        },
+        {
+          "position": 2,
+          "text": {
+            "zh": "九二：不出門庭，凶。",
+            "vi": "Hào Chín Hai: Chẳng ra sân cổng, hung.",
+            "en": "The second line, undivided, shows its subject not quitting the courtyard inside his gate. There will be evil."
+          }
+        },
+        {
+          "position": 3,
+          "text": {
+            "zh": "六三：不節若，則嗟若，无咎。",
+            "vi": "Hào Sáu Ba: Chẳng dè dặt vậy thì than thở vậy, không lỗi.",
+            "en": "The third line, divided, shows its subject with no appearance of observing the (proper) regulations, in which case we shall see him lamenting. But there will be no one to blame (but himself)."
+          }
+        },
+        {
+          "position": 4,
+          "text": {
+            "zh": "六四：安節，亨。",
+            "vi": "Hào Sáu Tư: Yên dè dặt, hanh.",
+            "en": "The fourth line, divided, shows its subject quietly and naturally (attentive to all) regulations. There will be progress and success."
+          }
+        },
+        {
+          "position": 5,
+          "text": {
+            "zh": "九五：甘節，吉；往有尚。",
+            "vi": "Hào Chín Năm: Sự dè dặt ngọt, tốt, đi có chuộng.",
+            "en": "The fifth line, undivided, shows its subject sweetly and acceptably enacting his regulations. There will be good fortune. The onward progress with them will afford ground for admiration."
+          }
+        },
+        {
+          "position": 6,
+          "text": {
+            "zh": "上六：苦節，貞凶，悔亡。",
+            "vi": "Hào Sáu Trên: Sự dè dặt khổ, chính bền hung, ăn năn mất.",
+            "en": "The topmost line, divided, shows its subject enacting regulations severe and difficult. Even with firmness and correctness there will be evil. But though there will be cause for repentance, it will (by and by) disappear."
+          }
+        }
+      ]
+    },
+    {
+      "number": 61,
+      "name_zh": "中孚",
+      "name_pinyin": "Zhōng Fú",
+      "judgment": {
+        "zh": "中孚：豚魚吉，利涉大川，利貞。",
+        "en": "Zhong Fu (moves even) pigs and fish, and leads to good fortune. There will be advantage in crossing the great stream. There will be advantage in being firm and correct.",
+        "vi": "Quẻ Trung Phu: Cá lợn tốt, lợi sang sông lớn, lợi về chính bền."
+      },
+      "image": {
+        "zh": "澤上有風，中孚；君子以議獄緩死。",
+        "en": "(The trigram representing the waters of) a marsh and that for wind above it form Zhong Fu. The superior man, in accordance with this, deliberates about cases of litigation and delays (the infliction of) death.",
+        "vi": "Lời Tượng nói rằng: Trên chằm có gió là quẻ Trung Phu. Đấng quân tử coi đó mà bàn việc ngục, hoãn tội chết."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "text": {
+            "zh": "初九：虞吉，有他不燕。",
+            "vi": "Hào Chín Đầu: Lo tốt, có khác, chẳng yên.",
+            "en": "The first line, undivided, shows its subject resting (in himself). There will be good fortune. If he sought to any other, he would not find rest."
+          }
+        },
+        {
+          "position": 2,
+          "text": {
+            "zh": "九二：鳴鶴在陰，其子和之，我有好爵，吾與爾靡之。",
+            "vi": "Hào Chín Hai: Con Hạc kêu ở chỗ tối, con nó họa đấy; ta có tước tốt, tao cùng mày thích đấy.",
+            "en": "The second line, undivided, shows its subject (like) the crane crying out in her hidden retirement, and her young ones responding to her. (It is as if it were said), 'I have a cup of good spirits,' (and the response were), 'I will partake of it with you.'"
+          }
+        },
+        {
+          "position": 3,
+          "text": {
+            "zh": "六三：得敵，或鼓或罷，或泣或歌。",
+            "vi": "Hào Sáu Ba: Được kẻ địch, hoặc khua trống hoặc thôi, hoặc khóc hoặc múa.",
+            "en": "The third line, divided, shows its subject having met with his mate. Now he beats his drum, and now he leaves off. Now he weeps, and now he sings."
+          }
+        },
+        {
+          "position": 4,
+          "text": {
+            "zh": "六四：月幾望，馬匹亡，无咎。",
+            "vi": "Hào Sáu Tư: mặt trăng hầu tuần vọng, đôi ngựa mất, không lỗi.",
+            "en": "The fourth line, divided, shows its subject (like) the moon nearly full, and (like) a horse (in a chariot) whose fellow disappears. There will be no error."
+          }
+        },
+        {
+          "position": 5,
+          "text": {
+            "zh": "九五：有孚攣如，无咎。",
+            "vi": "Hào Chín Năm: Có tin dường như co quắp vậy, không lỗi.",
+            "en": "The fifth line, undivided, shows its subject perfectly sincere, and linking (others) to him in closest union. There will be no error."
+          }
+        },
+        {
+          "position": 6,
+          "text": {
+            "zh": "上九：翰音登于天，貞凶。",
+            "vi": "Hào Chín Trên: Tiếng cánh lên chưng trời, chính bền hung.",
+            "en": "The topmost line, undivided, shows its subject in chanticleer (trying to) mount to heaven. Even with firm correctness there will be evil."
+          }
+        }
+      ]
+    },
+    {
+      "number": 62,
+      "name_zh": "小過",
+      "name_pinyin": "Xiǎo Guò",
+      "judgment": {
+        "zh": "小過：亨。利貞。可小事，不可大事。飛鳥遺之音，不宜上宜下，大吉。",
+        "en": "Xiao Guo indicates that (in the circumstances which it implies) there will be progress and attainment. But it will be advantageous to be firm and correct. (What the name denotes), may be done in small affairs, but not in great affairs. (It is like) the notes that come down from a bird on the wing;—to descend is better than to ascend. There will (in this way) be great good fortune.",
+        "vi": "Quẻ Tiểu Quá hanh, lợi về chính bền. Khá việc nhỏ, chẳng khá việc lớn, chim bay để chưng tiếng, chẳng nên lên, nên xuống, cả tốt."
+      },
+      "image": {
+        "zh": "山上有雷，小過；君子以行過乎恭，喪過乎哀，用過乎儉。",
+        "en": "(The trigram representing) a hill and that for thunder above it form Xiao Guo. The superior man, in accordance with this, in his conduct exceeds in humility, in mourning exceeds in sorrow, and in his expenditure exceeds in economy.",
+        "vi": "Lời Tượng nói rằng: Trên núi có sấm là quẻ Tiểu Quá. Đấng quân tử coi đó mà nên nết quá chưng kính, tang quá chưng thương, dùng quá chưng kiệm."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "text": {
+            "zh": "初六：飛鳥以凶。",
+            "vi": "Hào Sáu Đầu: Chim bay là hung.",
+            "en": "The first line, divided, suggests (the idea of) a bird flying, (and ascending) till the issue is evil."
+          }
+        },
+        {
+          "position": 2,
+          "text": {
+            "zh": "六二：過其祖，遇其妣；不及其君，遇其臣；无咎。",
+            "vi": "Hào Sáu Hai: Quá thửa ông, gặp thửa bà; chẳng kịp thửa vua, gặp thửa bề tôi, không lỗi.",
+            "en": "The second line, divided, shows its subject passing by his grandfather, and meeting with his grandmother; not attempting anything against his ruler, but meeting him as his minister. There will be no error."
+          }
+        },
+        {
+          "position": 3,
+          "text": {
+            "zh": "九三：弗過防之，從或戕之，凶。",
+            "vi": "Hào Chín Ba: Chẳng quá ngừa đó, theo hoặc hại đó, hung.",
+            "en": "The third line, undivided, shows its subject taking no extraordinary precautions against danger; and some in consequence finding opportunity to assail and injure him. There will be evil."
+          }
+        },
+        {
+          "position": 4,
+          "text": {
+            "zh": "九四：无咎，弗過遇之。往厲必戒，勿用永貞。",
+            "vi": "Hào Chín Tự: Không lỗi chẳng quá gặp đấy, đi nguy, ắt răn, chớ dùng dài lâu chính bền.",
+            "en": "The fourth line, undivided, shows its subject falling into no error, but meeting (the exigency of his situation), without exceeding (in his natural course). If he go forward, there will be peril, and he must be cautious. There is no occasion to be using firmness perpetually."
+          }
+        },
+        {
+          "position": 5,
+          "text": {
+            "zh": "六五：密雲不雨，自我西郊，公弋取彼在穴。",
+            "vi": "Hào Sáu Năm: Mây dầy chẳng mưa, ở cõi Tây lại, ông bắn lấy nó ở hang.",
+            "en": "The fifth line, divided, (suggests the idea) of dense clouds, but no rain, coming from our borders in the west. It also (shows) the prince shooting his arrow, and taking the bird in a cave."
+          }
+        },
+        {
+          "position": 6,
+          "text": {
+            "zh": "上六：弗遇過之，飛鳥離之，凶，是謂災眚。",
+            "vi": "Hào Sáu Trên: Chẳng gặp, quá đấy, chim bay lìa đấy, hung, ấy rằng vạ tội.",
+            "en": "The sixth line, divided, shows its subject not meeting (the exigency of his situation), and exceeding (his proper course). (It suggests the idea of) a bird flying far aloft. There will be evil. The case is what is called one of calamity and self-produced injury."
+          }
+        }
+      ]
+    },
+    {
+      "number": 63,
+      "name_zh": "既濟",
+      "name_pinyin": "Jì Jì",
+      "judgment": {
+        "zh": "既濟：亨小。利貞。初吉終亂。",
+        "en": "Ji Ji intimates progress and success in small matters. There will be advantage in being firm and correct. There has been good fortune in the beginning; there may be disorder in the end.",
+        "vi": "Quẻ Ký Tế hanh, lợi nhỏ về chính bền, đầu tốt, chót loạn."
+      },
+      "image": {
+        "zh": "水在火上，既濟；君子以思患而豫防之。",
+        "en": "(The trigram representing) fire and that for water above it form Ji Ji. The superior man, in accordance with this, thinks of evil (that may come), and beforehand guards against it.",
+        "vi": "Lời Tượng nói rằng: Nước ở trên lửa là quẻ Ký Tế. Đấng quân tử coi đó để nghĩ sự lo mà ngừa sẵn đấy."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "text": {
+            "zh": "初九：曳其輪，濡其尾，无咎。",
+            "vi": "Hào Chín Đầu: Kéo thửa bánh xe, ướt thửa đuôi không lỗi.",
+            "en": "The first line, undivided, (shows its subject as a driver) who drags back his wheel, (or as a fox) which has wet his tail. There will be no error."
+          }
+        },
+        {
+          "position": 2,
+          "text": {
+            "zh": "六二：婦喪其茀，勿逐，七日得。",
+            "vi": "Hào Sáu Hai: Đàn bà mất thửa khăn trùm chớ đuổi, bảy ngày được.",
+            "en": "The second line, divided, (shows its subject as) a wife who has lost her (carriage-)screen. There is no occasion to go in pursuit of it. In seven days she will find it."
+          }
+        },
+        {
+          "position": 3,
+          "text": {
+            "zh": "九三：高宗伐鬼方，三年克之，小人勿用。",
+            "vi": "Hào Chín Ba: Vua Cao Tông đánh nước Quỷ Phương, ba năm được đấy, kẻ tiểu nhân chờ dùng.",
+            "en": "The third line, undivided, (suggests the case of) Gao Zong who attacked the Demon region, but was three years in subduing it. Small men should not be employed (in such enterprises)."
+          }
+        },
+        {
+          "position": 4,
+          "text": {
+            "zh": "六四：繻有衣袽，終日戒。",
+            "vi": "Hào Sáu Tư: Ướt đã có áo giẻ, trọn ngày răn.",
+            "en": "The fourth line, divided, shows its subject with rags provided against any leak (in his boat), and on his guard all day long."
+          }
+        },
+        {
+          "position": 5,
+          "text": {
+            "zh": "九五：東鄰殺牛，不如西鄰之禴祭，實受其福。",
+            "vi": "Hào Chín Năm: Láng giềng bên Đông giết trâu chẳng bằng láng giềng bên Tây tế Thược, thật chịu thửa phúc.",
+            "en": "The fifth line, undivided, shows its subject (as) the neighbour in the east who slaughters an ox (for his sacrifice); but this is not equal to the (small) spring sacrifice of the neighbour in the west, whose sincerity receives the blessing."
+          }
+        },
+        {
+          "position": 6,
+          "text": {
+            "zh": "上六：濡其首，厲。",
+            "vi": "Hào Sáu Trên: Ướt thửa đầu, nguy!",
+            "en": "The topmost line, divided, shows its subject with (even) his head immersed. The position is perilous."
+          }
+        }
+      ]
+    },
+    {
+      "number": 64,
+      "name_zh": "未濟",
+      "name_pinyin": "Wèi Jì",
+      "judgment": {
+        "zh": "未濟：亨。小狐汔濟，濡其尾，无攸利。",
+        "en": "Wei Ji intimates progress and success (in the circumstances which it implies). (We see) a young fox that has nearly crossed (the stream), when its tail gets immersed. There will be no advantage in any way.",
+        "vi": "Quẻ Vị Tế hanh, con cáo nhỏ hầu sang, ướt thửa đuôi, không thửa lợi."
+      },
+      "image": {
+        "zh": "火在水上，未濟；君子以慎辨物居方。",
+        "en": "(The trigram representing) water and that for fire above it form Wei Ji. The superior man, in accordance with this, carefully discriminates among (the qualities of) things, and the (different) positions they (naturally) occupy.",
+        "vi": "Lời Tượng nói rằng: Lửa ở trên nước, là quẻ Vị Tế. Đấng quân tử coi đó mà cẩn thận phân biệt các vật, ở phương."
+      },
+      "lines": [
+        {
+          "position": 1,
+          "text": {
+            "zh": "初六：濡其尾，吝。",
+            "vi": "Hào Sáu Đầu: Ướt thửa đuôi, đáng thẹn.",
+            "en": "The first line, divided, shows its subject (like a fox) whose tail gets immersed. There will be occasion for regret."
+          }
+        },
+        {
+          "position": 2,
+          "text": {
+            "zh": "九二：曳其輪，貞吉。",
+            "vi": "Hào Chín hai: Kéo thửa bánh xe, chính bền, tốt.",
+            "en": "The second line, undivided, shows its subject dragging back his (carriage-)wheel. With firmness and correctness there will be good fortune."
+          }
+        },
+        {
+          "position": 3,
+          "text": {
+            "zh": "六三：未濟，征凶，利涉大川。",
+            "vi": "Hào Sáu ba: Chưa sang, đi hung, lợi về sang sông lớn.",
+            "en": "The third line, divided, shows its subject, with (the state of things) not yet remedied, advancing on; which will lead to evil. But there will be advantage in (trying to) cross the great stream."
+          }
+        },
+        {
+          "position": 4,
+          "text": {
+            "zh": "九四：貞吉，悔亡，震用伐鬼方，三年有賞于大國。",
+            "vi": "Hào Chín Tư: Chính bền, ăn năn mất, chấn dùng đánh nước Quỷ Phương, ba năm có thưởng chưng nước lớn.",
+            "en": "The fourth line, undivided, shows its subject by firm correctness obtaining good fortune, so that all occasion for repentance disappears. Let him stir himself up, as if he were invading the Demon region, where for three years rewards will come to him (and his troops) from the great kingdom."
+          }
+        },
+        {
+          "position": 5,
+          "text": {
+            "zh": "六五：貞吉，无悔，君子之光，有孚，吉。",
+            "vi": "Hào Sáu Năm: Chính bền tốt, không ăn năn, sự sáng của đấng quân tử, có tin tốt.",
+            "en": "The fifth line, divided, shows its subject by firm correctness obtaining good fortune, and having no occasion for repentance. (We see in him) the brightness of a superior man, and the possession of sincerity. There will be good fortune."
+          }
+        },
+        {
+          "position": 6,
+          "text": {
+            "zh": "上九：有孚于飲酒，无咎，濡其首，有孚失是。",
+            "vi": "Hào Chín Trên: có tin chưng uống rượu, không lỗi, ướt thửa đầu, có tin, đúng là mất.",
+            "en": "The topmost line, undivided, shows its subject drinking his wine, full of confidence and therefore feasting (quietly). There will be no error. 'He drinks and gets his head immersed:'—he does not know how to submit to the (proper) regulations."
+          }
+        }
+      ]
     }
   ]
 }

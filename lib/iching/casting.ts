@@ -12,6 +12,7 @@ import type {
   CastLine,
   CastMethod,
   CastResult,
+  CoinFace,
   LineType,
   LineValue,
   Position,
@@ -175,6 +176,39 @@ export function deriveResultingLines(cast: CastResult): ResultingLine[] | null {
   }
 
   return resultLines;
+}
+
+/**
+ * Derives the three coin faces consistent with a line's value, for the casting
+ * ceremony's reveal (AGENTS.md golden rule #1 — the UI must not invent a coin
+ * outcome the engine didn't produce). In the three-coin method a line's value
+ * is the sum of three coins, each tails=2 (yin) or heads=3 (yang); so the
+ * number of yang faces is exactly `value - 6` (6→0, 7→1, 8→2, 9→3).
+ *
+ * The engine records only the line value, not which individual coins fell, so
+ * a fixed canonical arrangement (yang faces first) is returned — what matters
+ * for honesty is that the displayed faces SUM to the engine's actual line
+ * value. That invariant is asserted here: if it ever failed, the ceremony
+ * would be showing coins inconsistent with the cast, so this throws rather
+ * than rendering a lie.
+ */
+export function coinFacesForLine(value: LineValue): [CoinFace, CoinFace, CoinFace] {
+  const yangCount = value - 6;
+  const faces = Array.from({ length: 3 }, (_, i): CoinFace => (i < yangCount ? "yang" : "yin")) as [
+    CoinFace,
+    CoinFace,
+    CoinFace,
+  ];
+
+  const sum = faces.reduce((total, face) => total + (face === "yang" ? 3 : 2), 0);
+  if (sum !== value) {
+    throw new Error(
+      `Coin face derivation mismatch: faces sum to ${sum} but line value is ${value}. ` +
+        `The ceremony must not display coins inconsistent with the cast.`,
+    );
+  }
+
+  return faces;
 }
 
 function generateSeed(): string {

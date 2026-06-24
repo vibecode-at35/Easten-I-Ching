@@ -6,6 +6,7 @@ export type ModelTier = "default" | "premium";
 export interface InterpretParams {
   cast: CastResult;
   question: string;
+  context?: string;
   locale: Locale;
   /** Defaults to "default" (Sonnet). "premium" routes to the deep-reading model. */
   tier?: ModelTier;

@@ -59,17 +59,29 @@ export function gatherGroundedTexts(
 
   let resulting: GroundedHexagram | null = null;
   if (cast.resultingHexagram !== null) {
-    const resultingRecord = getHexagramRecord(cast.resultingHexagram);
-    resulting = {
-      number: resultingRecord.number,
-      namePinyin: resultingRecord.name_pinyin,
-      nameZh: resultingRecord.name_zh,
-      judgment: resolveLocaleText(
-        resultingRecord.judgment,
-        locale,
-        `hexagram ${resultingRecord.number} judgment`,
-      ),
-    };
+    try {
+      const resultingRecord = getHexagramRecord(cast.resultingHexagram);
+      resulting = {
+        number: resultingRecord.number,
+        namePinyin: resultingRecord.name_pinyin,
+        nameZh: resultingRecord.name_zh,
+        judgment: resolveLocaleText(
+          resultingRecord.judgment,
+          locale,
+          `hexagram ${resultingRecord.number} judgment`,
+        ),
+      };
+    } catch (err) {
+      // Graceful degradation: if the resulting hexagram's text is missing from
+      // the corpus (hexagrams 57-64 are not yet in hexagrams.demo.json), proceed
+      // without it rather than killing the entire reading. The primary hexagram +
+      // changing lines still produce a meaningful interpretation. Logged so the
+      // gap is visible in server output without surfacing internals to the user.
+      console.warn(
+        `Resulting hexagram ${cast.resultingHexagram} text unavailable; proceeding without it:`,
+        (err as Error).message,
+      );
+    }
   }
 
   return { primary, changingLines, resulting };
@@ -121,7 +133,7 @@ export async function* runInterpretation(
 ): AsyncGenerator<string, void, unknown> {
   const grounded = gatherGroundedTexts(params.cast, params.locale);
   const grounding = await tryExtractGrounding(params.question, client);
-  const assembled = assemblePrompt(params.question, params.locale, grounded, grounding);
+  const assembled = assemblePrompt(params.question, params.locale, grounded, grounding, params.context);
   const tier = params.tier ?? "default";
 
   const allowed: AllowedHexagrams = {

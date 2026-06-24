@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Serif, Noto_Serif_TC } from "next/font/google";
 import "./globals.css";
+import { LocaleProvider } from "../lib/i18n/LocaleProvider";
+import { LanguageSwitcher } from "../components/LanguageSwitcher";
 
 /**
  * Warm-traditional type system (docs/TASKS/milestone-3-reading-experience.md §5.3):
@@ -41,9 +43,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${notoSerif.variable} ${notoSerifTC.variable} ${inter.variable}`}>
-      <body className="min-h-screen bg-paper-base font-sans text-ink antialiased">
-        {children}
+    <html lang="vi" className={`${notoSerif.variable} ${notoSerifTC.variable} ${inter.variable}`}>
+      <body className="min-h-screen bg-bg font-sans text-text antialiased">
+        <LocaleProvider>
+          <LanguageSwitcher />
+          {children}
+        </LocaleProvider>
       </body>
     </html>
   );

@@ -1,5 +1,12 @@
 export type LineValue = 6 | 7 | 8 | 9;
 export type LineType = "old_yin" | "young_yang" | "young_yin" | "old_yang";
+
+/**
+ * One of the three cast coins as it lands: "yang" is the heads/3 face, "yin"
+ * the tails/2 face. Display data only — derived from a line's value in
+ * casting.ts (coinFacesForLine), never computed in the UI.
+ */
+export type CoinFace = "yang" | "yin";
 export type CastMethod = "three_coin";
 export type Position = 1 | 2 | 3 | 4 | 5 | 6;
 

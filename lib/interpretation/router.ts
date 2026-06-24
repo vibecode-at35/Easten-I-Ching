@@ -8,7 +8,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import type { AssembledPrompt } from "./prompt";
 import type { ModelTier } from "./types";
 
-const MAX_TOKENS = 1024;
+const MAX_TOKENS = 2048;
 
 const MODEL_BY_TIER: Record<ModelTier, string> = {
   default: "claude-sonnet-4-6",

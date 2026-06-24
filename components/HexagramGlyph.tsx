@@ -12,6 +12,8 @@ import type { CastResult, ResultingLine } from "../lib/iching/types";
  */
 export interface HexagramGlyphProps {
   cast: CastResult;
+  /** Size of the primary hexagram lines. Defaults to 'default'. */
+  size?: "large" | "default";
 }
 
 export interface LineRowProps {
@@ -39,11 +41,11 @@ export function LineRow({ isYang, isChanging, size }: LineRowProps) {
     <div className="flex items-center gap-2">
       <div className={`flex ${height} ${width} justify-between`}>
         {isYang ? (
-          <span className={`${height} w-full rounded-full bg-ink shadow-[inset_0_1px_1px_rgba(0,0,0,0.18)]`} />
+          <span className={`${height} w-full rounded-full bg-gold shadow-[inset_0_1px_1px_rgba(0,0,0,0.25)]`} />
         ) : (
           <>
-            <span className={`${height} w-[44%] rounded-full bg-ink shadow-[inset_0_1px_1px_rgba(0,0,0,0.18)]`} />
-            <span className={`${height} w-[44%] rounded-full bg-ink shadow-[inset_0_1px_1px_rgba(0,0,0,0.18)]`} />
+            <span className={`${height} w-[44%] rounded-full bg-gold shadow-[inset_0_1px_1px_rgba(0,0,0,0.25)]`} />
+            <span className={`${height} w-[44%] rounded-full bg-gold shadow-[inset_0_1px_1px_rgba(0,0,0,0.25)]`} />
           </>
         )}
       </div>
@@ -58,7 +60,7 @@ export function LineRow({ isYang, isChanging, size }: LineRowProps) {
 interface LineStackProps {
   lines: Array<{ position: number; isYang: boolean }>;
   changingPositions: ReadonlySet<number>;
-  size: "default" | "small";
+  size: "large" | "default" | "small";
 }
 
 /** Stacks six LineRows bottom-to-top: position 1 at the bottom, position 6 at the top. */
@@ -78,7 +80,7 @@ function LineStack({ lines, changingPositions, size }: LineStackProps) {
   );
 }
 
-export function HexagramGlyph({ cast }: HexagramGlyphProps) {
+export function HexagramGlyph({ cast, size = "default" }: HexagramGlyphProps) {
   const primaryLines = cast.lines.map((line) => ({
     position: line.position,
     isYang: (line.value & 1) === 1, // odd values (7, 9) are yang — same convention as lib/iching/casting.ts
@@ -88,11 +90,11 @@ export function HexagramGlyph({ cast }: HexagramGlyphProps) {
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <LineStack lines={primaryLines} changingPositions={changingPositions} size="default" />
+      <LineStack lines={primaryLines} changingPositions={changingPositions} size={size} />
 
       {resultingLines && (
         <div className="flex flex-col items-center gap-3">
-          <span aria-hidden className="text-ink-muted">
+          <span aria-hidden className="text-text-muted">
             ↓
           </span>
           <LineStack lines={resultingLines} changingPositions={new Set()} size="small" />
