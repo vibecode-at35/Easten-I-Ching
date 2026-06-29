@@ -5,6 +5,7 @@
  */
 
 import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenAI } from "@google/genai";
 import type { AssembledPrompt } from "./prompt";
 import type { ModelTier } from "./types";
 
@@ -13,6 +14,12 @@ const MAX_TOKENS = 2048;
 const MODEL_BY_TIER: Record<ModelTier, string> = {
   default: "claude-sonnet-4-6",
   premium: "claude-opus-4-8",
+};
+
+const GEMINI_MODEL_BY_ANTHROPIC: Record<string, string> = {
+  "claude-sonnet-4-6": "gemini-2.5-flash",
+  "claude-opus-4-8": "gemini-2.5-pro",
+  "claude-haiku-4-5": "gemini-2.5-flash",
 };
 
 /** Resolves a tier to its concrete model id. Defaults to the "default" (Sonnet) tier. */
@@ -42,6 +49,12 @@ export interface ModelClient {
   };
 }
 
+export interface GeminiModelClient {
+  models: {
+    generateContentStream(params: any): AsyncIterable<{ text?: string | null }>;
+  };
+}
+
 /** Extracts the text of a `content_block_delta` / `text_delta` event, or null for any other event. */
 function extractTextDelta(event: unknown): string | null {
   if (typeof event !== "object" || event === null) return null;
@@ -64,6 +77,7 @@ export class ModelRequestError extends Error {
 }
 
 let defaultClient: Anthropic | null = null;
+let defaultGeminiClient: GoogleGenAI | null = null;
 
 function getDefaultClient(): ModelClient {
   if (!defaultClient) {
@@ -71,6 +85,49 @@ function getDefaultClient(): ModelClient {
     defaultClient = new Anthropic();
   }
   return defaultClient;
+}
+
+function getDefaultGeminiClient(): GeminiModelClient {
+  if (!defaultGeminiClient) {
+    // Reads GEMINI_API_KEY from the environment; never hardcoded, never logged.
+    defaultGeminiClient = new GoogleGenAI({});
+  }
+  return defaultGeminiClient;
+}
+
+async function* streamFromGemini(
+  anthropicModel: string,
+  prompt: AssembledPrompt,
+  geminiClient?: GeminiModelClient,
+): AsyncGenerator<string, void, unknown> {
+  const activeClient = geminiClient ?? getDefaultGeminiClient();
+  const model = GEMINI_MODEL_BY_ANTHROPIC[anthropicModel] || "gemini-2.5-flash";
+
+  const systemInstruction = prompt.system.map((s) => s.text).join("\n");
+  const contents = prompt.messages.map((m) => m.content).join("\n");
+
+  let stream;
+  try {
+    stream = await activeClient.models.generateContentStream({
+      model,
+      contents,
+      config: {
+        systemInstruction,
+      },
+    });
+  } catch (err) {
+    throw new ModelRequestError(err);
+  }
+
+  try {
+    for await (const chunk of stream) {
+      if (chunk.text) {
+        yield chunk.text;
+      }
+    }
+  } catch (err) {
+    throw new ModelRequestError(err);
+  }
 }
 
 /**
@@ -82,10 +139,12 @@ async function* streamFromModel(
   model: string,
   prompt: AssembledPrompt,
   client?: ModelClient,
+  geminiClient?: GeminiModelClient,
 ): AsyncGenerator<string, void, unknown> {
   const activeClient = client ?? getDefaultClient();
 
   let stream: ModelStream;
+  let anthropicFailed = false;
   try {
     stream = activeClient.messages.stream({
       model,
@@ -94,18 +153,23 @@ async function* streamFromModel(
       messages: prompt.messages,
     });
   } catch (err) {
-    throw new ModelRequestError(err);
+    anthropicFailed = true;
+  }
+
+  if (anthropicFailed) {
+    yield* streamFromGemini(model, prompt, geminiClient);
+    return;
   }
 
   try {
-    for await (const event of stream) {
+    for await (const event of stream!) {
       const text = extractTextDelta(event);
       if (text !== null) {
         yield text;
       }
     }
   } catch (err) {
-    throw new ModelRequestError(err);
+    yield* streamFromGemini(model, prompt, geminiClient);
   }
 }
 
@@ -118,8 +182,9 @@ export async function* interpret(
   prompt: AssembledPrompt,
   tier: ModelTier = "default",
   client?: ModelClient,
+  geminiClient?: GeminiModelClient,
 ): AsyncGenerator<string, void, unknown> {
-  yield* streamFromModel(resolveModel(tier), prompt, client);
+  yield* streamFromModel(resolveModel(tier), prompt, client, geminiClient);
 }
 
 /**
@@ -131,6 +196,7 @@ export async function* interpret(
 export async function* extract(
   prompt: AssembledPrompt,
   client?: ModelClient,
+  geminiClient?: GeminiModelClient,
 ): AsyncGenerator<string, void, unknown> {
-  yield* streamFromModel(EXTRACTION_MODEL, prompt, client);
+  yield* streamFromModel(EXTRACTION_MODEL, prompt, client, geminiClient);
 }

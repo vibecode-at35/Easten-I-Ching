@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { interpret, extract, resolveModel, EXTRACTION_MODEL, ModelRequestError, type ModelClient } from "./router";
+import { interpret, extract, resolveModel, EXTRACTION_MODEL, ModelRequestError, type ModelClient, type GeminiModelClient } from "./router";
 import type { AssembledPrompt } from "./prompt";
 
 function makeAssembledPrompt(): AssembledPrompt {
@@ -107,10 +107,16 @@ describe("interpret — streaming via injected client", () => {
         },
       },
     };
+    const geminiSecretError = new Error("Gemini key sk-gem-SECRET67890 failed");
+    const geminiClient: GeminiModelClient = {
+      models: {
+        generateContentStream: () => { throw geminiSecretError; }
+      }
+    };
 
     let caught: unknown;
     try {
-      await drain(interpret(makeAssembledPrompt(), "default", client));
+      await drain(interpret(makeAssembledPrompt(), "default", client, geminiClient));
     } catch (err) {
       caught = err;
     }
@@ -118,7 +124,8 @@ describe("interpret — streaming via injected client", () => {
     expect(caught).toBeInstanceOf(ModelRequestError);
     expect((caught as Error).message).toBe("The interpretation model request failed.");
     expect((caught as Error).message).not.toContain("sk-ant-SECRET12345");
-    expect((caught as ModelRequestError).cause).toBe(secretError);
+    expect((caught as Error).message).not.toContain("sk-gem-SECRET67890");
+    expect((caught as ModelRequestError).cause).toBe(geminiSecretError);
   });
 
   it("wraps a mid-stream iteration failure in ModelRequestError, preserving chunks already yielded", async () => {
@@ -133,11 +140,17 @@ describe("interpret — streaming via injected client", () => {
         }),
       },
     };
+    const geminiSecretError = new Error("Gemini token sk-gem-SECRET67890 rejected");
+    const geminiClient: GeminiModelClient = {
+      models: {
+        generateContentStream: () => { throw geminiSecretError; }
+      }
+    };
 
     const chunks: string[] = [];
     let caught: unknown;
     try {
-      for await (const chunk of interpret(makeAssembledPrompt(), "default", client)) {
+      for await (const chunk of interpret(makeAssembledPrompt(), "default", client, geminiClient)) {
         chunks.push(chunk);
       }
     } catch (err) {
@@ -147,6 +160,32 @@ describe("interpret — streaming via injected client", () => {
     expect(chunks).toEqual(["partial"]);
     expect(caught).toBeInstanceOf(ModelRequestError);
     expect((caught as Error).message).not.toContain("sk-ant-SECRET67890");
+    expect((caught as Error).message).not.toContain("sk-gem-SECRET67890");
+  });
+
+  it("falls back to Gemini if Anthropic fails synchronously", async () => {
+    const client: ModelClient = {
+      messages: {
+        stream: () => {
+          throw new Error("Anthropic failed");
+        },
+      },
+    };
+    const geminiClient: GeminiModelClient = {
+      models: {
+        generateContentStream: () => {
+          return {
+            async *[Symbol.asyncIterator]() {
+              yield { text: "Fallback " };
+              yield { text: "success" };
+            },
+          } as any;
+        }
+      }
+    };
+
+    const chunks = await drain(interpret(makeAssembledPrompt(), "default", client, geminiClient));
+    expect(chunks.join("")).toBe("Fallback success");
   });
 });
 
@@ -202,16 +241,23 @@ describe("extract — Phase 1 grounding model, same router", () => {
         },
       },
     };
+    const geminiSecretError = new Error("key sk-gem-SECRET-EXTRACT failed");
+    const geminiClient: GeminiModelClient = {
+      models: {
+        generateContentStream: () => { throw geminiSecretError; }
+      }
+    };
 
     let caught: unknown;
     try {
-      await drain(extract(makeAssembledPrompt(), client));
+      await drain(extract(makeAssembledPrompt(), client, geminiClient));
     } catch (err) {
       caught = err;
     }
 
     expect(caught).toBeInstanceOf(ModelRequestError);
     expect((caught as Error).message).not.toContain("sk-ant-SECRET-EXTRACT");
+    expect((caught as Error).message).not.toContain("sk-gem-SECRET-EXTRACT");
   });
 });
 

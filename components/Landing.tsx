@@ -38,39 +38,43 @@ export function Landing({ onBegin }: LandingProps) {
         <Lantern size={44} />
       </div>
 
-      {/* Bagua centerpiece, behind the wordmark. */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <BaguaRing size={460} className="opacity-80" />
-      </div>
-
-      <div className="relative flex flex-col items-center gap-9 text-center">
-        {/* Wordmark — brush calligraphy, gold-foil glint over a drop-glow. */}
-        <motion.div variants={riseFromAsh} className="relative flex flex-col items-center gap-5">
+      <div className="relative flex flex-col items-center gap-7 text-center">
+        {/* Emblem — the ring is a halo around the wordmark only. The block
+            reserves the ring's full size so the text below starts clear of it. */}
+        <motion.div
+          variants={riseFromAsh}
+          className="relative flex items-center justify-center"
+          style={{ width: "min(360px, 86vmin)", height: "min(360px, 86vmin)" }}
+        >
+          <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <BaguaRing size={360} className="opacity-80" />
+          </div>
+          {/* Wordmark — brush calligraphy, gold-foil glint over a drop-glow. */}
           <div className="relative leading-none">
             <span
               aria-hidden
               className="absolute inset-0 select-none font-brush text-gold blur-2xl"
-              style={{ fontSize: "clamp(5rem, 26vw, 9rem)", letterSpacing: "0.06em", opacity: 0.55 }}
+              style={{ fontSize: "clamp(4.5rem, 24vw, 8rem)", letterSpacing: "0.06em", opacity: 0.55 }}
             >
               易經
             </span>
             <h1
               className="gold-foil animate-gold-glint relative font-brush leading-none"
-              style={{ fontSize: "clamp(5rem, 26vw, 9rem)", letterSpacing: "0.06em" }}
+              style={{ fontSize: "clamp(4.5rem, 24vw, 8rem)", letterSpacing: "0.06em" }}
             >
               易經
             </h1>
           </div>
+        </motion.div>
+
+        {/* Subtitle + cloud-scroll — below the ring, in clear lacquer. */}
+        <motion.div variants={riseFromAsh} className="flex flex-col items-center gap-4">
           <p
             className="font-sans text-sm tracking-[0.55em] text-gold-bright"
             style={{ paddingLeft: "0.55em" }}
           >
             {t("landing.subtitle")}
           </p>
-        </motion.div>
-
-        {/* Cloud-scroll divider. */}
-        <motion.div variants={riseFromAsh}>
           <CloudScroll width={240} />
         </motion.div>
 
